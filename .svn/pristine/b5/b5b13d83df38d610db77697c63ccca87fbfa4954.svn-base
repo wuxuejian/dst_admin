@@ -1,0 +1,20 @@
+[2017-02-01 00:00:00]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'car_monidata.cs_tcp_car_history_data_201702_8' doesn't exist#0 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(474): PDOStatement->execute()
+#1 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(113): CarAnomalyDetection->main()
+#2 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(606): CarAnomalyDetection->__construct()
+#3 {main}
+[2017-02-01 00:00:05]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'car_monidata.cs_tcp_car_history_data_201702_3' doesn't exist#0 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(474): PDOStatement->execute()
+#1 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(113): CarAnomalyDetection->main()
+#2 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(606): CarAnomalyDetection->__construct()
+#3 {main}
+[2017-02-01 00:00:10]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'car_monidata.cs_tcp_car_history_data_201702_9' doesn't exist#0 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(474): PDOStatement->execute()
+#1 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(113): CarAnomalyDetection->main()
+#2 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(606): CarAnomalyDetection->__construct()
+#3 {main}
+[2017-03-01 00:00:00]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'car_monidata.cs_tcp_car_history_data_201703_9' doesn't exist#0 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(474): PDOStatement->execute()
+#1 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(113): CarAnomalyDetection->main()
+#2 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(606): CarAnomalyDetection->__construct()
+#3 {main}
+[2017-04-01 00:00:00]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'car_monidata.cs_tcp_car_history_data_201704_9' doesn't exist#0 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(474): PDOStatement->execute()
+#1 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(113): CarAnomalyDetection->main()
+#2 /mnt/wwwroot/DST/extension/Task/CarAnomalyDetection.php(606): CarAnomalyDetection->__construct()
+#3 {main}

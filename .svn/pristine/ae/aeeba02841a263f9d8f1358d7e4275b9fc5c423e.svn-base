@@ -1,0 +1,98 @@
+<?php
+namespace backend\modules\repair\controllers;
+use backend\controllers\BaseController;
+use backend\models\PurchaseOrderMain;
+use backend\models\PurchaseExpress;
+
+use backend\models\Car;
+use backend\models\ConfigCategory;
+use backend\models\CarFault;
+use backend\models\CarDrivingLicense;
+use backend\models\CarBrand;
+use backend\models\Owner;
+use backend\models\OperatingCompany;
+use backend\models\Battery;
+use backend\models\Motor;
+use backend\models\MotorMonitor;
+use backend\classes\UserLog;
+use common\models\Excel;
+use common\models\File;
+use yii;
+use yii\base\Object;
+use yii\data\Pagination;
+use backend\models\Admin;
+use common\classes\Category;
+use backend\models\CarType;
+class RepairInfoController extends BaseController
+{
+    public function actionIndex()
+    {
+        $buttons = $this->getCurrentActionBtn();
+        //车牌号
+        $query = (new \yii\db\Query())
+            ->select('id,plate_number')
+            ->from('cs_car')
+            ->where(['is_del'=>0]);
+        $searchFormOptions['car_id'] = $query->all();
+        //售后修理厂
+        $query = (new \yii\db\Query())
+            ->select('id,site_name')
+            ->from('oa_service_site');
+        $searchFormOptions['repair_company'] = $query->all();
+        return $this->render('index',['buttons'=>$buttons,'formoption'=>$searchFormOptions]);
+    }
+
+    public function actionAdd()
+    {
+        return $this->render('add');
+    }
+
+    public function actionEdit()
+    {
+        return $this->render('edit');
+    }
+
+    public function actionGetList()
+    {
+        $pageSize = isset($_GET['rows']) && $_GET['rows'] <= 50 ? intval($_GET['rows']) : 10;
+        $query = (new \yii\db\Query())
+            ->select('a.*,b.plate_number,c.site_name,d.order_no')
+            ->from('cs_repair as a')
+            ->leftjoin('cs_car as b','a.car_id = b.id')
+            ->leftJoin('oa_service_site as c','a.sale_factory = c.id')
+            ->leftJoin('oa_car_maintain as d','a.order_number = d.id')
+            ->where(['a.is_del'=>'0','b.is_del'=>'0']);
+        if (yii::$app->request->isGet){
+            $dat = $_GET;
+            if($dat['car_id'] != ''){
+                $query->andFilterWhere(['=','car_id',trim($dat['car_id'])]);
+            }
+            if($dat['order_number'] != ''){
+                $query->andFilterWhere(['like','order_number',trim($dat['order_number'])]);
+            }
+            if($dat['order_type'] != ''){
+                $query->andFilterWhere(['=','order_type',trim($dat['order_type'])]);
+            }
+            if($dat['sale_factory'] != ''){
+                $query->andFilterWhere(['=','a.sale_factory',trim($dat['sale_factory'])]);
+            }
+            if($dat['check_status'] != ''){
+                $query->andFilterWhere(['=','a.check_status',trim($dat['check_status'])]);
+            }
+            if($dat['bill_status'] != ''){
+                $query->andFilterWhere(['=','bill_status',trim($dat['bill_status'])]);
+            }
+        }
+        $total = $query->count();
+//        var_dump($total);exit;
+        $pages = new Pagination(['totalCount' =>$total, 'pageSize' => $pageSize]);
+        $data = $query->offset($pages->offset)->limit($pages->limit)->all();
+//        echo '<pre>';
+//        var_dump($data);exit;
+        //数据转换
+        $allData=array();
+        $allData['rows'] = $data;
+        $allData['total'] = $total;
+        return json_encode($allData);
+    }
+}

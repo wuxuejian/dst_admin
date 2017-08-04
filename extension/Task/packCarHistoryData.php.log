@@ -1,0 +1,266 @@
+2016-06-28 17:32:14 start...打包数据
+2016-06-28 17:32:14 end...打包数据
+2016-06-28 17:35:36 start...打包数据
+2016-06-28 17:35:36 end...打包数据
+2016-06-28 18:00:30 start...打包数据
+2016-06-28 18:02:57 end...打包数据
+2016-06-29 16:30:01 start...打包数据
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__0 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__1 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__2 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__3 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__4 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__5 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__6 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__7 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__8 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data__9 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 16:30:01 end...打包数据
+2016-06-29 17:00:02 start...打包数据
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_0 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_1 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_2 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_3 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_4 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_5 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_6 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_7 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_8 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201605_9 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-06-29 17:00:02 end...打包数据
+2016-07-01 00:00:01 start...打包数据
+2016-07-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_0 | gzip > /home/szdst/cs_tcp_car_history_data_201606_0.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_1 | gzip > /home/szdst/cs_tcp_car_history_data_201606_1.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_2 | gzip > /home/szdst/cs_tcp_car_history_data_201606_2.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_3 | gzip > /home/szdst/cs_tcp_car_history_data_201606_3.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_4 | gzip > /home/szdst/cs_tcp_car_history_data_201606_4.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_5 | gzip > /home/szdst/cs_tcp_car_history_data_201606_5.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_6 | gzip > /home/szdst/cs_tcp_car_history_data_201606_6.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_7 | gzip > /home/szdst/cs_tcp_car_history_data_201606_7.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_8 | gzip > /home/szdst/cs_tcp_car_history_data_201606_8.sql.zip
+2016-07-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201606_9 | gzip > /home/szdst/cs_tcp_car_history_data_201606_9.sql.zip
+2016-07-01 00:00:02 end...打包数据
+2016-08-01 00:00:01 start...打包数据
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_0 | gzip > /home/szdst/cs_tcp_car_history_data_201607_0.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_1 | gzip > /home/szdst/cs_tcp_car_history_data_201607_1.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_2 | gzip > /home/szdst/cs_tcp_car_history_data_201607_2.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_3 | gzip > /home/szdst/cs_tcp_car_history_data_201607_3.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_4 | gzip > /home/szdst/cs_tcp_car_history_data_201607_4.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_5 | gzip > /home/szdst/cs_tcp_car_history_data_201607_5.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_6 | gzip > /home/szdst/cs_tcp_car_history_data_201607_6.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_7 | gzip > /home/szdst/cs_tcp_car_history_data_201607_7.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_8 | gzip > /home/szdst/cs_tcp_car_history_data_201607_8.sql.zip
+2016-08-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_9 | gzip > /home/szdst/cs_tcp_car_history_data_201607_9.sql.zip
+2016-08-01 00:00:01 end...打包数据
+2016-08-01 09:10:33 start...打包数据
+2016-08-01 09:10:33 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_0 | gzip > /home/szdst/cs_tcp_car_history_data_201607_0.sql.zip -d
+2016-08-01 09:10:33 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_1 | gzip > /home/szdst/cs_tcp_car_history_data_201607_1.sql.zip -d
+2016-08-01 09:10:33 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_2 | gzip > /home/szdst/cs_tcp_car_history_data_201607_2.sql.zip -d
+2016-08-01 09:10:33 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_3 | gzip > /home/szdst/cs_tcp_car_history_data_201607_3.sql.zip -d
+2016-08-01 09:10:34 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_4 | gzip > /home/szdst/cs_tcp_car_history_data_201607_4.sql.zip -d
+2016-08-01 09:10:34 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_5 | gzip > /home/szdst/cs_tcp_car_history_data_201607_5.sql.zip -d
+2016-08-01 09:10:34 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_6 | gzip > /home/szdst/cs_tcp_car_history_data_201607_6.sql.zip -d
+2016-08-01 09:10:34 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_7 | gzip > /home/szdst/cs_tcp_car_history_data_201607_7.sql.zip -d
+2016-08-01 09:10:34 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_8 | gzip > /home/szdst/cs_tcp_car_history_data_201607_8.sql.zip -d
+2016-08-01 09:10:34 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_9 | gzip > /home/szdst/cs_tcp_car_history_data_201607_9.sql.zip -d
+2016-08-01 09:10:34 end...打包数据
+2016-08-01 09:19:25 start...打包数据
+2016-08-01 09:19:25 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_0 | gzip > /home/szdst/cs_tcp_car_history_data_201607_0.sql.zip
+2016-08-01 09:24:47 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_1 | gzip > /home/szdst/cs_tcp_car_history_data_201607_1.sql.zip
+2016-08-01 09:30:25 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_2 | gzip > /home/szdst/cs_tcp_car_history_data_201607_2.sql.zip
+2016-08-01 09:35:28 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_3 | gzip > /home/szdst/cs_tcp_car_history_data_201607_3.sql.zip
+2016-08-01 09:40:00 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_4 | gzip > /home/szdst/cs_tcp_car_history_data_201607_4.sql.zip
+2016-08-01 09:45:19 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_5 | gzip > /home/szdst/cs_tcp_car_history_data_201607_5.sql.zip
+2016-08-01 09:50:40 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_6 | gzip > /home/szdst/cs_tcp_car_history_data_201607_6.sql.zip
+2016-08-01 09:56:31 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_7 | gzip > /home/szdst/cs_tcp_car_history_data_201607_7.sql.zip
+2016-08-01 10:00:48 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_8 | gzip > /home/szdst/cs_tcp_car_history_data_201607_8.sql.zip
+2016-08-01 10:06:26 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201607_9 | gzip > /home/szdst/cs_tcp_car_history_data_201607_9.sql.zip
+2016-08-01 10:11:39 end...打包数据
+2016-09-01 00:00:01 start...打包数据
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_0 | gzip > /home/szdst/cs_tcp_car_history_data_201608_0.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_1 | gzip > /home/szdst/cs_tcp_car_history_data_201608_1.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_2 | gzip > /home/szdst/cs_tcp_car_history_data_201608_2.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_3 | gzip > /home/szdst/cs_tcp_car_history_data_201608_3.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_4 | gzip > /home/szdst/cs_tcp_car_history_data_201608_4.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_5 | gzip > /home/szdst/cs_tcp_car_history_data_201608_5.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_6 | gzip > /home/szdst/cs_tcp_car_history_data_201608_6.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_7 | gzip > /home/szdst/cs_tcp_car_history_data_201608_7.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_8 | gzip > /home/szdst/cs_tcp_car_history_data_201608_8.sql.zip
+2016-09-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201608_9 | gzip > /home/szdst/cs_tcp_car_history_data_201608_9.sql.zip
+2016-09-01 00:00:01 end...打包数据
+2016-10-01 00:00:01 start...打包数据
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_0 | gzip > /home/szdst/cs_tcp_car_history_data_201609_0.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_1 | gzip > /home/szdst/cs_tcp_car_history_data_201609_1.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_2 | gzip > /home/szdst/cs_tcp_car_history_data_201609_2.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_3 | gzip > /home/szdst/cs_tcp_car_history_data_201609_3.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_4 | gzip > /home/szdst/cs_tcp_car_history_data_201609_4.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_5 | gzip > /home/szdst/cs_tcp_car_history_data_201609_5.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_6 | gzip > /home/szdst/cs_tcp_car_history_data_201609_6.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_7 | gzip > /home/szdst/cs_tcp_car_history_data_201609_7.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_8 | gzip > /home/szdst/cs_tcp_car_history_data_201609_8.sql.zip
+2016-10-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201609_9 | gzip > /home/szdst/cs_tcp_car_history_data_201609_9.sql.zip
+2016-10-01 00:00:01 end...打包数据
+2016-11-01 00:00:02 start...打包数据
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_0 | gzip > /home/szdst/cs_tcp_car_history_data_201610_0.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_1 | gzip > /home/szdst/cs_tcp_car_history_data_201610_1.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_2 | gzip > /home/szdst/cs_tcp_car_history_data_201610_2.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_3 | gzip > /home/szdst/cs_tcp_car_history_data_201610_3.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_4 | gzip > /home/szdst/cs_tcp_car_history_data_201610_4.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_5 | gzip > /home/szdst/cs_tcp_car_history_data_201610_5.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_6 | gzip > /home/szdst/cs_tcp_car_history_data_201610_6.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_7 | gzip > /home/szdst/cs_tcp_car_history_data_201610_7.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_8 | gzip > /home/szdst/cs_tcp_car_history_data_201610_8.sql.zip
+2016-11-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201610_9 | gzip > /home/szdst/cs_tcp_car_history_data_201610_9.sql.zip
+2016-11-01 00:00:02 end...打包数据
+2016-12-01 00:00:02 start...打包数据
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_0 | gzip > /home/szdst/cs_tcp_car_history_data_201611_0.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_1 | gzip > /home/szdst/cs_tcp_car_history_data_201611_1.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_2 | gzip > /home/szdst/cs_tcp_car_history_data_201611_2.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_3 | gzip > /home/szdst/cs_tcp_car_history_data_201611_3.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_4 | gzip > /home/szdst/cs_tcp_car_history_data_201611_4.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_5 | gzip > /home/szdst/cs_tcp_car_history_data_201611_5.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_6 | gzip > /home/szdst/cs_tcp_car_history_data_201611_6.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_7 | gzip > /home/szdst/cs_tcp_car_history_data_201611_7.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_8 | gzip > /home/szdst/cs_tcp_car_history_data_201611_8.sql.zip
+2016-12-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201611_9 | gzip > /home/szdst/cs_tcp_car_history_data_201611_9.sql.zip
+2016-12-01 00:00:02 end...打包数据
+2017-01-01 00:00:01 start...打包数据
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_0 | gzip > /home/szdst/cs_tcp_car_history_data_201612_0.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_1 | gzip > /home/szdst/cs_tcp_car_history_data_201612_1.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_2 | gzip > /home/szdst/cs_tcp_car_history_data_201612_2.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_3 | gzip > /home/szdst/cs_tcp_car_history_data_201612_3.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_4 | gzip > /home/szdst/cs_tcp_car_history_data_201612_4.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_5 | gzip > /home/szdst/cs_tcp_car_history_data_201612_5.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_6 | gzip > /home/szdst/cs_tcp_car_history_data_201612_6.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_7 | gzip > /home/szdst/cs_tcp_car_history_data_201612_7.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_8 | gzip > /home/szdst/cs_tcp_car_history_data_201612_8.sql.zip
+2017-01-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_9 | gzip > /home/szdst/cs_tcp_car_history_data_201612_9.sql.zip
+2017-01-01 00:00:02 end...打包数据
+2017-01-03 10:34:37 start...打包数据
+2017-01-03 10:34:37 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_0 | gzip > /home/szdst/cs_tcp_car_history_data_201612_0.sql.zip
+2017-01-03 10:37:38 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_1 | gzip > /home/szdst/cs_tcp_car_history_data_201612_1.sql.zip
+2017-01-03 10:40:11 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_2 | gzip > /home/szdst/cs_tcp_car_history_data_201612_2.sql.zip
+2017-01-03 10:43:16 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_3 | gzip > /home/szdst/cs_tcp_car_history_data_201612_3.sql.zip
+2017-01-03 10:45:57 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_4 | gzip > /home/szdst/cs_tcp_car_history_data_201612_4.sql.zip
+2017-01-03 10:48:50 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_5 | gzip > /home/szdst/cs_tcp_car_history_data_201612_5.sql.zip
+2017-01-03 10:51:37 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_6 | gzip > /home/szdst/cs_tcp_car_history_data_201612_6.sql.zip
+2017-01-03 10:55:22 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_7 | gzip > /home/szdst/cs_tcp_car_history_data_201612_7.sql.zip
+2017-01-03 10:58:19 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_8 | gzip > /home/szdst/cs_tcp_car_history_data_201612_8.sql.zip
+2017-01-03 10:58:19 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_9 | gzip > /home/szdst/cs_tcp_car_history_data_201612_9.sql.zip
+2017-01-03 10:58:19 end...打包数据
+2017-01-03 16:06:13 start...打包数据
+2017-01-03 16:06:13 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_6 | gzip > /home/szdst/cs_tcp_car_history_data_201612_6.sql.zip
+2017-01-03 16:09:53 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_7 | gzip > /home/szdst/cs_tcp_car_history_data_201612_7.sql.zip
+2017-01-03 16:12:49 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_8 | gzip > /home/szdst/cs_tcp_car_history_data_201612_8.sql.zip
+2017-01-03 16:16:29 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201612_9 | gzip > /home/szdst/cs_tcp_car_history_data_201612_9.sql.zip
+2017-01-03 16:20:32 end...打包数据
+2017-02-01 00:00:02 start...打包数据
+2017-02-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_6 | gzip > /home/szdst/cs_tcp_car_history_data_201701_6.sql.zip
+2017-02-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_7 | gzip > /home/szdst/cs_tcp_car_history_data_201701_7.sql.zip
+2017-02-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_8 | gzip > /home/szdst/cs_tcp_car_history_data_201701_8.sql.zip
+2017-02-01 00:00:02 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_9 | gzip > /home/szdst/cs_tcp_car_history_data_201701_9.sql.zip
+2017-02-01 00:00:02 end...打包数据
+2017-03-01 00:00:01 start...打包数据
+2017-03-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_6 | gzip > /home/szdst/cs_tcp_car_history_data_201702_6.sql.zip
+2017-03-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_7 | gzip > /home/szdst/cs_tcp_car_history_data_201702_7.sql.zip
+2017-03-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_8 | gzip > /home/szdst/cs_tcp_car_history_data_201702_8.sql.zip
+2017-03-01 00:00:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_9 | gzip > /home/szdst/cs_tcp_car_history_data_201702_9.sql.zip
+2017-03-01 00:00:01 end...打包数据
+2017-03-01 14:38:12 start...打包数据
+2017-03-01 14:38:12 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_0 | gzip > /home/szdst/cs_tcp_car_history_data_201701_0.sql.zip
+2017-03-01 14:40:17 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_1 | gzip > /home/szdst/cs_tcp_car_history_data_201701_1.sql.zip
+2017-03-01 14:42:03 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_2 | gzip > /home/szdst/cs_tcp_car_history_data_201701_2.sql.zip
+2017-03-01 14:44:27 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_3 | gzip > /home/szdst/cs_tcp_car_history_data_201701_3.sql.zip
+2017-03-01 14:46:20 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_4 | gzip > /home/szdst/cs_tcp_car_history_data_201701_4.sql.zip
+2017-03-01 14:47:35 start...打包数据
+2017-03-01 14:47:35 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_0 | gzip > /home/szdst/cs_tcp_car_history_data_201701_0.sql.zip
+2017-03-01 14:49:15 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_5 | gzip > /home/szdst/cs_tcp_car_history_data_201701_5.sql.zip
+2017-03-01 14:50:37 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_1 | gzip > /home/szdst/cs_tcp_car_history_data_201701_1.sql.zip
+2017-03-01 14:53:00 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_2 | gzip > /home/szdst/cs_tcp_car_history_data_201701_2.sql.zip
+2017-03-01 14:53:19 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_6 | gzip > /home/szdst/cs_tcp_car_history_data_201701_6.sql.zip
+2017-03-01 14:56:14 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_3 | gzip > /home/szdst/cs_tcp_car_history_data_201701_3.sql.zip
+2017-03-01 14:57:20 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_7 | gzip > /home/szdst/cs_tcp_car_history_data_201701_7.sql.zip
+2017-03-01 14:58:41 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_4 | gzip > /home/szdst/cs_tcp_car_history_data_201701_4.sql.zip
+2017-03-01 15:00:13 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_8 | gzip > /home/szdst/cs_tcp_car_history_data_201701_8.sql.zip
+2017-03-01 15:02:11 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_5 | gzip > /home/szdst/cs_tcp_car_history_data_201701_5.sql.zip
+2017-03-01 15:04:39 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_9 | gzip > /home/szdst/cs_tcp_car_history_data_201701_9.sql.zip
+2017-03-01 15:06:13 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_6 | gzip > /home/szdst/cs_tcp_car_history_data_201701_6.sql.zip
+2017-03-01 15:08:06 end...打包数据
+2017-03-01 15:09:48 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_7 | gzip > /home/szdst/cs_tcp_car_history_data_201701_7.sql.zip
+2017-03-01 15:11:47 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_8 | gzip > /home/szdst/cs_tcp_car_history_data_201701_8.sql.zip
+2017-03-01 15:14:57 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201701_9 | gzip > /home/szdst/cs_tcp_car_history_data_201701_9.sql.zip
+2017-03-01 15:17:24 end...打包数据
+2017-04-01 09:33:14 start...打包数据
+2017-04-01 09:33:14 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_0 | gzip > /home/szdst/cs_tcp_car_history_data_201702_0.sql.zip
+2017-04-01 09:34:53 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_1 | gzip > /home/szdst/cs_tcp_car_history_data_201702_1.sql.zip
+2017-04-01 09:36:29 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_2 | gzip > /home/szdst/cs_tcp_car_history_data_201702_2.sql.zip
+2017-04-01 09:38:22 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_3 | gzip > /home/szdst/cs_tcp_car_history_data_201702_3.sql.zip
+2017-04-01 09:40:30 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_4 | gzip > /home/szdst/cs_tcp_car_history_data_201702_4.sql.zip
+2017-04-01 09:42:43 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_5 | gzip > /home/szdst/cs_tcp_car_history_data_201702_5.sql.zip
+2017-04-01 09:45:25 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_6 | gzip > /home/szdst/cs_tcp_car_history_data_201702_6.sql.zip
+2017-04-01 09:47:10 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_7 | gzip > /home/szdst/cs_tcp_car_history_data_201702_7.sql.zip
+2017-04-01 09:48:35 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_8 | gzip > /home/szdst/cs_tcp_car_history_data_201702_8.sql.zip
+2017-04-01 09:50:49 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_9 | gzip > /home/szdst/cs_tcp_car_history_data_201702_9.sql.zip
+2017-04-01 09:52:44 end...打包数据
+2017-04-01 11:45:29 start...打包数据
+2017-04-01 11:45:29 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_0 | gzip > /home/szdst/cs_tcp_car_history_data_201702_0.sql.zip
+2017-04-01 11:47:12 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_1 | gzip > /home/szdst/cs_tcp_car_history_data_201702_1.sql.zip
+2017-04-01 11:48:43 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_2 | gzip > /home/szdst/cs_tcp_car_history_data_201702_2.sql.zip
+2017-04-01 11:50:35 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_3 | gzip > /home/szdst/cs_tcp_car_history_data_201702_3.sql.zip
+2017-04-01 11:52:40 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_4 | gzip > /home/szdst/cs_tcp_car_history_data_201702_4.sql.zip
+2017-04-01 11:54:52 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_5 | gzip > /home/szdst/cs_tcp_car_history_data_201702_5.sql.zip
+2017-04-01 11:57:35 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_6 | gzip > /home/szdst/cs_tcp_car_history_data_201702_6.sql.zip
+2017-04-01 11:59:17 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_7 | gzip > /home/szdst/cs_tcp_car_history_data_201702_7.sql.zip
+2017-04-01 12:00:43 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_8 | gzip > /home/szdst/cs_tcp_car_history_data_201702_8.sql.zip
+2017-04-01 12:02:52 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201702_9 | gzip > /home/szdst/cs_tcp_car_history_data_201702_9.sql.zip
+2017-04-01 12:04:47 end...打包数据
+2017-05-02 10:40:43 start...打包数据
+2017-05-02 10:40:43 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_0 | gzip > /home/szdst/cs_tcp_car_history_data_201703_0.sql.zip
+2017-05-02 10:43:20 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_1 | gzip > /home/szdst/cs_tcp_car_history_data_201703_1.sql.zip
+2017-05-02 10:46:23 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_2 | gzip > /home/szdst/cs_tcp_car_history_data_201703_2.sql.zip
+2017-05-02 10:49:47 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_3 | gzip > /home/szdst/cs_tcp_car_history_data_201703_3.sql.zip
+2017-05-02 10:53:46 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_4 | gzip > /home/szdst/cs_tcp_car_history_data_201703_4.sql.zip
+2017-05-02 10:58:13 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_5 | gzip > /home/szdst/cs_tcp_car_history_data_201703_5.sql.zip
+2017-05-02 11:02:29 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_6 | gzip > /home/szdst/cs_tcp_car_history_data_201703_6.sql.zip
+2017-05-02 11:06:20 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_7 | gzip > /home/szdst/cs_tcp_car_history_data_201703_7.sql.zip
+2017-05-02 11:09:35 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_8 | gzip > /home/szdst/cs_tcp_car_history_data_201703_8.sql.zip
+2017-05-02 11:13:09 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201703_9 | gzip > /home/szdst/cs_tcp_car_history_data_201703_9.sql.zip
+2017-05-02 11:17:12 end...打包数据
+2017-06-05 14:34:23 start...打包数据
+2017-06-05 14:34:23 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_0 | gzip > /home/szdst/cs_tcp_car_history_data_201704_0.sql.zip
+2017-06-05 14:37:23 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_1 | gzip > /home/szdst/cs_tcp_car_history_data_201704_1.sql.zip
+2017-06-05 14:40:38 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_2 | gzip > /home/szdst/cs_tcp_car_history_data_201704_2.sql.zip
+2017-06-05 14:44:09 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_3 | gzip > /home/szdst/cs_tcp_car_history_data_201704_3.sql.zip
+2017-06-05 14:48:34 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_4 | gzip > /home/szdst/cs_tcp_car_history_data_201704_4.sql.zip
+2017-06-05 14:52:09 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_5 | gzip > /home/szdst/cs_tcp_car_history_data_201704_5.sql.zip
+2017-06-05 14:55:37 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_6 | gzip > /home/szdst/cs_tcp_car_history_data_201704_6.sql.zip
+2017-06-05 14:59:57 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_7 | gzip > /home/szdst/cs_tcp_car_history_data_201704_7.sql.zip
+2017-06-05 15:03:25 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_8 | gzip > /home/szdst/cs_tcp_car_history_data_201704_8.sql.zip
+2017-06-05 15:06:45 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201704_9 | gzip > /home/szdst/cs_tcp_car_history_data_201704_9.sql.zip
+2017-06-05 15:10:29 end...打包数据
+2017-07-03 14:33:55 start...打包数据
+2017-07-03 14:33:55 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_0 | gzip > /home/szdst/cs_tcp_car_history_data_201705_0.sql.zip
+2017-07-03 14:38:37 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_1 | gzip > /home/szdst/cs_tcp_car_history_data_201705_1.sql.zip
+2017-07-03 14:43:13 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_2 | gzip > /home/szdst/cs_tcp_car_history_data_201705_2.sql.zip
+2017-07-03 14:46:45 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_3 | gzip > /home/szdst/cs_tcp_car_history_data_201705_3.sql.zip
+2017-07-03 14:51:36 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_4 | gzip > /home/szdst/cs_tcp_car_history_data_201705_4.sql.zip
+2017-07-03 14:56:38 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_5 | gzip > /home/szdst/cs_tcp_car_history_data_201705_5.sql.zip
+2017-07-03 15:01:09 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_6 | gzip > /home/szdst/cs_tcp_car_history_data_201705_6.sql.zip
+2017-07-03 15:08:03 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_7 | gzip > /home/szdst/cs_tcp_car_history_data_201705_7.sql.zip
+2017-07-03 15:13:28 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_8 | gzip > /home/szdst/cs_tcp_car_history_data_201705_8.sql.zip
+2017-07-03 15:18:01 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_9 | gzip > /home/szdst/cs_tcp_car_history_data_201705_9.sql.zip
+2017-07-03 15:23:30 end...打包数据
+2017-07-18 15:33:04 start...打包数据
+2017-07-18 15:33:04 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_0 | gzip > /home/szdst/cs_tcp_car_history_data_201705_0.sql.zip
+2017-07-18 15:33:04 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_1 | gzip > /home/szdst/cs_tcp_car_history_data_201705_1.sql.zip
+2017-07-18 15:33:04 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_2 | gzip > /home/szdst/cs_tcp_car_history_data_201705_2.sql.zip
+2017-07-18 15:33:04 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_3 | gzip > /home/szdst/cs_tcp_car_history_data_201705_3.sql.zip
+2017-07-18 15:33:05 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_4 | gzip > /home/szdst/cs_tcp_car_history_data_201705_4.sql.zip
+2017-07-18 15:33:05 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_5 | gzip > /home/szdst/cs_tcp_car_history_data_201705_5.sql.zip
+2017-07-18 15:33:05 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_6 | gzip > /home/szdst/cs_tcp_car_history_data_201705_6.sql.zip
+2017-07-18 15:33:05 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_7 | gzip > /home/szdst/cs_tcp_car_history_data_201705_7.sql.zip
+2017-07-18 15:33:05 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_8 | gzip > /home/szdst/cs_tcp_car_history_data_201705_8.sql.zip
+2017-07-18 15:33:05 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_9 | gzip > /home/szdst/cs_tcp_car_history_data_201705_9.sql.zip
+2017-07-18 15:33:05 end...打包数据
+2017-07-18 15:34:07 start...打包数据
+2017-07-18 15:34:07 mysqldump -h127.0.0.1 -uroot -p4Z3uChwl car_monidata cs_tcp_car_history_data_201705_0 | gzip > /home/szdst/cs_tcp_car_history_data_201705_0.sql.zip

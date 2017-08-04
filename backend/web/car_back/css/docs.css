@@ -1,0 +1,48 @@
+.hide{display: none;}
+.hide-must{display: none!important;}
+.show{display: block;}
+.mg-r-10{margin-right: 10px;}
+/*上传文件按钮美化*/
+.a-upload {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.a-upload input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.a-upload:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+
+.c-red{color:#DB2828!important;}
+.c-q-gray{color:#aaa!important;}
+.c-black{color:#111!important;}
+.c-green{color:#21BA45!important;}
+
+.rotate-45{
+    transform:rotate(-45deg);
+    -ms-transform:rotate(-45deg); /* Internet Explorer */
+    -moz-transform:rotate(-45deg); /* Firefox */
+    -webkit-transform:rotate(-45deg); /* Safari 和 Chrome */
+    -o-transform:rotate(-45deg; /* Opera */
+}
+
+.font-w-b{
+    font-weight: bold!important;
+}

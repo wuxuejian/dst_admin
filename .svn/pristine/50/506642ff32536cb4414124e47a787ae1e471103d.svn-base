@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+	<head>
+  		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  		<meta name="Generator" content="EditPlus®">
+  		<meta name="Author" content="">
+  		<meta name="Keywords" content="">
+  		<meta name="Description" content="">
+  		<title>退车流程</title>
+  		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+  		<link rel="stylesheet" type="text/css" href="css/docs.css">
+  		<style type="text/css">
+  			.dimmed.dimmable>.ui.animating.dimmer.d1, .dimmed.dimmable>.ui.visible.dimmer.d1, .ui.active.dimmer.d1 {
+			    display: block;
+			    opacity: 0.1;
+			}
+  		</style>
+	</head>
+	<body>
+		<div class="main ui container" style="margin-top:16px;">
+			<div class="ui grid">
+		    	<div class="four wide column">
+		    		<div class="ui fluid vertical steps">
+		        		<a class="step" href="index1.html">
+				    		<div class="content">
+				      			<div class="title">1.客户退车意愿登记</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index2.html">
+				    		<div class="content">
+				      			<div class="title">2.销售沟通确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="active step" href="index3.html">
+				    		<div class="content">
+				      			<div class="title">3.销售负责人审批</div>
+				    		</div>
+				  		</a>
+						<a class="step" href="index4.html">
+				    		<div class="content">
+				      			<div class="title">4.售后验车</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index5.html">
+				    		<div class="content">
+				      			<div class="title">5.车辆入库</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index6.html">
+				    		<div class="content">
+				      			<div class="title">6.押金结算</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index7.html">
+				    		<div class="content">
+				      			<div class="title">7.结算异常审批</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index8.html">
+				    		<div class="content">
+				      			<div class="title">8.财务转账收款确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index9.html">
+				    		<div class="content">
+				      			<div class="title">9.归档</div>
+				    		</div>
+				  		</a>
+		        	</div>
+		        </div>
+		      	<div class="twelve wide column ui segments">
+		      		<div class="field id_test hide">
+		      			<div class="ui error message">
+					        <div class="header">您没有权限操作此步骤!</div>
+					    </div>
+					    <div></div>
+		      		</div>
+		      		<div class="ui dimmer d1">
+				   		<div class="content">
+				     	<div class="center">
+				        	<h2 class="ui inverted icon header"> 您没有权限操作此步骤! </h2>
+				     	 </div>
+				    	</div>
+				  	</div>
+		      		<form class="ui form">
+			        	<div class="inline two fields">
+					        <div class="field">
+					          	<label>客户名称：</label>
+					          	<span name="customer_name"></span>
+					        </div>
+					        <div class="field">
+					          	<label>联系电话：</label>
+					          	<span name="customer_tel"></span>
+					        </div>
+					    </div>
+					    <div class="inline two fields">
+						    <div class="field">
+					        	<label>客户地址：</label>
+					        	<span name="customer_addr"></span>
+					      	</div>
+					      	<div class="field">
+					        	<label>预计还车时间：</label>
+					        	<span name="back_time"></span>
+					      	</div>
+				      	</div>
+				      	<div class="inline two fields">
+						    <div class="field">
+					        	<label>退车类型：</label>
+					        	<span name="back_type"></span>
+					      	</div>
+					      	<div class="field">
+					        	<label>还车站场：</label>
+					        	<span name="extract_car_site_name"></span>
+					      	</div>
+				      	</div>
+				      	<div class="field">
+				        	<label>退车原因：</label>
+				        	<textarea name="back_cause" placeholder="退车原因" rows="2" readonly=""></textarea>
+				      	</div>
+				      	<div class="field">
+				          	<label>备注：</label>
+				          	<textarea name="note2" placeholder="备注" rows="2" readonly=""></textarea>
+					    </div>
+					    
+        				<div class="ui column grid json_before">
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide save_cancel_div">
+					          		<div class="ui submit button green" onclick="add3(1)">同意</div>
+		        					<div class="ui submit button" onclick="modal_show()">驳回</div>
+		        			  	</div>
+					        </div>
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide">
+					          		<span class="oper_user mg-r-10">操作人：XXX</span><span class="oper_time">2016-10-11 11:24</span>
+		        			  	</div>
+					        </div>
+					    </div>
+			        </form>
+		      	</div>
+		    </div>
+		</div>
+		<form class="ui form modal" id="form1"  action="../index.php?r=car/car-back/add3" method="post">
+			<input name='id' class="hide" />
+			<input name="is_reject" class="hide" />
+		  	<div class="header">驳回退车请求</div>
+		  	<div class="content">
+		      	<div class="ui form">
+		        	<div class="field">
+		          		<label>驳回原因：</label>
+		          		<textarea name="reject_cause"></textarea>
+		        	</div>
+		      	</div>
+		    </div>
+		    <div class="actions">
+		      	<div class="ui button" onclick="modal_close()">取消</div>
+		      	<div class="ui green button" onclick="add3(2)">确定</div>
+		    </div>
+		</form>
+		<div class="ui small modal" id="a_modal" >
+			<input name='id' class="hide" />
+		  	<div class="header">保存成功！</div>
+		  	<div class="content">
+		      	<p>退车审批通过，等待售后及车管验车</p>
+		    </div>
+		    <div class="actions">
+		      	<div class="ui green button" onclick="cancel()">确定</div>
+		    </div>
+		</div>
+	</body>
+	<script src="js/jqueryv183.js"></script>
+  	<script src="js/jquery.form.js"></script>
+  	<script src="js/semantic.min.js"></script>
+  	<script src="js/flow.js"></script>
+  	<script>
+  		//预处理下拉框
+  		$('.selection.dropdown').dropdown();
+  		//预处理单选按钮
+  		$('.ui.radio.checkbox').checkbox();
+  		//预处理弹出输入框
+  		function modal_show(){
+	  		$('#form1').modal('show');
+  		}
+  		function a_modal_show(){
+	  		$('#a_modal').modal('show');
+  		}
+  		function modal_close(){
+	  		$('.ui.modal').modal('hide');
+  		}
+  		//处理步骤显示
+  		var page_id = getQueryString('id');
+  		var page_state = getQueryString('state');
+  		var page_role_ids = getQueryString('role_ids');
+		step_show_hide(page_id,page_state,8,page_role_ids);
+
+		//判断角色是否能修改该页面
+		$.ajax({
+           	url:'../index.php?r=car/car-back/rbac-access&index=3',
+           	type:'get',
+           	dataType:'json',
+           	success:function(data){
+           		if(data == false){
+           			/*
+           			//预处理遮盖层
+			  		$('.ui .segments').dimmer('show','on');
+			  		$('.ui .segments').off("click");//让点击事件取消
+			  		*/
+			  	
+			  		//不可操作
+			  		$('.id_test').show();
+			  		$('.save_cancel_div').hide();
+           		}
+           	},
+           	error: function (msg) {}
+        })
+  		
+  		var car_list = new Array();
+  		//获取客户列表
+  		$(document).ready(function(){
+			$.ajax({
+	           	url:'../index.php?r=car/car-back/get-cars&q=',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(data){           		
+	           		for( i = 0 ; i < data.length ; i++ ){
+
+	           			car_list[i] = {};
+	           			car_list[i].plate_number = data[i].plate_number;
+	           			car_list[i].car_model = data[i].car_model;
+	           			car_list[i].car_model_name = data[i].car_model_name;
+	           		}
+		       		//获取页面值
+		       		$.ajax({
+			           	url:'../index.php?r=car/car-back/get2',
+			           	data: {id:page_id},
+			           	type:'get',
+			           	dataType:'json',
+			           	success:function(datai){
+			           		if(datai.status){
+								if(datai.data.state != 2){
+									$('.ui .segments').dimmer('show','on');
+									$('.ui .segments').off("click");//让点击事件取消
+									$('.dimmer .header').text("");
+								}
+			           			if(datai.data.company_name != null){
+			           				$('span[name="customer_name"]').text(datai.data.company_name);
+			           			}else if(datai.data.id_name != null){
+			           				$('span[name="customer_name"]').text(datai.data.id_name);
+			           			}else{
+			           				$('span[name="customer_name"]').text(datai.data.other_customer_name);
+			           			}
+			           			$('span[name="customer_tel"]').text(datai.data.customer_tel);
+			           			$('span[name="customer_addr"]').text(datai.data.customer_addr);
+			           			$('span[name="back_time"]').text(datai.data.back_time);
+			           			if(datai.data.back_type == 1){
+			           				$('span[name="back_type"]').text('客户退车');
+			           			}else if(datai.data.back_type == 2){
+			           				$('span[name="back_type"]').text('主动收车');
+			           			}else{}
+			           			
+			           			$('span[name="extract_car_site_name"]').text(datai.data.extract_car_site_name);
+			           			$('textarea[name="back_cause"]').val(datai.data.back_cause);	
+			           			$('textarea[name="note2"]').val(datai.data.note2);
+
+			           			if(datai.data.contract_text == null || datai.data.contract_text == ''){
+			           				datai.data.contract_text = new Array();
+			           				datai.data.contract_text[0] = {};
+			           				datai.data.contract_text[0].contract_number = '';
+			           				datai.data.contract_text[0].car_ids = '';
+			           				datai.data.contract_text[0].break_contract_type = '';
+			           				datai.data.contract_text[0].contract_time = '';
+			           				datai.data.contract_text[0].break_contract_money = '';
+			           				datai.data.contract_text[0].plate_numbers = [];
+			           			}
+			           			
+			           			for(var i = 0 ; i < datai.data.contract_text.length; i++){
+			           				if(datai.data.contract_text[i].plate_numbers == null){
+			           					datai.data.contract_text[i].plate_numbers =[];
+			           				}
+			           			}
+
+			           			for(var i = 0 ; i < datai.data.contract_text.length; i++){
+			           				var ii = i+1;
+		           					var html = [];
+		           					html.push('<div class="every_contract" id="every_contract'+ii+'">');
+			           					html.push('<div class="inline two fields">');
+			           						html.push('<div class="field">');
+			           							html.push('<label>合同编号:</label>');
+			           							html.push('<span name="contract_number'+ii+'">')
+										        html.push('</span>');
+			           						html.push('</div>');
+			           						html.push('<div class="field">')
+										        html.push('<label for="fruit"><span class="c-red">*</span>合同违约情况:</label>');
+										        html.push('<span name="break_contract_type'+ii+'">');
+										        html.push('</span>');
+										    html.push('</div>');
+										html.push('</div>');    
+									    html.push('<div class="inline two fields">');
+									        html.push('<div class="field">');
+									          	html.push('<label>合同结束时间:</label>');
+									          	html.push('<span name="contract_time'+ii+'">');
+									          	html.push('</span>');
+									        html.push('</div>');
+									        html.push('<div class="field">');
+									        	html.push('<label>违约金额:</label>');
+									        	html.push('<span name="break_contract_money'+ii+'">');
+									          	html.push('</span>');
+											html.push('</div>');
+									    html.push('</div>');
+									    html.push('<div class="field">');
+									    	html.push('<label><span class="c-red">*</span>退租车辆</label>');
+									    	html.push('<table class="ui table">');
+										      	html.push('<thead>');
+										        	html.push('<tr>');
+										          		html.push('<th>车牌号</th>');
+										          		html.push('<th>车型号</th>');
+										        	html.push('</tr>');
+										      	html.push('</thead>');
+										      	html.push('<tbody>');
+										      		for(var j = 0 ; j < datai.data.contract_text[i].plate_numbers.length ; j++){
+										      			html.push('<tr>');
+										      				html.push('<td>'+datai.data.contract_text[i].plate_numbers[j].plate_number+'</td>');
+										      				html.push('<td>'+datai.data.contract_text[i].plate_numbers[j].car_model+'</td>');
+										        		html.push('</tr>');
+										      		}
+										      	html.push('</tbody>');
+										    html.push('</table>');
+										html.push('</div>');
+										html.push('<br/>');
+			           				html.push('</div>');
+
+			           				$('.json_before').before(html.join(''));
+			           				
+
+
+			           				//此处开始做数据显示
+			           				$('span[name="contract_number'+ii+'"]').text(datai.data.contract_text[i].contract_number);
+			           				$('span[name="contract_time'+ii+'"]').text(datai.data.contract_text[i].contract_time);
+			           				$('span[name="break_contract_money'+ii+'"]').text(datai.data.contract_text[i].break_contract_money+'元');
+			           				if(datai.data.contract_text[i].break_contract_type == 2){
+			           					$('span[name="break_contract_type'+ii+'"]').text('合同已到期');
+			           				}else if(datai.data.contract_text[i].break_contract_type == 1){
+			           					$('span[name="break_contract_type'+ii+'"]').text('合同未到期');
+			           				}else{}
+			           			}
+			           			/*if(datai.data.break_contract_type == 1){
+			           				$('.contract_sh').hide();
+			           				$('input[name="break_contract_type"]').eq(0).trigger("click");
+			           			}else if(datai.data.break_contract_type == 2){
+			           				$('.contract_sh').show();
+				           			$('span[name="contract_time"]').text(datai.data.contract_time);
+				           			$('span[name="break_contract_money"]').text(datai.data.break_contract_money);
+				           			$('input[name="break_contract_type"]').eq(1).trigger("click")
+			           			}
+			           			$('input[name="break_contract_type"]').change(function(){
+			           				if($('input[name="break_contract_type"]:checked').val() == 1){
+			           					$('.contract_sh').hide();
+			           				}else if($('input[name="break_contract_type"]:checked').val() == 2){
+			           					$('.contract_sh').show();
+			           				}
+			           			})
+			           			//添加车量
+			           			
+			           			if(datai.data.cars.length >= 1){
+				           			for(var i = 0; i<datai.data.cars.length; i++){
+				           				if(i != 0)add_copy('copy_parents');
+										$('span[name="car_no[]"]').eq(i).text(datai.data.cars[i].plate_number);
+				           				//当车牌照确定后自动添加车架好
+										for(j=0; j<car_list.length; j++){
+											if($('span[name="car_no[]"]').eq(i).text() == car_list[j].plate_number){
+												$('span[name="car_no[]"]').eq(i).parents('.copy_parents').find('span[name="car_model_name[]"]').text(car_list[j].car_model_name);
+											}
+										}	           				
+				           			}
+			           			}*/
+			           			//操作人和操作时间赋值
+			           			var oper_user = datai.data["oper_user"+3];
+			           			var oper_time = datai.data["oper_time"+3];
+			           			user_time(3,oper_user,oper_time);
+			           		}      		
+			   			},
+			            error: function (msg) {}
+				   	});
+				},
+	            error: function (msg) {}
+		   	});
+		})
+
+		function add3(reject){
+			$('input[name="is_reject"]').val(reject);
+			modal_close();
+			if($('input[name="is_reject"]').val() == 1){
+				a_modal_show();
+			}if($('input[name="is_reject"]').val() == 2){
+				cancel();
+			}
+			$('#form1').ajaxSubmit({
+				dataType : "json",
+				success : function(data){	
+				},
+				error: function(xhr){
+					//alert("提交失败");
+				}
+			});
+		}
+  	</script>
+</html>

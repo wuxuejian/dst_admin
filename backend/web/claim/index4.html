@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>出险理赔流程</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css" >
+	<link rel="stylesheet" type="text/css" href="css/lyz.calendar.css"  />
+</head>
+<body>
+	<div class='control-box'>
+		<div class='mainview'>
+			<div class='product product-full product-col-1 sidebar-trans'>
+				<div class='mbody'>
+					<div class='container'>
+						<div class='console-table-wapper margin-top'>
+							<div class='one-block'>
+								<div class='block-title'>
+									出险理赔流程
+								</div>
+								<div class='block-content clear'>
+									<div class='flow-nav fl'>
+										<ul id='page_nav_ul'>
+											<a href="index.html" class='have-done'><li>1、报案出险</li></a>
+											<a href="index1.html" class='have-done'><li>2、查勘结论</li></a>
+											<a href="index2.html" class='have-done'><li>3、保险定损</li></a>
+											<a href="index3.html" class='have-done'><li>4、车辆维修</li></a>
+											<a href="index4.html" class='active'><li>5、保险理赔</li></a>
+											<a href="index5.html" class='disableCss'><li>6、保险请款</li></a>
+											<a href="index6.html" class='disableCss'><li>7、转账结案</li></a>
+										</ul>
+									</div>
+									<div class='flow-container fr content10-noborder'>
+										<form id="myform">
+											<input name='id' class="hide" />
+											<input name="claim_num" class="hide">
+											<div class="block-content10 clear">
+												<div class="col-4">
+													<div class="title">理赔总额:</div>
+													<div class="content" id='lpje'></div>
+												</div>
+											</div>
+
+											<div class='save-cancel clear mg-8'>
+												<input type="button" id='save' class="btn btn-ra5 btn-normal" value="保存并下一步">
+												<input type="button" class="btn btn-ra5 btn-cannot" value="取消" onclick="cancel()">
+											</div>
+											<div id='oper' class="block-content10 clear hide" >
+												<div class="col-12">
+													<div class="title">上一次操作人员:</div>
+													<div class="content" id='oper_user5'>
+													</div>
+												</div>
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='remind'>
+		<div style='display: none;'>
+		</div>
+	</div>
+	<script type="text/javascript" src='js/jqueryv183.js'></script>
+	<script type="text/javascript" src='js/flow.js'></script>
+	<script type="text/javascript" src='js/jquery.ajaxSubmit.js'></script>
+	<script src="js/lyz.calendar.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function getQueryString(name) { 
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+			var r = window.location.search.substr(1).match(reg); 
+			if (r != null) return unescape(r[2]); return null; 
+		}
+		var page_id = getQueryString('id');
+
+		//初始跳转
+		var page_step = getQueryString('step');
+		var page_have = getQueryString('have');
+		//对左侧A标签加ID
+		ahref_add_id(page_id,page_step,page_have);
+
+
+		var insurance_length;
+		var insurance_val = [];
+		var insurance_text = [];
+		//获取保险公司列表并赋值
+		function insurance_get(){
+			$.ajax({
+	           	url:'../index.php?r=car/insurance-claim/insurance-company',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(dataget){
+	           		insurance_length = dataget.company.length;
+	           		for(i=0; i<insurance_length; i++){
+	           			insurance_val[i] = dataget.company[i].value;
+	           			insurance_text[i] = dataget.company[i].text;
+	           		}
+
+	           	//获取数据
+	           	$.ajax({
+	           	url:'../index.php?r=car/insurance-claim/get5',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(datai){
+	           		$('input[name="id"]').val(page_id);
+	           		if(datai.data.oper_user5 == 0){
+	           			$('#oper').hide();
+	           		}else{
+	           			$('#oper').show();
+	           			$('#oper_user5').text(datai.data.oper_user5);
+	           		}
+	           		$('input[name="claim_num"]').val(datai.data.responsibility_text.length);
+				    for(var i = datai.data.responsibility_text.length; i > 0 ; i--){
+				    	var data_stata = datai.data.responsibility_text[i-1].responsibility_object;
+				    	var name;
+				    	if(data_stata == 1){
+				    		name = "标的车";
+				    	}else if(data_stata == 2){
+				    		name = datai.data.responsibility_text[i-1].plate_number;
+				    	}else if(data_stata == 3){
+				    		name = datai.data.responsibility_text[i-1].object_name;
+				    	}else if(data_stata == 4){
+				    		name = datai.data.responsibility_text[i-1].full_name;
+				    	}else{}
+				    	var html = [];
+				    	html.push('<div class="bxlp-box'+i+'">');
+					    	html.push('<div class="block-content10 clear">');
+					    		html.push('<div class="col-12">');
+					    			html.push('<div class="title">'+name+'理赔</div>');
+					    		html.push('</div>');
+					    	html.push('</div>');
+					    	//新建如果这个数据不存在的时候
+					    	if(datai.data.claim_text == null){
+					    		datai.data.claim_text = new Array();
+					    		if(datai.data.claim_text[i-1] == undefined){
+						    		datai.data.claim_text[i-1] = new Array();
+						    		if(datai.data.claim_text[i-1][0] == undefined){
+							    		datai.data.claim_text[i-1][0] = {};
+							    		datai.data.claim_text[i-1][0].claim_customer = "";
+							    		datai.data.claim_text[i-1][0].claim_account = "";
+							    		datai.data.claim_text[i-1][0].claim_time = "";
+							    		datai.data.claim_text[i-1][0].claim_amount = "";
+						    		}
+						    	}
+					    	}
+					    	if(datai.data.claim_text[i-1] == undefined){
+					    		datai.data.claim_text[i-1] = new Array();
+					    		if(datai.data.claim_text[i-1][0] == undefined){
+						    		datai.data.claim_text[i-1][0] = {};
+						    		datai.data.claim_text[i-1][0].claim_customer = "";
+						    		datai.data.claim_text[i-1][0].claim_account = "";
+						    		datai.data.claim_text[i-1][0].claim_time = "";
+						    		datai.data.claim_text[i-1][0].claim_amount = "";
+					    		}
+					    	}
+					    	
+					    	
+					    	for(var m = 0; m < datai.data.claim_text[i-1].length ; m++){
+
+						    	html.push('<div class="bxlp'+i+'">');
+							    	html.push('<div class="block-content10 clear">');
+							    		html.push('<div class="col-4">');
+							    			html.push('<div class="title">保险公司</div>');
+							    			html.push('<div class="content">')
+							    				html.push('<select class="form-control col-10 must" name="insurance_company'+i+'[]">');
+							    					for(var j=0; j<insurance_length; j++){
+							    						html.push('<option value="'+insurance_val[j]+'">'+insurance_text[j]+'</option>');
+							    					}
+							    				html.push('</select>');
+											html.push('</div>');
+										html.push('</div>');
+										html.push('<div class="col-4">');
+											html.push('<div class="title">理赔类型</div>');
+											html.push('<div class="content">');
+												html.push('<select class="form-control col-10 must" name="claim_type'+i+'[]" onChange="javascript:type_change('+i+','+m+')" value="">');
+													html.push('<option value="地上铁">地上铁</option>');
+													html.push('<option value="直赔">直赔</option>');
+													html.push('<option value="转包">转包</option>');
+												html.push('</select>');
+											html.push('</div>');
+										html.push('</div>');
+										if(m != 0){
+											html.push('<div class="col-2"">');
+												html.push('<div class="btn btn-ra5 btn-cannot remove" onClick="javascript:removebxlp('+i+','+m+')">移除</div>');
+											html.push('</div>');
+										}	
+									html.push('</div>');
+									html.push('<div class="block-content10 clear hide">');
+										html.push('<div class="col-4">');
+											html.push('<div class="title">赔付对象</div>');
+											html.push('<div class="content">');
+												html.push('<input name="claim_customer'+i+'[]" class="form-control col-10" value="'+datai.data.claim_text[i-1][m].claim_customer+'">');
+											html.push('</div>');
+										html.push('</div>');
+										html.push('<div class="col-4">');
+											html.push('<div class="title">赔付账户</div>');
+											html.push('<div class="content">');
+												html.push('<input name="claim_account'+i+'[]" class="form-control col-10" value="'+datai.data.claim_text[i-1][m].claim_account+'">');
+											html.push('</div>');
+										html.push('</div>');
+									html.push('</div>');
+									html.push('<div class="block-content10 clear">');
+										html.push('<div class="col-4">');
+											
+											html.push('<div class="title">理赔时间</div>');
+											html.push('<div class="content">');
+												html.push('<input id="txtBeginDate' +i+'i'+m+ '" name="claim_time'+i+'[]" class="form-control col-10" readonly="readonly" value="'+datai.data.claim_text[i-1][m].claim_time+'">');
+											html.push('</div>');
+										html.push('</div>');
+										html.push('<div class="col-4">');
+											html.push('<div class="title"><span class="warncolor">*</span>理赔金额</div>');
+											html.push('<div class="content">'); 
+												html.push('<input name="claim_amount'+i+'[]" class="form-control col-10 lpje_menoy must" value="'+datai.data.claim_text[i-1][m].claim_amount+'" onChange="javascript:lpje_change()">');
+											html.push('</div>');
+										html.push('</div>');
+									html.push('</div>');
+								html.push('</div>');
+							}
+							html.push('<div class="btn btn-ra5 btn-normal mg-8 addtjlp'+i+'" onClick="javascript:addtjlp('+i+')">添加理赔</div>');
+						html.push('</div>');
+						$(html.join('')).prependTo('#myform');
+						lpje_change();
+						
+				    }
+
+
+				    
+				    
+				    for(var i = datai.data.responsibility_text.length; i > 0 ; i--){
+				    	for(var m = 0; m < datai.data.claim_text[i-1].length ; m++){
+				    		if(datai.data.claim_text[i-1][m].claim_type  != "地上铁"){
+				    			$('select[name="claim_type'+i+'[]"]').eq(m).find('option').eq(1).attr("selected","selected");
+				    			$('select[name="claim_type'+i+'[]"]').eq(m).parents('.bxlp'+i).find('input[name="claim_customer'+i+'[]"]').parents('.block-content10').show();
+				    		}
+				    		//
+						   	$(function () {
+						        $("#txtBeginDate" + i +'i'+ m).calendar();
+						        if($("#txtBeginDate" + i +'i'+ m).val() == ''){
+						        	var myDate = new Date();
+							        var year = myDate.getFullYear();
+							        var month = myDate.getMonth() + 1;
+							        var day = myDate.getDate();
+							        $('#txtBeginDate' + i +'i'+ m).val(year+'-'+month+'-'+day); 
+						        }
+						    });
+						}
+				    }
+	   			},
+	            error: function (msg) {}
+		   	});
+	           	
+	   			},
+	            error: function (msg) {}
+		   	});
+		}
+		insurance_get();
+
+		$(document).ready(function(){
+
+		})
+		
+		//类型转换
+		function type_change(number_i,number_m){
+			if($('select[name="claim_type'+number_i+'[]"]').eq(number_m).val() == '地上铁'){
+				$('select[name="claim_type'+number_i+'[]"]').eq(number_m).parents('.bxlp'+number_i).find('input[name="claim_customer'+number_i+'[]"]').parents('.block-content10').hide();
+			}else if($('select[name="claim_type'+number_i+'[]"]').eq(number_m).val() == '转包' || $('select[name="claim_type'+number_i+'[]"]').eq(number_m).val() == '直赔'){
+				$('select[name="claim_type'+number_i+'[]"]').eq(number_m).parents('.bxlp'+number_i).find('input[name="claim_customer'+number_i+'[]"]').parents('.block-content10').show();
+			}
+		}
+		//添加记录
+		function addtjlp(number_i){
+			var m = $('select[name="claim_type'+number_i+'[]"]').length;
+			var html = [];
+			html.push('<div class="bxlp'+number_i+'">');
+		    	html.push('<div class="block-content10 clear">');
+		    		html.push('<div class="col-4">');
+		    			html.push('<div class="title">保险公司</div>');
+		    			html.push('<div class="content">')
+		    				html.push('<select class="form-control col-10 must" name="insurance_company'+number_i+'[]">');
+		    					for(j=0; j<insurance_length; j++){
+		    						html.push('<option value="'+insurance_val[j]+'">'+insurance_text[j]+'</option>');
+		    					}
+		    				html.push('</select>');
+						html.push('</div>');
+					html.push('</div>');
+					html.push('<div class="col-4">');
+						html.push('<div class="title">理赔类型</div>');
+						html.push('<div class="content">');
+							html.push('<select class="form-control col-10 must" name="claim_type'+number_i+'[]" onChange="javascript:type_change('+number_i+','+m+')">');
+								html.push('<option value="地上铁">地上铁</option>');
+								html.push('<option value="直赔">直赔</option>');
+								html.push('<option value="转包">转包</option>');
+							html.push('</select>');
+						html.push('</div>');
+					html.push('</div>');
+					html.push('<div class="col-2">');
+						html.push('<div class="btn btn-ra5 btn-cannot remove" onClick="javascript:removebxlp('+number_i+','+m+')">移除</div>');
+					html.push('</div>');	
+				html.push('</div>');
+				html.push('<div class="block-content10 clear hide">');
+					html.push('<div class="col-4">');
+						html.push('<div class="title">赔付对象</div>');
+						html.push('<div class="content">');
+							html.push('<input name="claim_customer'+number_i+'[]" class="form-control col-10">');
+						html.push('</div>');
+					html.push('</div>');
+					html.push('<div class="col-4">');
+						html.push('<div class="title">赔付账户</div>');
+						html.push('<div class="content">');
+							html.push('<input name="claim_account'+number_i+'[]" class="form-control col-10">');
+						html.push('</div>');
+					html.push('</div>');
+				html.push('</div>');
+				html.push('<div class="block-content10 clear">');
+					html.push('<div class="col-4">');
+						html.push('<div class="title">理赔时间</div>');
+						html.push('<div class="content">');
+							html.push('<input id="txtBeginDate' +number_i+'i'+m+ '" name="claim_time'+number_i+'[]" class="form-control col-10" readonly="readonly">');
+						html.push('</div>');
+					html.push('</div>');
+					html.push('<div class="col-4">');
+						html.push('<div class="title"><span class="warncolor">*</span>理赔金额</div>');
+						html.push('<div class="content">');
+							html.push('<input name="claim_amount'+number_i+'[]" class="form-control col-10 lpje_menoy must" onChange="javascript:lpje_change()">');
+						html.push('</div>');
+					html.push('</div>');
+				html.push('</div>');
+			html.push('</div>');
+			$('.addtjlp'+number_i).before(html.join(''));
+
+		   	$(function () {
+		        $("#txtBeginDate" + number_i +'i'+ m).calendar();
+		    });
+				
+		}
+
+		$('#save').on('click', function() {
+			$('.warn').detach();
+			$('.must').each(function(){
+				if($(this).val() == ''){
+					$(this).after('<div class="warn">请填写完整内容</div>');
+				}
+			});
+			$('.must').keyup(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			$('.must').change(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			$('.must').mouseover(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			if($('.warn').length){
+				return false;
+			}
+	        $("#myform").ajaxSubmit({
+	            type: 'post', // 提交方式 get/post
+	            url: '../index.php?r=car/insurance-claim/add5', // 需要提交的 url
+	            dataType: "json",
+	            success: function(data) {
+	            	window.location.href="index5.html?id="+page_id+"&step="+page_step+"&have=1";
+	            },
+	            error: function (msg) {
+	            }
+	        });   	     
+		});
+		function removebxlp(i_num,m_num){
+			$('.bxlp'+i_num).eq(m_num).detach();
+			lpje_change();
+		}
+		function lpje_change(){
+			var amount = 0;
+			for(var i = 0 ; i < $('.lpje_menoy').length ; i++ ){
+				var amount_i = 0;
+				if($('.lpje_menoy').eq(i).val() != ''){
+					amount_i = $('.lpje_menoy').eq(i).val();
+				}
+				amount += parseFloat(amount_i);
+			}
+			$('#lpje').text(amount + '元');
+		}
+	</script>
+</body>
+</html>

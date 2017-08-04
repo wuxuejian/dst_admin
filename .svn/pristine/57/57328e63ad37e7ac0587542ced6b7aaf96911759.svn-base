@@ -1,0 +1,33 @@
+html,body{height: 100%;}
+body{font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei"; font-size:12px; color: #666; line-height: 1.428571429;  background-color: #fff; margin: 0; padding: 0;}
+a{cursor: pointer; text-decoration:none; color: #666;}
+*{padding:0px; margin:0px; }
+input, button, select{outline: none;}
+ul{list-style: none;}
+.clear:before,
+.clear:after {display: table;content: " ";}
+.clear:after {clear: both;}
+
+.cantainer{min-width: 1030px; position: relative; z-index: 20; height: 100%;}
+.login-top-bg{height:6px; background:url(../images/login-top.png) no-repeat scroll center top #d6eff9;}
+.header-wp{border-bottom: 2px solid #f2f2f2;min-width: 960px; background: #fff;}
+.header{height: 60px; width: 960px; margin:0 auto; padding: 20px 0 0 0 ;}
+.login-logo{width: 164px; height: 36px; float: left; background: url(../images/login-logo.png);}
+
+.login-watchword{font-size: 20px; padding-top: 10px; color: #89c340; float: right; font-style:italic;}
+.warp{height: 100%; width: 960px; background: #000;}
+.footer{position: absolute; width: 100%; min-width: 1030px; height: 600px; bottom: 0; background: url(../images/login-bg.png) no-repeat scroll center bottom;}
+.footer .yewei{position: absolute;width: 100%;bottom:10px; text-align: center; color:#fff; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
+.footer .yewei a{color:#fff;}
+.fontsize24{font-size: 24px;}
+.login-box{width: 960px; margin:0 auto; height: 80%; position: relative;}
+.login-bg-text{position:absolute; left: 20px; top:12%; margin-top: 100px; color:#f49910; font-size: 32px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
+.login-windows{position:absolute; right: 70px; top:12%; padding: 30px; border-radius: 6px; background: #fff; box-shadow: 0px 2px 10px #aaa;}
+.login-windows h5{font-size: 20px; text-align: center; font-weight: normal; margin-bottom: 10px;}
+.login-windows div{margin-bottom: 15px; position: relative;}
+.login-windows input{padding: 0 10px; height: 32px; line-height: 32px; width: 200px; border:1px solid #ddd;}
+.login-windows .checkimg{margin-bottom: 15px; position: absolute; right: 0px; top:1px; height: 32px;}
+.login-windows .checkimg img{height: 32px;}
+.login-windows .login-btn{width: 220px; padding: 0 10px; height: 32px; line-height: 32px; text-align: center; color: #fff; background:#89c340; border-radius: 6px; border:1px solid #89c340;}
+.login-windows .login-btn:hover{background: #7bb82d;}
+.login-windows .remen {width: 16px; height:16px; margin-right: 10px; padding: 0px; vertical-align: middle;}

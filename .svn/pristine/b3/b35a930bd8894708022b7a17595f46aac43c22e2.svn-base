@@ -1,0 +1,99 @@
+/*自适应宽度的form表单格式*/
+.ulforform-resizeable{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    overflow: hidden;
+}
+.ulforform-resizeable .ulforform-resizeable-group{
+    float: left;
+    width: 310px;
+    overflow: hidden;
+}
+.ulforform-resizeable .ulforform-resizeable-group .ulforform-resizeable-title{
+    float: left;
+    width: 85px;
+    text-align: right;
+    height: 25px;
+    line-height: 25px;
+    padding: 5px;
+}
+.ulforform-resizeable .ulforform-resizeable-group .ulforform-resizeable-input{
+    float: left;
+    width: 200px;
+    text-align: left;
+    padding: 5px;
+    height: 25px;
+}
+/*单行*/
+.ulforform-resizeable .ulforform-resizeable-group-single{
+    float: left;
+    width: 100%;
+    overflow: hidden;
+}
+.ulforform-resizeable .ulforform-resizeable-group-single .ulforform-resizeable-title{
+    float: left;
+    width: 85px;
+    text-align: right;
+    line-height: 25px;
+    padding: 5px;
+}
+.ulforform-resizeable .ulforform-resizeable-group-single .ulforform-resizeable-input{
+    float: left;
+    text-align: left;
+    padding: 5px;
+}
+.img{
+    background-image: url(../images/logo1.png);
+    background-repeat: no-repeat;
+    height: 50px;
+    width: 225px;
+    float: left;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.right{
+    width: 100px;
+    height: 50px;
+    float: right;
+    margin-right: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+.right a{
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    background-color: #5AB6DF;
+    color: #fff;
+    font-family: "Open Sans",sans-serif;
+    text-decoration: none;
+    margin-top: 20px;
+    line-height: 30px;
+    font-size: 13pt;
+    font-weight: 700;
+    border-radius: 5px;
+}
+
+
+.main{
+    margin-left: 10px;
+    margin-top: 20px;
+    width: 600px;
+    height: 40px;
+    text-align: left;
+    color: #5AB5DE;
+    font-family: "Open Sans",sans-serif;
+    font-size: 16pt;
+    font-weight: 700;
+}
+.footer{
+    width: 300px;
+    margin:0 auto;
+    height: 16px;
+}
+.footer p{
+    font-size: 10pt;
+    line-height: 16px;
+    font-family: 'arial',sans-serif;
+}

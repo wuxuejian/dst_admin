@@ -1,0 +1,494 @@
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-01','','','','','','','','','','','','','','','0.38|6.78|11','','','','','','','','','','','','','','','','','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '0.38|6.78|11' WHERE  `year_month` = '2016-01'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-02','','0.35|5.91|7','0.65|9.75|3','0.00|0.10|1','','','','','','','','','','','0.11|2.10|11','','9.37|16.49|7','10.46|18.60|15','9.55|14.71|7','','','','','','','','','','23.31|39.56|14','','','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '53.8|107.22|65' WHERE  `year_month` = '2016-02'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-03','5.99|34.70|5','','','','','','','','','0.82|1.27|1','','','','6.47|11.20|4','10.50|16.25|1','33.90|60.20|19','64.97|104.38|10','0.27|3.51|2','55.53|83.55|2','2.02|5.00|3','4.50|6.75|1','17.80|60.81|3','','75.70|111.20|11','40.05|60.06|3','54.11|79.41|5','53.81|80.00|3','91.82|135.67|9','228.01|339.42|20','283.77|424.41|25','159.21|228.23|32','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '1189.25|1846.02|159' WHERE  `year_month` = '2016-03'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-04','154.71|207.61|21','88.38|130.33|7','137.26|176.26|6','45.25|67.32|3','155.00|225.12|31','439.57|631.91|43','399.89|584.40|38','731.14|1074.94|69','576.01|840.01|42','533.30|804.26|41','566.68|827.05|42','341.61|512.26|28','568.98|834.71|46','574.08|853.21|43','475.61|707.38|38','773.45|1281.93|59','724.08|1076.97|48','775.48|1431.17|60','1090.80|1629.99|85','656.66|984.30|55','762.98|1240.13|50','846.29|1806.59|56','662.89|2748.29|48','898.79|1400.20|70','803.41|1966.32|66','811.32|1212.82|56','828.65|1234.00|60','615.36|920.51|40','728.82|1088.43|49','664.59|988.96|43','','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '17431.04|29487.38|1343' WHERE  `year_month` = '2016-04'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-05','666.73|995.31|44','1089.53|1626.45|63','767.62|1146.43|56','844.62|1263.54|50','908.09|1438.05|50','868.43|1748.54|68','694.14|1040.53|51','776.80|1164.69|55','941.47|1453.41|70','809.23|1254.20|65','1000.32|1913.97|70','978.99|1465.30|74','1117.79|2069.38|86','1129.20|1687.30|75','1172.96|1752.32|85','1125.74|2028.28|77','1217.23|1816.98|72','815.99|1288.54|59','827.21|1234.84|68','900.91|2795.46|58','1103.54|3355.75|91','1053.51|1593.28|82','725.46|1050.66|59','','','','','','','','','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '21535.51|37183.21|1528' WHERE  `year_month` = '2016-05'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2015-08','','','','','','','','','','','','','','','','','','','','','','','','','','','','59.55|59.47|11','14.89|14.86|3','','110818.61|0.85|3','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '110893.05|75.18|17' WHERE  `year_month` = '2015-08'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2015-09','0.00|0.00|0','0.00|0.40|4','','','','0.00|0.00|0','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '0|0.4|4' WHERE  `year_month` = '2015-09'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2015-12','','','','','','','','','','','','','','','','','','','','','','','','0.21|2.09|4','18.73|126.88|15','29.72|98.20|7','8.33|129.10|5','31.97|98.86|49','58.10|170.85|50','51.92|178.98|13','39.98|220.38|13','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '238.96|1025.34|156' WHERE  `year_month` = '2015-12'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-01','3.47|53.61|5','','','38.95|216.19|9','50.76|239.89|36','40.95|100.57|28','91.43|124.92|11','37.09|127.69|27','62.12|104.48|9','25.59|101.02|5','112.62|260.71|19','121.59|324.58|22','236.80|718.13|56','255.57|786.08|29','215.67|653.02|70','118.77|382.55|15','93.40|461.73|22','194.70|496.07|32','191.96|615.15|39','152.50|571.50|31','199.05|657.62|38','184.83|732.38|33','33.85|691.12|28','27.16|672.77|28','212.40|900.16|60','285.29|834.89|41','312.55|1198.57|69','217.28|867.40|42','159.00|926.78|50','134.66|744.38|30','214.41|767.94|34','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '4024.42|15331.9|918' WHERE  `year_month` = '2016-01'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-02','233.13|825.67|46','225.80|766.80|64','455.43|755.29|63','454.21|721.03|41','373.16|575.35|25','233.32|394.07|16','131.51|206.33|7','74.02|111.00|4','181.76|301.01|11','192.12|288.09|13','56.16|135.25|6','61.36|91.42|5','85.88|127.85|11','135.11|200.37|8','241.91|452.93|27','68.06|205.40|27','178.61|319.33|25','153.60|367.75|34','527.49|902.43|62','658.75|1010.32|54','613.13|887.65|40','659.99|958.40|67','1182.46|1655.42|84','856.48|1390.93|91','1255.20|1844.45|115','1162.53|1621.84|115','981.35|1465.01|70','827.67|1312.53|56','1004.39|1558.83|84','','','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '13264.59|21452.75|1271' WHERE  `year_month` = '2016-02'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-03','1056.24|1433.69|89','1934.60|2326.75|91','1236.84|2256.89|95','1409.40|2016.05|101','1370.05|1871.01|98','1449.83|1993.19|93','1735.29|2169.90|123','1881.43|2456.09|117','2284.34|2990.14|132','2540.55|3359.85|142','1196.38|1973.73|68','635.98|1039.84|55','776.22|1233.07|44','2847.89|4126.75|171','2836.99|3875.29|177','3113.34|3838.99|201','2868.94|4165.54|159','3276.98|3813.38|186','3009.69|3464.17|150','2471.44|2763.37|125','2667.17|3045.62|148','3080.00|3238.77|146','3033.38|3458.24|152','3055.50|3273.81|177','2949.84|3566.84|155','2350.85|2437.51|110','2543.41|2545.51|121','2371.09|2458.61|124','3184.57|3344.67|164','3084.63|2895.34|148','1834.06|1929.71|88','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '70086.92|85362.32|3950' WHERE  `year_month` = '2016-03'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-04','615.94|687.85|55','780.78|770.12|46','645.89|573.25|27','590.18|526.30|26','610.91|633.77|50','1295.88|1279.62|84','3803.10|2886.36|126','2515.54|2303.87|120','2566.88|2241.46|107','1949.12|1470.27|89','2099.00|1893.91|131','2018.12|1825.82|99','2012.20|1846.18|98','2050.84|1756.10|113','2256.01|1807.60|98','2144.53|1673.94|82','1781.70|1479.60|83','1704.28|1393.93|98','2267.69|1922.39|102','2252.10|1868.69|102','2306.90|1739.07|113','2498.98|49476.93|108','2406.46|1856.83|121','2267.48|1629.22|113','2002.96|1696.08|105','2651.19|2264.24|124','2948.90|2538.98|134','2730.47|2180.69|149','2667.05|2547.31|132','1964.41|1896.77|81','','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '60405.49|98667.15|2916' WHERE  `year_month` = '2016-04'
+2016-05-23 17:10:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-05','1311.09|1686.10|56','785.11|856.85|43','1462.37|1712.10|76','1542.64|2037.37|74','1793.87|2187.70|88','1658.84|2210.34|98','1404.84|1837.76|62','1318.93|1618.78|57','1793.07|2188.77|92','1778.36|2419.24|77','2177.02|2868.06|104','2128.26|3162.53|103','4869.23|2802.61|233','4576.35|3007.47|223','3372.47|1967.12|140','3379.30|2556.75|176','4506.22|3018.97|226','4509.20|2780.53|247','4974.24|3563.76|228','11638.11|3034.24|215','4262.73|2708.99|187','3724.57|2059.59|179','2941.75|1966.03|153','','','','','','','','','') 
+2016-05-23 17:10:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '71908.57|54251.66|3137' WHERE  `year_month` = '2016-05'
+2016-05-23 17:10:01 Complete statistics.
+2016-05-23 17:20:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-01','','','','','','','','','','','','','','','0.38|6.78|11','','','','','','','','','','','','','','','','','') 
+2016-05-23 17:20:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '0.38|6.78|11' WHERE  `year_month` = '2016-01'
+2016-05-23 17:20:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-02','','0.35|5.91|7','0.65|9.75|3','0.00|0.10|1','','','','','','','','','','','0.11|2.10|11','','9.37|16.49|7','10.46|18.60|15','9.55|14.71|7','','','','','','','','','','23.31|39.56|14','','','') 
+2016-05-23 17:20:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '53.8|107.22|65' WHERE  `year_month` = '2016-02'
+2016-05-23 17:20:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-03','5.99|34.70|5','','','','','','','','','0.82|1.27|1','','','','6.47|11.20|4','10.50|16.25|1','33.90|60.20|19','64.97|104.38|10','0.27|3.51|2','55.53|83.55|2','2.02|5.00|3','4.50|6.75|1','17.80|60.81|3','','75.70|111.20|11','40.05|60.06|3','54.11|79.41|5','53.81|80.00|3','91.82|135.67|9','228.01|339.42|20','283.77|424.41|25','159.21|228.23|32','') 
+2016-05-23 17:20:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '1189.25|1846.02|159' WHERE  `year_month` = '2016-03'
+2016-05-23 17:20:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-04','154.71|207.61|21','88.38|130.33|7','137.26|176.26|6','45.25|67.32|3','155.00|225.12|31','439.57|631.91|43','399.89|584.40|38','731.14|1074.94|69','576.01|840.01|42','533.30|804.26|41','566.68|827.05|42','341.61|512.26|28','568.98|834.71|46','574.08|853.21|43','475.61|707.38|38','773.45|1281.93|59','724.08|1076.97|48','775.48|1431.17|60','1090.80|1629.99|85','656.66|984.30|55','762.98|1240.13|50','846.29|1806.59|56','662.89|2748.29|48','898.79|1400.20|70','803.41|1966.32|66','811.32|1212.82|56','828.65|1234.00|60','615.36|920.51|40','728.82|1088.43|49','664.59|988.96|43','','') 
+2016-05-23 17:20:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '17431.04|29487.38|1343' WHERE  `year_month` = '2016-04'
+2016-05-23 17:20:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-05','666.73|995.31|44','1089.53|1626.45|63','767.62|1146.43|56','844.62|1263.54|50','908.09|1438.05|50','868.43|1748.54|68','694.14|1040.53|51','776.80|1164.69|55','941.47|1453.41|70','809.23|1254.20|65','1000.32|1913.97|70','978.99|1465.30|74','1117.79|2069.38|86','1129.20|1687.30|75','1172.96|1752.32|85','1125.74|2028.28|77','1217.23|1816.98|72','815.99|1288.54|59','827.21|1234.84|68','900.91|2795.46|58','1103.54|3355.75|91','1053.51|1593.28|82','733.17|1061.45|60','','','','','','','','','') 
+2016-05-23 17:20:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '21543.22|37194|1529' WHERE  `year_month` = '2016-05'
+2016-05-23 17:20:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2015-08','','','','','','','','','','','','','','','','','','','','','','','','','','','','59.55|59.47|11','14.89|14.86|3','','110818.61|0.85|3','') 
+2016-05-23 17:20:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '110893.05|75.18|17' WHERE  `year_month` = '2015-08'
+2016-05-23 17:20:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2015-09','0.00|0.00|0','0.00|0.40|4','','','','0.00|0.00|0','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-05-23 17:20:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '0|0.4|4' WHERE  `year_month` = '2015-09'
+2016-05-23 17:20:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2015-12','','','','','','','','','','','','','','','','','','','','','','','','0.21|2.09|4','18.73|126.88|15','29.72|98.20|7','8.33|129.10|5','31.97|98.86|49','58.10|170.85|50','51.92|178.98|13','39.98|220.38|13','') 
+2016-05-23 17:20:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '238.96|1025.34|156' WHERE  `year_month` = '2015-12'
+2016-05-23 17:20:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-01','3.47|53.61|5','','','38.95|216.19|9','50.76|239.89|36','40.95|100.57|28','91.43|124.92|11','37.09|127.69|27','62.12|104.48|9','25.59|101.02|5','112.62|260.71|19','121.59|324.58|22','236.80|718.13|56','255.57|786.08|29','215.67|653.02|70','118.77|382.55|15','93.40|461.73|22','194.70|496.07|32','191.96|615.15|39','152.50|571.50|31','199.05|657.62|38','184.83|732.38|33','33.85|691.12|28','27.16|672.77|28','212.40|900.16|60','285.29|834.89|41','312.55|1198.57|69','217.28|867.40|42','159.00|926.78|50','134.66|744.38|30','214.41|767.94|34','') 
+2016-05-23 17:20:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '4024.42|15331.9|918' WHERE  `year_month` = '2016-01'
+2016-05-23 17:20:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-02','233.13|825.67|46','225.80|766.80|64','455.43|755.29|63','454.21|721.03|41','373.16|575.35|25','233.32|394.07|16','131.51|206.33|7','74.02|111.00|4','181.76|301.01|11','192.12|288.09|13','56.16|135.25|6','61.36|91.42|5','85.88|127.85|11','135.11|200.37|8','241.91|452.93|27','68.06|205.40|27','178.61|319.33|25','153.60|367.75|34','527.49|902.43|62','658.75|1010.32|54','613.13|887.65|40','659.99|958.40|67','1182.46|1655.42|84','856.48|1390.93|91','1255.20|1844.45|115','1162.53|1621.84|115','981.35|1465.01|70','827.67|1312.53|56','1004.39|1558.83|84','','','') 
+2016-05-23 17:20:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '13264.59|21452.75|1271' WHERE  `year_month` = '2016-02'
+2016-05-23 17:20:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-03','1056.24|1433.69|89','1934.60|2326.75|91','1236.84|2256.89|95','1409.40|2016.05|101','1370.05|1871.01|98','1449.83|1993.19|93','1735.29|2169.90|123','1881.43|2456.09|117','2284.34|2990.14|132','2540.55|3359.85|142','1196.38|1973.73|68','635.98|1039.84|55','776.22|1233.07|44','2847.89|4126.75|171','2836.99|3875.29|177','3113.34|3838.99|201','2868.94|4165.54|159','3276.98|3813.38|186','3009.69|3464.17|150','2471.44|2763.37|125','2667.17|3045.62|148','3080.00|3238.77|146','3033.38|3458.24|152','3055.50|3273.81|177','2949.84|3566.84|155','2350.85|2437.51|110','2543.41|2545.51|121','2371.09|2458.61|124','3184.57|3344.67|164','3084.63|2895.34|148','1834.06|1929.71|88','') 
+2016-05-23 17:20:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '70086.92|85362.32|3950' WHERE  `year_month` = '2016-03'
+2016-05-23 17:20:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-04','615.94|687.85|55','780.78|770.12|46','645.89|573.25|27','590.18|526.30|26','610.91|633.77|50','1295.88|1279.62|84','3803.10|2886.36|126','2515.54|2303.87|120','2566.88|2241.46|107','1949.12|1470.27|89','2099.00|1893.91|131','2018.12|1825.82|99','2012.20|1846.18|98','2050.84|1756.10|113','2256.01|1807.60|98','2144.53|1673.94|82','1781.70|1479.60|83','1704.28|1393.93|98','2267.69|1922.39|102','2252.10|1868.69|102','2306.90|1739.07|113','2498.98|49476.93|108','2406.46|1856.83|121','2267.48|1629.22|113','2002.96|1696.08|105','2651.19|2264.24|124','2948.90|2538.98|134','2730.47|2180.69|149','2667.05|2547.31|132','1964.41|1896.77|81','','') 
+2016-05-23 17:20:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '60405.49|98667.15|2916' WHERE  `year_month` = '2016-04'
+2016-05-23 17:20:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-05','1311.09|1686.10|56','785.11|856.85|43','1462.37|1712.10|76','1542.64|2037.37|74','1793.87|2187.70|88','1658.84|2210.34|98','1404.84|1837.76|62','1318.93|1618.78|57','1793.07|2188.77|92','1778.36|2419.24|77','2177.02|2868.06|104','2128.26|3162.53|103','4869.23|2802.61|233','4576.35|3007.47|223','3372.47|1967.12|140','3379.30|2556.75|176','4506.22|3018.97|226','4509.20|2780.53|247','4974.24|3563.76|228','11638.11|3034.24|215','4262.73|2708.99|187','3724.57|2059.59|179','2941.75|1966.03|153','','','','','','','','','') 
+2016-05-23 17:20:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '71908.57|54251.66|3137' WHERE  `year_month` = '2016-05'
+2016-05-23 17:20:02 Complete statistics.
+2016-05-23 17:55:01 UPDATE `cs_report_charge_statistics_app` SET `day_22` = '1053.51|1593.28|82' ,`day_23` = '800.41|1192.97|65'  WHERE `year_month` = '2016-05' 
+2016-05-23 17:55:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '21610.46|37325.52|1534' WHERE  `year_month` = '2016-05'
+2016-05-23 17:55:01 UPDATE `cs_report_charge_statistics_card` SET `day_22` = '3724.57|2059.59|179' ,`day_23` = '3010.73|2021.90|156'  WHERE `year_month` = '2016-05' 
+2016-05-23 17:55:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '71977.55|54307.53|3140' WHERE  `year_month` = '2016-05'
+2016-05-23 17:55:01 Complete statistics.
+2016-05-24 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_23` = '1130.68|1707.89|84'  WHERE `year_month` = '2016-05' 
+2016-05-24 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '21940.73|37840.44|1553' WHERE  `year_month` = '2016-05'
+2016-05-24 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_23` = '3720.24|2420.94|192'  WHERE `year_month` = '2016-05' 
+2016-05-24 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '72687.06|54706.57|3176' WHERE  `year_month` = '2016-05'
+2016-05-24 00:00:01 Complete statistics.
+2016-05-25 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_24` = '1302.30|3728.45|77'  WHERE `year_month` = '2016-05' 
+2016-05-25 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '23243.03|41568.89|1630' WHERE  `year_month` = '2016-05'
+2016-05-25 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_24` = '4882.36|2918.49|275'  WHERE `year_month` = '2016-05' 
+2016-05-25 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '77569.42|57625.06|3451' WHERE  `year_month` = '2016-05'
+2016-05-25 00:00:01 Complete statistics.
+2016-05-26 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_25` = '1134.57|1749.04|88'  WHERE `year_month` = '2016-05' 
+2016-05-26 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '24377.6|43317.93|1718' WHERE  `year_month` = '2016-05'
+2016-05-26 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_25` = '4553.79|2813.01|230'  WHERE `year_month` = '2016-05' 
+2016-05-26 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '82123.21|60438.07|3681' WHERE  `year_month` = '2016-05'
+2016-05-26 00:00:02 Complete statistics.
+2016-05-27 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_26` = '1238.00|1883.64|80'  WHERE `year_month` = '2016-05' 
+2016-05-27 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '25615.6|45201.57|1798' WHERE  `year_month` = '2016-05'
+2016-05-27 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_26` = '6430.37|4506.12|241'  WHERE `year_month` = '2016-05' 
+2016-05-27 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '88553.58|64944.19|3922' WHERE  `year_month` = '2016-05'
+2016-05-27 00:00:02 Complete statistics.
+2016-05-28 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_27` = '1476.12|2222.53|108'  WHERE `year_month` = '2016-05' 
+2016-05-28 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '27091.72|47424.1|1906' WHERE  `year_month` = '2016-05'
+2016-05-28 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_27` = '4827.44|2729.69|244'  WHERE `year_month` = '2016-05' 
+2016-05-28 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '93381.02|67673.88|4166' WHERE  `year_month` = '2016-05'
+2016-05-28 00:00:01 Complete statistics.
+2016-05-29 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_28` = '1513.64|3263.57|103'  WHERE `year_month` = '2016-05' 
+2016-05-29 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '28605.36|50687.67|2009' WHERE  `year_month` = '2016-05'
+2016-05-29 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_28` = '4521.32|2653.91|188'  WHERE `year_month` = '2016-05' 
+2016-05-29 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '97902.34|70327.79|4354' WHERE  `year_month` = '2016-05'
+2016-05-29 00:00:02 Complete statistics.
+2016-05-30 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_29` = '1364.11|2052.54|83'  WHERE `year_month` = '2016-05' 
+2016-05-30 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '29969.47|52740.21|2092' WHERE  `year_month` = '2016-05'
+2016-05-30 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_29` = '4054.94|2129.07|164'  WHERE `year_month` = '2016-05' 
+2016-05-30 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '101957.28|72456.86|4518' WHERE  `year_month` = '2016-05'
+2016-05-30 00:00:01 Complete statistics.
+2016-05-31 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_30` = '1655.26|2466.70|106'  WHERE `year_month` = '2016-05' 
+2016-05-31 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '31624.73|55206.91|2198' WHERE  `year_month` = '2016-05'
+2016-05-31 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_30` = '10188.62|2666.49|193'  WHERE `year_month` = '2016-05' 
+2016-05-31 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '112145.9|75123.35|4711' WHERE  `year_month` = '2016-05'
+2016-05-31 00:00:01 Complete statistics.
+2016-06-01 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_31` = '1347.06|2078.31|96'  WHERE `year_month` = '2016-05' 
+2016-06-01 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '32971.79|57285.22|2294' WHERE  `year_month` = '2016-05'
+2016-06-01 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_31` = '6017.02|4526.64|267'  WHERE `year_month` = '2016-05' 
+2016-06-01 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '118162.92|79649.99|4978' WHERE  `year_month` = '2016-05'
+2016-06-01 00:00:01 Complete statistics.
+2016-06-02 00:00:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-06','1522.19|2276.02|93','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-06-02 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '1522.19|2276.02|93' WHERE  `year_month` = '2016-06'
+2016-06-02 00:00:01 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-06','6126.84|4485.28|285','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-06-02 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '6126.84|4485.28|285' WHERE  `year_month` = '2016-06'
+2016-06-02 00:00:01 Complete statistics.
+2016-06-03 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_02` = '1578.45|2350.25|114'  WHERE `year_month` = '2016-06' 
+2016-06-03 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '3100.64|4626.27|207' WHERE  `year_month` = '2016-06'
+2016-06-03 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_02` = '4028.28|4829.22|182'  WHERE `year_month` = '2016-06' 
+2016-06-03 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '10155.12|9314.5|467' WHERE  `year_month` = '2016-06'
+2016-06-03 00:00:01 Complete statistics.
+2016-06-04 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_03` = '1714.20|2806.05|110'  WHERE `year_month` = '2016-06' 
+2016-06-04 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '4814.84|7432.32|317' WHERE  `year_month` = '2016-06'
+2016-06-04 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_03` = '3851.20|5008.73|179'  WHERE `year_month` = '2016-06' 
+2016-06-04 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '14006.32|14323.23|646' WHERE  `year_month` = '2016-06'
+2016-06-04 00:00:02 Complete statistics.
+2016-06-05 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_04` = '1863.39|3536.84|122'  WHERE `year_month` = '2016-06' 
+2016-06-05 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '6678.23|10969.16|439' WHERE  `year_month` = '2016-06'
+2016-06-05 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_04` = '3406.39|5336.28|148'  WHERE `year_month` = '2016-06' 
+2016-06-05 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '17412.71|19659.51|794' WHERE  `year_month` = '2016-06'
+2016-06-05 00:00:02 Complete statistics.
+2016-06-06 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_05` = '1632.05|2448.88|87'  WHERE `year_month` = '2016-06' 
+2016-06-06 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '8310.28|13418.04|526' WHERE  `year_month` = '2016-06'
+2016-06-06 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_05` = '2183.46|3026.43|92'  WHERE `year_month` = '2016-06' 
+2016-06-06 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '19596.17|22685.94|886' WHERE  `year_month` = '2016-06'
+2016-06-06 00:00:02 Complete statistics.
+2016-06-07 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_06` = '1304.49|1948.26|90'  WHERE `year_month` = '2016-06' 
+2016-06-07 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '9614.77|15366.3|616' WHERE  `year_month` = '2016-06'
+2016-06-07 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_06` = '2531.85|3423.02|122'  WHERE `year_month` = '2016-06' 
+2016-06-07 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '22128.02|26108.96|1008' WHERE  `year_month` = '2016-06'
+2016-06-07 00:00:02 Complete statistics.
+2016-06-08 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_07` = '1388.12|2114.30|91'  WHERE `year_month` = '2016-06' 
+2016-06-08 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '11002.89|17480.6|707' WHERE  `year_month` = '2016-06'
+2016-06-08 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_07` = '3187.36|4288.23|121'  WHERE `year_month` = '2016-06' 
+2016-06-08 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '25315.38|30397.19|1129' WHERE  `year_month` = '2016-06'
+2016-06-08 00:00:02 Complete statistics.
+2016-06-09 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_08` = '1283.98|1913.19|90'  WHERE `year_month` = '2016-06' 
+2016-06-09 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '12286.87|19393.79|797' WHERE  `year_month` = '2016-06'
+2016-06-09 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_08` = '3202.73|4369.77|134'  WHERE `year_month` = '2016-06' 
+2016-06-09 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '28518.11|34766.96|1263' WHERE  `year_month` = '2016-06'
+2016-06-09 00:00:01 Complete statistics.
+2016-06-10 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_09` = '1450.71|2181.66|101'  WHERE `year_month` = '2016-06' 
+2016-06-10 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '13737.58|21575.45|898' WHERE  `year_month` = '2016-06'
+2016-06-10 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_09` = '2700.59|3693.79|104'  WHERE `year_month` = '2016-06' 
+2016-06-10 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '31218.7|38460.75|1367' WHERE  `year_month` = '2016-06'
+2016-06-10 00:00:01 Complete statistics.
+2016-06-11 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_10` = '1347.09|2060.10|106'  WHERE `year_month` = '2016-06' 
+2016-06-11 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '15084.67|23635.55|1004' WHERE  `year_month` = '2016-06'
+2016-06-11 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_10` = '1998.61|2663.42|85'  WHERE `year_month` = '2016-06' 
+2016-06-11 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '33217.31|41124.17|1452' WHERE  `year_month` = '2016-06'
+2016-06-11 00:00:02 Complete statistics.
+2016-06-12 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_11` = '1108.54|1673.12|82'  WHERE `year_month` = '2016-06' 
+2016-06-12 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '16193.21|25308.67|1086' WHERE  `year_month` = '2016-06'
+2016-06-12 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_11` = '1667.00|2274.25|71'  WHERE `year_month` = '2016-06' 
+2016-06-12 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '34884.31|43398.42|1523' WHERE  `year_month` = '2016-06'
+2016-06-12 00:00:02 Complete statistics.
+2016-06-13 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_12` = '1676.45|3618.39|135'  WHERE `year_month` = '2016-06' 
+2016-06-13 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '17869.66|28927.06|1221' WHERE  `year_month` = '2016-06'
+2016-06-13 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_12` = '2721.57|3285.46|125'  WHERE `year_month` = '2016-06' 
+2016-06-13 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '37605.88|46683.88|1648' WHERE  `year_month` = '2016-06'
+2016-06-13 00:00:01 Complete statistics.
+2016-06-14 00:00:03 UPDATE `cs_report_charge_statistics_app` SET `day_13` = '1633.61|3323.59|110'  WHERE `year_month` = '2016-06' 
+2016-06-14 00:00:03 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '19503.27|32250.65|1331' WHERE  `year_month` = '2016-06'
+2016-06-14 00:00:03 UPDATE `cs_report_charge_statistics_card` SET `day_13` = '3334.00|4704.00|145'  WHERE `year_month` = '2016-06' 
+2016-06-14 00:00:03 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '40939.88|51387.88|1793' WHERE  `year_month` = '2016-06'
+2016-06-14 00:00:03 Complete statistics.
+2016-06-15 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_14` = '1446.11|2152.97|112'  WHERE `year_month` = '2016-06' 
+2016-06-15 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '20949.38|34403.62|1443' WHERE  `year_month` = '2016-06'
+2016-06-15 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `day_14` = '2786.96|3829.76|143'  WHERE `year_month` = '2016-06' 
+2016-06-15 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '43726.84|55217.64|1936' WHERE  `year_month` = '2016-06'
+2016-06-15 00:00:04 Complete statistics.
+2016-06-16 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_15` = '1492.66|2487.97|97'  WHERE `year_month` = '2016-06' 
+2016-06-16 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '22442.04|36891.59|1540' WHERE  `year_month` = '2016-06'
+2016-06-16 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_15` = '3152.34|4345.10|142'  WHERE `year_month` = '2016-06' 
+2016-06-16 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '46879.18|59562.74|2078' WHERE  `year_month` = '2016-06'
+2016-06-16 00:00:02 Complete statistics.
+2016-06-17 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_16` = '1629.75|2393.17|108'  WHERE `year_month` = '2016-06' 
+2016-06-17 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '24071.79|39284.76|1648' WHERE  `year_month` = '2016-06'
+2016-06-17 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_16` = '2735.36|3794.04|125'  WHERE `year_month` = '2016-06' 
+2016-06-17 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '49614.54|63356.78|2203' WHERE  `year_month` = '2016-06'
+2016-06-17 00:00:01 Complete statistics.
+2016-06-18 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_17` = '2056.74|3854.35|146'  WHERE `year_month` = '2016-06' 
+2016-06-18 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '26128.53|43139.11|1794' WHERE  `year_month` = '2016-06'
+2016-06-18 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_17` = '2902.39|4035.15|125'  WHERE `year_month` = '2016-06' 
+2016-06-18 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '52516.93|67391.93|2328' WHERE  `year_month` = '2016-06'
+2016-06-18 00:00:02 Complete statistics.
+2016-06-19 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_18` = '1536.95|2241.19|79'  WHERE `year_month` = '2016-06' 
+2016-06-19 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '27665.48|45380.3|1873' WHERE  `year_month` = '2016-06'
+2016-06-19 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_18` = '2630.92|3705.75|87'  WHERE `year_month` = '2016-06' 
+2016-06-19 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '55147.85|71097.68|2415' WHERE  `year_month` = '2016-06'
+2016-06-19 00:00:02 Complete statistics.
+2016-06-20 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_19` = '1365.50|2028.30|91'  WHERE `year_month` = '2016-06' 
+2016-06-20 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '29030.98|47408.6|1964' WHERE  `year_month` = '2016-06'
+2016-06-20 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_19` = '3127.45|5672.92|132'  WHERE `year_month` = '2016-06' 
+2016-06-20 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '58275.3|76770.6|2547' WHERE  `year_month` = '2016-06'
+2016-06-20 00:00:02 Complete statistics.
+2016-06-21 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_20` = '1760.96|2626.51|133'  WHERE `year_month` = '2016-06' 
+2016-06-21 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '30791.94|50035.11|2097' WHERE  `year_month` = '2016-06'
+2016-06-21 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_20` = '2722.39|3810.04|131'  WHERE `year_month` = '2016-06' 
+2016-06-21 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '60997.69|80580.64|2678' WHERE  `year_month` = '2016-06'
+2016-06-21 00:00:01 Complete statistics.
+2016-06-22 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_21` = '1811.66|2665.04|136'  WHERE `year_month` = '2016-06' 
+2016-06-22 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '32603.6|52700.15|2233' WHERE  `year_month` = '2016-06'
+2016-06-22 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_21` = '2765.00|3829.29|120'  WHERE `year_month` = '2016-06' 
+2016-06-22 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '63762.69|84409.93|2798' WHERE  `year_month` = '2016-06'
+2016-06-22 00:00:02 Complete statistics.
+2016-06-23 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_22` = '1842.96|3199.31|126'  WHERE `year_month` = '2016-06' 
+2016-06-23 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '34446.56|55899.46|2359' WHERE  `year_month` = '2016-06'
+2016-06-23 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_22` = '3166.04|4360.10|183'  WHERE `year_month` = '2016-06' 
+2016-06-23 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '66928.73|88770.03|2981' WHERE  `year_month` = '2016-06'
+2016-06-23 00:00:02 Complete statistics.
+2016-06-24 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_23` = '1834.08|2807.49|142'  WHERE `year_month` = '2016-06' 
+2016-06-24 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '36280.64|58706.95|2501' WHERE  `year_month` = '2016-06'
+2016-06-24 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_23` = '2734.56|3757.37|130'  WHERE `year_month` = '2016-06' 
+2016-06-24 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '69663.29|92527.4|3111' WHERE  `year_month` = '2016-06'
+2016-06-24 00:00:01 Complete statistics.
+2016-06-25 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_24` = '2174.54|4720.73|140'  WHERE `year_month` = '2016-06' 
+2016-06-25 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '38455.18|63427.68|2641' WHERE  `year_month` = '2016-06'
+2016-06-25 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_24` = '3307.24|4599.50|126'  WHERE `year_month` = '2016-06' 
+2016-06-25 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '72970.53|97126.9|3237' WHERE  `year_month` = '2016-06'
+2016-06-25 00:00:01 Complete statistics.
+2016-06-26 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_25` = '1765.85|2612.67|128'  WHERE `year_month` = '2016-06' 
+2016-06-26 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '40221.03|66040.35|2769' WHERE  `year_month` = '2016-06'
+2016-06-26 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_25` = '3129.31|4397.86|112'  WHERE `year_month` = '2016-06' 
+2016-06-26 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '76099.84|101524.76|3349' WHERE  `year_month` = '2016-06'
+2016-06-26 00:00:01 Complete statistics.
+2016-06-27 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_26` = '2124.79|3114.37|133'  WHERE `year_month` = '2016-06' 
+2016-06-27 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '42345.82|69154.72|2902' WHERE  `year_month` = '2016-06'
+2016-06-27 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_26` = '2237.81|3091.36|93'  WHERE `year_month` = '2016-06' 
+2016-06-27 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '78337.65|104616.12|3442' WHERE  `year_month` = '2016-06'
+2016-06-27 00:00:02 Complete statistics.
+2016-06-28 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_27` = '1688.53|2497.58|122'  WHERE `year_month` = '2016-06' 
+2016-06-28 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '44034.35|71652.3|3024' WHERE  `year_month` = '2016-06'
+2016-06-28 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_27` = '2369.52|3280.96|102'  WHERE `year_month` = '2016-06' 
+2016-06-28 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '80707.17|107897.08|3544' WHERE  `year_month` = '2016-06'
+2016-06-28 00:00:01 Complete statistics.
+2016-06-29 00:00:04 UPDATE `cs_report_charge_statistics_app` SET `day_28` = '1787.25|2733.28|111'  WHERE `year_month` = '2016-06' 
+2016-06-29 00:00:04 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '45821.6|74385.58|3135' WHERE  `year_month` = '2016-06'
+2016-06-29 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `day_28` = '2856.80|3907.27|122'  WHERE `year_month` = '2016-06' 
+2016-06-29 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '83563.97|111804.35|3666' WHERE  `year_month` = '2016-06'
+2016-06-29 00:00:04 Complete statistics.
+2016-06-30 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_29` = '1901.91|2907.34|123'  WHERE `year_month` = '2016-06' 
+2016-06-30 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '47723.51|77292.92|3258' WHERE  `year_month` = '2016-06'
+2016-06-30 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_29` = '2865.34|3930.72|137'  WHERE `year_month` = '2016-06' 
+2016-06-30 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '86429.31|115735.07|3803' WHERE  `year_month` = '2016-06'
+2016-06-30 00:00:02 Complete statistics.
+2016-07-01 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_30` = '2085.70|3063.00|135'  WHERE `year_month` = '2016-06' 
+2016-07-01 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '49809.21|80355.92|3393' WHERE  `year_month` = '2016-06'
+2016-07-01 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_30` = '3432.03|4712.13|144'  WHERE `year_month` = '2016-06' 
+2016-07-01 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '89861.34|120447.2|3947' WHERE  `year_month` = '2016-06'
+2016-07-01 00:00:02 Complete statistics.
+2016-07-02 00:00:01 INSERT INTO `cs_report_charge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-07','1855.37|2709.07|132','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-07-02 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '1855.37|2709.07|132' WHERE  `year_month` = '2016-07'
+2016-07-02 00:00:02 INSERT INTO `cs_report_charge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-07','3367.11|4585.02|147','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-07-02 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '3367.11|4585.02|147' WHERE  `year_month` = '2016-07'
+2016-07-02 00:00:02 Complete statistics.
+2016-07-03 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_02` = '1993.36|4721.05|145'  WHERE `year_month` = '2016-07' 
+2016-07-03 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '3848.73|7430.12|277' WHERE  `year_month` = '2016-07'
+2016-07-03 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_02` = '3686.53|5060.36|127'  WHERE `year_month` = '2016-07' 
+2016-07-03 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '7053.64|9645.38|274' WHERE  `year_month` = '2016-07'
+2016-07-03 00:00:02 Complete statistics.
+2016-07-04 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_03` = '1643.83|2382.44|118'  WHERE `year_month` = '2016-07' 
+2016-07-04 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '5492.56|9812.56|395' WHERE  `year_month` = '2016-07'
+2016-07-04 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_03` = '2918.81|3990.30|119'  WHERE `year_month` = '2016-07' 
+2016-07-04 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '9972.45|13635.68|393' WHERE  `year_month` = '2016-07'
+2016-07-04 00:00:02 Complete statistics.
+2016-07-05 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_04` = '1603.21|3802.05|116'  WHERE `year_month` = '2016-07' 
+2016-07-05 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '7095.77|13614.61|511' WHERE  `year_month` = '2016-07'
+2016-07-05 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_04` = '2979.96|5520.92|136'  WHERE `year_month` = '2016-07' 
+2016-07-05 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '12952.41|19156.6|529' WHERE  `year_month` = '2016-07'
+2016-07-05 00:00:04 Complete statistics.
+2016-07-06 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_05` = '1934.00|2790.71|136'  WHERE `year_month` = '2016-07' 
+2016-07-06 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '9029.77|16405.32|647' WHERE  `year_month` = '2016-07'
+2016-07-06 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_05` = '3260.75|4704.83|141'  WHERE `year_month` = '2016-07' 
+2016-07-06 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '16213.16|23861.43|670' WHERE  `year_month` = '2016-07'
+2016-07-06 00:00:02 Complete statistics.
+2016-07-07 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_06` = '1904.27|2814.93|148'  WHERE `year_month` = '2016-07' 
+2016-07-07 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '10934.04|19220.25|795' WHERE  `year_month` = '2016-07'
+2016-07-07 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_06` = '3762.58|5097.54|161'  WHERE `year_month` = '2016-07' 
+2016-07-07 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '19975.74|28958.97|831' WHERE  `year_month` = '2016-07'
+2016-07-07 00:00:02 Complete statistics.
+2016-07-08 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_07` = '1837.20|2687.97|118'  WHERE `year_month` = '2016-07' 
+2016-07-08 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '12771.24|21908.22|913' WHERE  `year_month` = '2016-07'
+2016-07-08 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_07` = '3730.87|5022.19|182'  WHERE `year_month` = '2016-07' 
+2016-07-08 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '23706.61|33981.16|1013' WHERE  `year_month` = '2016-07'
+2016-07-08 00:00:02 Complete statistics.
+2016-07-09 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_08` = '1903.57|2781.04|138'  WHERE `year_month` = '2016-07' 
+2016-07-09 00:00:04 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '14674.81|24689.26|1051' WHERE  `year_month` = '2016-07'
+2016-07-09 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `day_08` = '3827.84|5174.47|165'  WHERE `year_month` = '2016-07' 
+2016-07-09 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '27534.45|39155.63|1178' WHERE  `year_month` = '2016-07'
+2016-07-09 00:00:04 Complete statistics.
+2016-07-10 00:00:03 UPDATE `cs_report_charge_statistics_app` SET `day_09` = '2041.98|2969.32|139'  WHERE `year_month` = '2016-07' 
+2016-07-10 00:00:03 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '16716.79|27658.58|1190' WHERE  `year_month` = '2016-07'
+2016-07-10 00:00:03 UPDATE `cs_report_charge_statistics_card` SET `day_09` = '4022.14|5518.97|146'  WHERE `year_month` = '2016-07' 
+2016-07-10 00:00:03 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '31556.59|44674.6|1324' WHERE  `year_month` = '2016-07'
+2016-07-10 00:00:03 Complete statistics.
+2016-07-11 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_10` = '2388.21|3457.59|144'  WHERE `year_month` = '2016-07' 
+2016-07-11 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '19105|31116.17|1334' WHERE  `year_month` = '2016-07'
+2016-07-11 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_10` = '3356.58|6385.55|147'  WHERE `year_month` = '2016-07' 
+2016-07-11 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '34913.17|51060.15|1471' WHERE  `year_month` = '2016-07'
+2016-07-11 00:00:02 Complete statistics.
+2016-07-12 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_11` = '1904.69|2768.20|138'  WHERE `year_month` = '2016-07' 
+2016-07-12 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '21009.69|33884.37|1472' WHERE  `year_month` = '2016-07'
+2016-07-12 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `day_11` = '2965.26|3998.56|120'  WHERE `year_month` = '2016-07' 
+2016-07-12 00:00:02 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '37878.43|55058.71|1591' WHERE  `year_month` = '2016-07'
+2016-07-12 00:00:02 Complete statistics.
+2016-07-13 00:00:02 UPDATE `cs_report_charge_statistics_app` SET `day_12` = '1703.81|2437.39|121'  WHERE `year_month` = '2016-07' 
+2016-07-13 00:00:05 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '22713.5|36321.76|1593' WHERE  `year_month` = '2016-07'
+2016-07-13 00:00:05 UPDATE `cs_report_charge_statistics_card` SET `day_12` = '3231.78|4493.77|131'  WHERE `year_month` = '2016-07' 
+2016-07-13 00:00:05 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '41110.21|59552.48|1722' WHERE  `year_month` = '2016-07'
+2016-07-13 00:00:05 Complete statistics.
+2016-07-14 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_13` = '1850.82|2691.56|128'  WHERE `year_month` = '2016-07' 
+2016-07-14 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '24564.32|39013.32|1721' WHERE  `year_month` = '2016-07'
+2016-07-14 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `day_13` = '3791.11|5056.05|154'  WHERE `year_month` = '2016-07' 
+2016-07-14 00:00:04 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '44901.32|64608.53|1876' WHERE  `year_month` = '2016-07'
+2016-07-14 00:00:04 Complete statistics.
+2016-07-15 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_14` = '2073.23|3011.06|144'  WHERE `year_month` = '2016-07' 
+2016-07-15 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '26637.55|42024.38|1865' WHERE  `year_month` = '2016-07'
+2016-07-15 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_14` = '3987.25|5359.89|178'  WHERE `year_month` = '2016-07' 
+2016-07-15 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '48888.57|69968.42|2054' WHERE  `year_month` = '2016-07'
+2016-07-15 00:00:01 Complete statistics.
+2016-07-16 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_15` = '2365.74|3419.78|176'  WHERE `year_month` = '2016-07' 
+2016-07-16 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '29003.29|45444.16|2041' WHERE  `year_month` = '2016-07'
+2016-07-16 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_15` = '3860.68|5264.85|141'  WHERE `year_month` = '2016-07' 
+2016-07-16 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '52749.25|75233.27|2195' WHERE  `year_month` = '2016-07'
+2016-07-16 00:00:01 Complete statistics.
+2016-07-17 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_16` = '2101.66|3062.52|144'  WHERE `year_month` = '2016-07' 
+2016-07-17 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '31104.95|48506.68|2185' WHERE  `year_month` = '2016-07'
+2016-07-17 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_16` = '4145.66|5741.74|150'  WHERE `year_month` = '2016-07' 
+2016-07-17 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '56894.91|80975.01|2345' WHERE  `year_month` = '2016-07'
+2016-07-17 00:00:01 Complete statistics.
+2016-07-18 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_17` = '2083.79|3046.72|136'  WHERE `year_month` = '2016-07' 
+2016-07-18 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '33188.74|51553.4|2321' WHERE  `year_month` = '2016-07'
+2016-07-18 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_17` = '3709.03|5159.81|135'  WHERE `year_month` = '2016-07' 
+2016-07-18 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '60603.94|86134.82|2480' WHERE  `year_month` = '2016-07'
+2016-07-18 00:00:01 Complete statistics.
+2016-07-19 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `day_18` = '2026.77|2970.58|149'  WHERE `year_month` = '2016-07' 
+2016-07-19 00:00:01 UPDATE `cs_report_charge_statistics_app` SET `month_total` = '35215.51|54523.98|2470' WHERE  `year_month` = '2016-07'
+2016-07-19 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `day_18` = '3179.71|4267.79|143'  WHERE `year_month` = '2016-07' 
+2016-07-19 00:00:01 UPDATE `cs_report_charge_statistics_card` SET `month_total` = '63783.65|90402.61|2623' WHERE  `year_month` = '2016-07'
+2016-07-19 00:00:01 Complete statistics.

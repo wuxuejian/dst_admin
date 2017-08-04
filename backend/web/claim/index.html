@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>出险理赔流程</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css" >
+	<link rel="stylesheet" type="text/css" href="css/lyz.calendar.css"  />
+</head>
+<body>
+	<div class='control-box'>
+		<div class='mainview'>
+			<div class='product product-full product-col-1 sidebar-trans'>
+				<div class='mbody'>
+					<div class='container'>
+						<div class='console-table-wapper margin-top'>
+							<div class='one-block'>
+								<div class='block-title'>
+									出险理赔流程
+								</div>
+								<div class='block-content clear'>
+									<div class='flow-nav fl'>
+										<ul id='page_nav_ul'>
+											<a href="index.html" class='active'><li>1、报案出险</li></a>
+											<a href="index1.html" class='disableCss'><li>2、查勘结论</li></a>
+											<a href="index2.html" class='disableCss'><li>3、保险定损</li></a>
+											<a href="index3.html" class='disableCss'><li>4、车辆维修</li></a>
+											<a href="index4.html" class='disableCss'><li>5、保险理赔</li></a>
+											<a href="index5.html" class='disableCss'><li>6、保险请款</li></a>
+											<a href="index6.html" class='disableCss'><li>7、转账结案</li></a>
+										</ul>
+									</div>
+									<div class='flow-container fr content10-noborder'>
+										<form id="myform" >
+											<input name='id' class="hide" />
+											<div class="block-content10 clear">
+												<div class="col-6">
+													<div class="title"><span class="warncolor">*</span>出险车牌号</div>
+													<div class="content">
+														<input name="car_num" id="car_num_i" class="form-control col-6  drop-down-i must" type="text">
+														<ul id="car_num_u" class='drop-down-u'>
+														</ul>
+													</div>
+												</div>
+												<div class="col-6">
+													<div class="title"><span class="warncolor">*</span>出险日期</div>
+													<div class="content"><input name="danger_date" id="txtBeginDate" class="form-control col-6 must" readonly="readonly" value=''></div>
+												</div>
+											</div>
+											<div class="block-content10 clear">
+												<div class="col-6">
+													<div class="title">报案人</div>
+													<div class="content"><input name="people" id="people" class="form-control col-6" type="text"></div>
+												</div>
+												<div class="col-6">
+													<div class="title">报案电话</div>
+													<div class="content"><input name="tel" id="tel" class="form-control col-6" type="text"></div>
+												</div>
+											</div>
+											<div class="block-content10 clear">
+												<div class="col-12">
+													<div class="title">出险所在地</div>
+													<div class="content">
+														<select class="form-control col-2 fl" id="province_id" name="province_id">
+															<option value="">请选择省份</option>
+														</select>
+														<select class="form-control col-2 fl" id="city_id" name="city_id">
+															<option value="">请选择城市</option>
+														</select>
+														<select class="form-control col-2 fl" name="area_id" id="area_id">
+															<option value="">请选择区域</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="block-content10 clear">
+												<div class="col-12">
+													<div class="title">出险详细地址</div>
+													<div class="content">
+														<input class="form-control col-6" name="area-detail" id="area_detail" type="text" placeholder='详细地址,    示例：燕南路8号东风大厦后面'/>
+													</div>
+												</div>
+											</div>
+											<div class='save-cancel clear mg-8'>
+												<input type="button" class="btn btn-ra5 btn-normal" value="保存并下一步" id="save"/>
+												<input type="button" class="btn btn-ra5 btn-cannot" value="取消" onclick="cancel()" />
+											</div>
+											<div id='oper' class="block-content10 clear hide" >
+												<div class="col-12">
+													<div class="title">上一次操作人员:</div>
+													<div class="content" id='oper_user1'>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='remind'>
+		<div style='display: none;'>
+		</div>
+	</div>
+	<script type="text/javascript" src='js/jqueryv183.js'></script>
+	<script type="text/javascript" src='js/flow.js'></script>
+	<script type="text/javascript" src='js/jquery.ajaxSubmit.js'></script>
+	<script src="js/lyz.calendar.min.js" type="text/javascript"></script>
+	<script>
+	    $(function () {
+	        $("#txtBeginDate").calendar();
+	        var myDate = new Date();
+	        var year = myDate.getFullYear();
+	        var month = myDate.getMonth() + 1;
+	        var day = myDate.getDate();
+	        $('#txtBeginDate').val(year+'-'+month+'-'+day); 
+	    });
+	</script>
+	<script type="text/javascript">
+	//获取页面尾部?代码
+	function getQueryString(name) { 
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+		var r = window.location.search.substr(1).match(reg); 
+		if (r != null) return unescape(r[2]); return null; 
+	}
+	var page_id = getQueryString('id');
+	var page_step = getQueryString('step');
+	var page_have = getQueryString('have');
+	//对左侧A标签加ID
+	ahref_add_id(page_id,page_step,page_have);
+	if(!page_have){
+		if(page_step == 1){
+		}else if(page_step == 2){
+			window.location.href="index1.html?id="+page_id+"&step="+page_step+"&have=1";
+		}else if(page_step == 3){
+			window.location.href="index2.html?id="+page_id+"&step="+page_step+"&have=1";
+		}else if(page_step == 4){
+			window.location.href="index3.html?id="+page_id+"&step="+page_step+"&have=1";
+		}else if(page_step == 5){
+			window.location.href="index4.html?id="+page_id+"&step="+page_step+"&have=1";
+		}else if(page_step == 6){
+			window.location.href="index5.html?id="+page_id+"&step="+page_step+"&have=1";
+		}else if(page_step == 7){
+			window.location.href="index6.html?id="+page_id+"&step="+page_step+"&have=1";
+		}else if(page_step == 8){
+			window.location.href="index6.html?id="+page_id+"&step="+page_step+"&have=1";
+		}else{
+		}
+	}
+	$('input[name="id"]').val(page_id);
+
+	
+
+	//获取之前页面数据
+	var province_id;
+	var city_id;
+	var area_id;
+
+	$(document).ready(function(){
+		$.ajax({
+           	url:'../index.php?r=car/insurance-claim/get1',
+           	data: {id:page_id},
+           	type:'get',
+           	dataType:'json',
+           	success:function(dataget){
+           		if(dataget.status){
+	           		$('#car_num_i').val(dataget.data.car_num);
+	           		$('input[name="danger_date"]').val(dataget.data.danger_date);
+	           		$('input[name="people"]').val(dataget.data.people);
+	           		$('input[name="tel"]').val(dataget.data.tel);
+	           		province_id = dataget.data.province_id;
+	           		city_id = dataget.data.city_id;
+	           		area_id = dataget.data.area_id;
+	           		$('input[name="area-detail"]').val(dataget.data.area_detail);
+	           		
+	           		if(dataget.data.oper_user1 == 0){
+	           			$('#oper').hide();
+	           		}else{
+	           			$('#oper').show();
+	           			$('#oper_user1').text(dataget.data.oper_user1);
+	           		} 		
+           		};
+           		$('input[name="id"]').val(page_id); 
+           		province_select(); 
+   			},
+            error: function (msg) {}
+	   	});
+	})
+
+	//车牌号选择
+	$('#car_num_i').keyup(function(){
+		var i_val = $('#car_num_i').val();
+		$.ajax({
+	        type: "get",
+	        url: "../index.php?r=car/insurance-claim/get-cars",
+	        data: {q:i_val},
+	        dataType: "json",
+	        success: function (data) {//ajax请求成功后触发的方法
+	        	$('#car_num_u li').detach();
+	        	var html = [];
+	        	for(var i = 0; i < data.rows.length; i++){
+	        		html.push('<li>' + data.rows[i].plate_number + '</li>');
+	        	}
+	        	$(html.join('')).appendTo('#car_num_u');
+	        	$('#car_num_u li').click(function(){
+					var v_li = $(this).text();
+					$('#car_num_i').val(v_li);
+					$(this).parent().hide()
+				})
+	        },
+	        error: function (msg) {}
+	    });
+	})
+
+	//城市选择
+		
+		function province_select(){
+			if($('#province_id').val() == ''){
+				$.ajax({
+		           	url:'../index.php?r=car/insurance-claim/get-region',
+		           	type:'get',
+		           	dataType:'json',
+		           	success:function(data){
+		           		$('#province_id option').detach();
+		           		var html = [];
+		           		html.push('<option value="">请选择省份</option>');
+		           		for(var i = 0; i < data.length; i++){
+		           			html.push('<option value=' + data[i].region_id + '>' + data[i].region_name + '</option>');
+		           		}
+		           		$(html.join('')).appendTo('#province_id');
+		           		$('#province_id').val(province_id);
+		           		if($('#province_id').value == undefined){
+		           			$('#province_id').val(6);
+		           		}
+		           		city_select();
+		            },
+		            error: function (msg) {}
+	    	   	});
+    	   	}
+    	}
+		function city_select(){
+			if($('#city_id').val() == ''){
+				province_id = $('#province_id').val();
+				$.ajax({
+		           	url:'../index.php?r=car/insurance-claim/get-region',
+		           	type:'get',
+		           	data:{region_id:province_id},
+		           	dataType:'json',
+		           	success:function(data){
+		           		$('#city_id option').detach();
+		           		var html = [];
+		           		html.push('<option value="">请选择城市</option>');
+		           		for(var i = 0; i < data.length; i++){
+		           			html.push('<option value=' + data[i].region_id + '>' + data[i].region_name + '</option>');
+		           		}
+		           		$(html.join('')).appendTo('#city_id');
+		           		$('#city_id').val(city_id);
+		           		if($('#city_id').value == undefined){
+		           			$('#city_id').val(77);
+		           		}
+		           		area_select()
+		            },
+		            error: function (msg) {}
+	    	   	});
+    	   	}
+		}
+		function area_select(){
+			if($('#area_id').val() == ''){
+				city_id = $('#city_id').val(); 
+				$.ajax({
+		           	url:'../index.php?r=car/insurance-claim/get-region',
+		           	type:'get',
+		           	data:{region_id:city_id},
+		           	dataType:'json',
+		           	success:function(data){
+		           		$('#area_id option').detach();
+		           		var html = [];
+		           		html.push('<option value="">请选择区域</option>');
+		           		for(var i = 0; i < data.length; i++){
+		           			html.push('<option value=' + data[i].region_id + '>' + data[i].region_name + '</option>');
+		           		}
+		           		$(html.join('')).appendTo('#area_id');
+		           		$('#area_id').val(area_id);
+		            },
+		            error: function (msg) {}
+	    	   	});
+    	   	}
+		}
+		
+		
+        $('#province_id').change(function(){
+    		province_id = $('#province_id').val();
+    		$.ajax({
+    	           	url:'../index.php?r=car/insurance-claim/get-region',
+    	           	type:'get',
+    	           	data:{region_id:province_id},
+    	           	dataType:'json',
+    	           	success:function(data){
+    	           		$('#city_id option').detach();
+    	           		var html = [];
+    	           		html.push('<option value="">请选择城市</option>');
+    	           		for(var i = 0; i < data.length; i++){
+    	           			html.push('<option value=' + data[i].region_id + '>' + data[i].region_name + '</option>');
+    	           		}
+    	           		$(html.join('')).appendTo('#city_id');
+    	            },
+    	            error: function (msg) {}
+    	   	});
+        });
+        $('#city_id').change(function(){
+    		city_id = $('#city_id').val();
+    		$.ajax({
+    	           	url:'../index.php?r=car/insurance-claim/get-region',
+    	           	type:'get',
+    	           	data:{region_id:city_id},
+    	           	dataType:'json',
+    	           	success:function(data){
+    	           		$('#area_id option').detach();
+    	           		var html = [];
+    	           		html.push('<option value="">请选择区域</option>');
+    	           		for(var i = 0; i < data.length; i++){
+    	           			html.push('<option value=' + data[i].region_id + '>' + data[i].region_name + '</option>');
+    	           		}
+    	           		$(html.join('')).appendTo('#area_id');
+    	            },
+    	            error: function (msg) {}
+    	   	});
+        });
+    $('#save').on('click', function() {
+    	$('.warn').detach();
+		$('.must').each(function(){
+			if($(this).val() == ''){
+				$(this).after('<div class="warn">请填写完整内容</div>');
+			}
+		});
+		if($('.warn').length){
+			return false;
+		}
+
+        $("#myform").ajaxSubmit({
+            type: 'post', // 提交方式 get/post
+            url: '../index.php?r=car/insurance-claim/add1', // 需要提交的 url
+            dataType: "json",
+            success: function(data) { 
+            	if(data.status){
+            		if(data.id){
+            			window.location.href="index1.html?id="+data.id+"&step="+page_step+"&have=1";
+            		}else {
+            			window.location.href="index1.html?id="+page_id+"&step="+page_step+"&have=1";
+            		}
+            	}else {
+            		alert(data.info);
+            	}
+            	
+            },
+            error: function (msg) {
+            }
+        });
+        	     
+	});
+	</script>
+</body>
+</html>

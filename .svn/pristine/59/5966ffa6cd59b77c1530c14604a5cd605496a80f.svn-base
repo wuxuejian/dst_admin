@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+	<head>
+  		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  		<meta name="Generator" content="EditPlus®">
+  		<meta name="Author" content="">
+  		<meta name="Keywords" content="">
+  		<meta name="Description" content="">
+  		<title>退车流程</title>
+  		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+  		<link rel="stylesheet" type="text/css" href="css/docs.css">
+		<link rel="stylesheet" type="text/css" href="jedate/skin/jedate.css">
+		<style type="text/css">
+  			.dimmed.dimmable>.ui.animating.dimmer.d1, .dimmed.dimmable>.ui.visible.dimmer.d1, .ui.active.dimmer.d1 {
+			    display: block;
+			    opacity: 0.1;
+			}
+  		</style>
+	</head>
+	<body>
+		<div class="main ui container" style="margin-top:16px;">
+			<div class="ui grid">
+		    	<div class="four wide column">
+		    		<div class="ui fluid vertical steps">
+		        		<a class="step" href="index1.html">
+				    		<div class="content">
+				      			<div class="title">1.客户退车意愿登记</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index2.html">
+				    		<div class="content">
+				      			<div class="title">2.销售沟通确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index3.html">
+				    		<div class="content">
+				      			<div class="title">3.销售负责人审批</div>
+				    		</div>
+				  		</a>
+						<a class="active step" href="index4.html">
+				    		<div class="content">
+				      			<div class="title">4.售后验车</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index5.html">
+				    		<div class="content">
+				      			<div class="title">5.车辆入库</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index6.html">
+				    		<div class="content">
+				      			<div class="title">6.押金结算</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index7.html">
+				    		<div class="content">
+				      			<div class="title">7.结算异常审批</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index8.html">
+				    		<div class="content">
+				      			<div class="title">8.财务转账收款确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index9.html">
+				    		<div class="content">
+				      			<div class="title">9.归档</div>
+				    		</div>
+				  		</a>
+		        	</div>
+		      	</div>
+		      	<div class="twelve wide column ui segments">
+		      		<div class="field id_test hide">
+		      			<div class="ui error message">
+					        <div class="header">您没有权限操作此步骤!</div>
+					    </div>
+					    <div></div>
+		      		</div>
+		      		<div class="ui dimmer d1">
+				   		<div class="content">
+				     	<div class="center">
+				        	<h2 class="ui inverted icon header"> 您没有权限操作此步骤! </h2>
+				     	 </div>
+				    	</div>
+				  	</div>
+				  	<div class="field">
+		      			<div class="ui blue message">
+					        <p>退车站点：<span name="extract_car_site"></span>&emsp;&emsp;&emsp;&emsp;站点负责人：<span name="extract_car_site_user"></span></p>
+					        <p><span class="c-red">注:</span>该页面只有负责人有权操作！</p>
+					    </div>
+					    <div></div>
+		      		</div>
+
+		      		<form class="ui form" id="form1"  action="../index.php?r=car/car-back/add4" method="post" enctype="multipart/form-data">
+		      			<input name='id' class="hide" />
+		      			<h3 class="ui black block header">
+					      <span class="ui left">违章列表</span>
+					      <span class="ui right" style="float:right; cursor:pointer; color:#00b5ad" onclick="refresh()">重新查询</span>
+					    </h3>
+					    <div class="field"><label><div class="ui checkbox"><input type="checkbox" value="1" name="wz_confirm_state"><label>违章确认</label></div></label></div>
+			      		<table class="ui celled structured table">
+					      <thead>
+					        <tr>
+						        <th>车牌号</th>
+						        <th>违章时间</th>
+						        <th>违章地点</th>
+						        <th>违章说明</th>
+						        <th>扣分</th>
+						        <th>罚款</th>
+						        <th>注销状态</th>
+					        </tr>
+					      </thead>
+					      <tbody id='wz_table'>	
+					      </tbody>	
+					    </table>
+						
+						<h3 class="ui black block header">
+					      出险记录（仅供参考）
+					    </h3>
+					    <div class="field"><label><div class="ui checkbox"><input type="checkbox" value="1" name="insurance_confirm_state"><label>出险确认</label></div></label></div>
+					    <table class="ui celled structured table">
+					      <thead>
+					        <tr>
+					          <th>车牌号</th>
+				    		  <th>出险单号</th>
+					          <th>出险状态</th>
+					        </tr>
+					      </thead>
+					      <tbody id='bx_table'>
+					      </tbody>
+					    </table>
+					    <div class="field">
+			          		<textarea name="insurance_note" rows="2" placeholder="保险备注"></textarea>
+			        	</div>
+
+					    <h3 class="ui black block header">
+					      车辆定损信息
+					    </h3>
+						<div id="json_before">
+						
+					    </div>
+						
+        				<div class="ui column grid">
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide save_cancel_div">
+					          		<div class="ui submit button green" onclick="add4()">保存</div>
+		        					<div class="ui submit button" onclick="cancel()">取消</div>
+		        			  	</div>
+					        </div>
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide">
+					          		<span class="oper_user mg-r-10"></span><span class="oper_time"></span>
+		        			  	</div>
+					        </div>
+					    </div>
+			        </form>
+		      	</div>
+		    </div>
+		</div>
+		<div class="ui small modal" id="a_modal" >
+			<input name='id' class="hide" />
+		  	<div class="header">保存成功！</div>
+		  	<div class="content">
+		      	<p>验车信息已确认，等待车管入库</p>
+		    </div>
+		    <div class="actions">
+		      	<div class="ui green button" onclick="cancel()">确定</div>
+		    </div>
+		</div>
+		<div class="ui small modal" id="b_modal" >
+			<input name='id' class="hide" />
+		  	<div class="header">违章查询成功！</div>
+		  	<div class="content">
+		      	<p>1分钟后刷新页面即可得最新违章结果，<span class="c-red">(每次违章查询会花费0.04*车数（元），请谨慎使用!)</span></p>
+		    </div>
+		    <div class="actions">
+		    	<div class="ui button" onclick="modal_close()">取消查询</div>
+		      	<div class="ui green button" onclick="sure_refresh()">确定查询</div>
+		    </div>
+		</div>
+		<div class="ui small modal" id="img_modal" style='left: 50%;'>
+		  	<img class='ui img' style='height:700px;'>
+		</div>
+	</body>
+	<script src="js/jqueryv183.js"></script>
+  	<script src="js/jquery.form.js"></script>
+  	<script src="js/semantic.min.js"></script>
+  	<script src="js/flow.js"></script>
+  	<script type="text/javascript" src="jedate/jquery.jedate.min.js"></script>
+
+	
+ 	
+  	<script>
+  		//预处理下拉框
+  		$('.selection.dropdown').dropdown();
+  		//预处理单选按钮
+  		$('.ui.radio.checkbox').checkbox();
+  		//预处理弹出输入框
+  		function a_modal_show(){
+	  		$('#a_modal').modal('show');
+  		}
+  		function modal_close(){
+	  		$('.ui.modal').modal('hide');
+  		}
+  		//处理步骤显示
+  		var page_id = getQueryString('id');
+  		var page_state = getQueryString('state');
+  		var page_role_ids = getQueryString('role_ids');
+		step_show_hide(page_id,page_state,8,page_role_ids);
+
+		//判断角色是否能修改该页面
+		$.ajax({
+           	url:'../index.php?r=car/car-back/rbac-access&index=4',
+           	type:'get',
+           	dataType:'json',
+           	success:function(data){
+           		if(data == false){
+           			/*
+           			//预处理遮盖层
+			  		$('.ui .segments').dimmer('show','on');
+			  		$('.ui .segments').off("click");//让点击事件取消
+			  		*/
+			  	
+			  		//不可操作
+			  		$('.id_test').show();
+			  		$('.save_cancel_div').hide();
+
+           		}
+           	},
+           	error: function (msg) {}
+        })
+  		
+
+  		//设置添加起步值
+	  	var a_l;
+	  	//让车辆列表设置为全局变量
+	  	var car_num_list = {}
+	    var car_ll = 0;
+	    //设置判断该页面是否可编辑的值page_state
+	    var page_state;
+  		//获取客户列表
+  		$(document).ready(function(){
+       		//获取页面值
+       		$.ajax({
+	           	url:'../index.php?r=car/car-back/get4',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(datai){
+	           		if(datai.status){
+	           			page_state = datai.data.state;
+						// if(datai.data.state != 3 && datai.data.state != 4){
+						// 	$('.ui .segments').dimmer('show','on');
+						// 	$('.ui .segments').off("click");//让点击事件取消
+						// 	$('.dimmer .header').text("");
+						// }
+	           			//所属站点和负责人
+	           			$('span[name="extract_car_site"]').text(datai.data.extract_car_site);
+	           			var car_site_user = '';
+	           			for(var i = 0; i < datai.data.extract_car_site_user.length; i++){
+	           				car_site_user += datai.data.extract_car_site_user[i].name;
+	           				if(i != datai.data.extract_car_site_user.length - 1){
+	           					car_site_user += '、';
+	           				}
+	           			}
+	           			$('span[name="extract_car_site_user"]').text(car_site_user);
+	           			//确定出险处理完毕
+	           			if(datai.data.insurance_confirm_state == 1){
+	           				$('input[name="insurance_confirm_state"]').trigger("click");
+	           			}
+	           			$('textarea[name="insurance_note"]').val(datai.data.insurance_note);
+	           			//确定违章处理完毕
+	           			if(datai.data.wz_confirm_state == 1){
+	           				$('input[name="wz_confirm_state"]').trigger("click");
+	           			}
+
+	           			//违章列表
+	           			for(var i = 0; i <datai.data.wz_text.length ; i++){
+	           				if(datai.data.wz_text[i].lists.length==0){
+	           					continue;
+	           				}
+	           				var html=[];
+	           				var leng = datai.data.wz_text[i].lists.length;
+	           				if(datai.data.wz_text[i].province == undefined){
+	           					if(datai.data.wz_text[i].lists[0] == undefined){
+		           					datai.data.wz_text[i].lists[0] = {};
+		           					datai.data.wz_text[i].lists[0].date = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].area = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].act = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].code = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].fen = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].money = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].handled = '出错！请手动查询';
+		           				}
+	           				}
+	           				if(datai.data.wz_text[i].lists[0] == undefined){
+	           					datai.data.wz_text[i].lists[0] = {};
+	           					datai.data.wz_text[i].lists[0].date = '';
+	           					datai.data.wz_text[i].lists[0].area = '';
+	           					datai.data.wz_text[i].lists[0].act = '';
+	           					datai.data.wz_text[i].lists[0].code = '';
+	           					datai.data.wz_text[i].lists[0].fen = '';
+	           					datai.data.wz_text[i].lists[0].money = '';
+	           					datai.data.wz_text[i].lists[0].handled = '';
+	           				}
+	           				
+	           				html.push('<tr>');
+	           					html.push('<td rowspan='+leng+'>'+datai.data.wz_text[i].hphm+'</td>');
+	           					html.push('<td>'+datai.data.wz_text[i].lists[0].date+'</td>');
+	           					html.push('<td>'+datai.data.wz_text[i].lists[0].area+'</td>');
+	           					html.push('<td>'+datai.data.wz_text[i].lists[0].act+'</td>');
+	           					html.push('<td>'+datai.data.wz_text[i].lists[0].fen+'</td>');
+	           					html.push('<td>'+datai.data.wz_text[i].lists[0].money+'</td>');
+	           					if(datai.data.wz_text[i].lists[0].handled == '0'){
+	           						html.push('<td class="warning">未处理</td>');
+	           					}else if(datai.data.wz_text[i].lists[0].handled == 1){
+	           						html.push('<td>已处理</td>');
+	           					}else{
+	           						html.push('<td></td>');
+	           					}
+	           				html.push('</tr>');
+	           				if(leng > 1){
+		           				for(var j = 1 ; j < leng ; j++){
+		           					if(datai.data.wz_text[i].lists[j] == undefined){
+			           					datai.data.wz_text[i].lists[j] = {};
+			           					datai.data.wz_text[i].lists[j].date = '';
+			           					datai.data.wz_text[i].lists[j].area = '';
+			           					datai.data.wz_text[i].lists[j].act = '';
+			           					datai.data.wz_text[i].lists[j].code = '';
+			           					datai.data.wz_text[i].lists[j].fen = '';
+			           					datai.data.wz_text[i].lists[j].money = '';
+			           					datai.data.wz_text[i].lists[j].handled = '';
+			           				}
+		           					html.push('<tr>');
+		           						html.push('<td>'+datai.data.wz_text[i].lists[j].date+'</td>');
+			           					html.push('<td>'+datai.data.wz_text[i].lists[j].area+'</td>');
+			           					html.push('<td>'+datai.data.wz_text[i].lists[j].act+'</td>');
+			           					html.push('<td>'+datai.data.wz_text[i].lists[j].fen+'</td>');
+			           					html.push('<td>'+datai.data.wz_text[i].lists[j].money+'</td>');
+			           					if(datai.data.wz_text[i].lists[j].handled == '0'){
+			           						html.push('<td class="warning">未处理</td>');
+			           					}else if(datai.data.wz_text[i].lists[j].handled == 1){
+			           						html.push('<td>已处理</td>');
+			           					}else{
+			           						html.push('<td></td>');
+			           					}
+			           					
+		           					html.push('</tr>');
+		           				}
+	           				}
+	           				$(html.join('')).appendTo('#wz_table');			
+	           			}
+
+	           			//保险列表
+	           			for(var i = 0; i<datai.data.insurance_claims.length ; i++){
+	           				var html=[];
+	           				var leng = datai.data.insurance_claims[i].length;
+	           				if(datai.data.insurance_claims[i] == undefined){
+	           					datai.data.insurance_claims[i][0] = {};
+	           					datai.data.insurance_claims[i][0].plate_number = '';
+	           					datai.data.insurance_claims[i][0].number = '';
+	           					datai.data.insurance_claims[i][0].insurance_status = '';
+	           				}
+	           				for(var j = 0 ; j < leng; j++){
+	           					if(j == 0){
+		           					html.push('<tr>');
+			           					html.push('<td rowspan='+leng+'>'+datai.data.insurance_claims[i][j].plate_number+'</td>');
+				           				html.push('<td>'+datai.data.insurance_claims[i][j].number+'</td>');
+						           		html.push('<td>'+datai.data.insurance_claims[i][j].insurance_status+'</td>');
+						           	html.push('</tr>');
+					           	}
+					           	if( j > 0){
+					           		html.push('<tr>');
+				           				html.push('<td>'+datai.data.insurance_claims[i][j].number+'</td>');
+						           		html.push('<td>'+datai.data.insurance_claims[i][j].insurance_status+'</td>');
+						           	html.push('</tr>');
+					           	}
+	           				}
+	           				
+				           	$(html.join('')).appendTo('#bx_table');	
+	           			}
+
+	           			//车辆定损列表
+           				var html = [];
+           				for(var i = 0; i < datai.data.plate_numbers.length; i++){
+           					html.push('<div class="damage_list ui yellow message">');
+	           					html.push('<div class="inline fields">');
+	           						html.push('<label>'+datai.data.plate_numbers[i]+'</label>');
+	           						html.push('<div class="one wide field">');
+	           						html.push('</div>');	
+	           						html.push('<div class="three wide field">');
+	           							html.push('<div class="ui checkbox"><input type="checkbox" value="1" name="is_back[]"><label>车辆收回</label></div>');
+	           							html.push('<input type="checkbox" name="is_back[]" value="0" checked="checked" class="hide-must">');
+	           						html.push('</div>');
+	           						html.push('<div class="three wide field">');
+	           							html.push('<div class="ui checkbox"><input type="checkbox" value="1" name="no_storage[]"><label>车辆无法入库</label></div>');
+	           							html.push('<input type="checkbox" name="no_storage[]" value="0" checked="checked" class="hide-must">');
+	           						html.push('</div>');	           						
+	           					html.push('</div>');
+	           					html.push('<div class="fields">');
+	           						html.push('<div class="eight wide field">');
+	           							html.push('<input type="text" class="qremove" placeholder="入场时间" name="into_time[]" id="into_time_'+i+'" readonly>');
+	           						html.push('</div>');          						
+	           						html.push('<div class="four wide field">');
+	           							html.push('<div class="ui right labeled input">');
+									      	html.push('<input type="text" placeholder="定损报价" name="damage_money[]">');
+									      	html.push('<div class="ui basic label">元 </div>');
+									    html.push('</div>');
+	           						html.push('</div>');
+	           						html.push('<div class="four wide field">');
+	           							html.push('<input type="text" placeholder="验车人" name="damage_people[]">');
+	           						html.push('</div>');           						
+	           					html.push('</div>');
+	           					html.push('<div class="field">');
+           							html.push('<input type="text" class="hide-must" placeholder="" name="car_no[]" value="'+datai.data.plate_numbers[i]+'">');
+           							html.push('<input type="text" placeholder="损失维修情况" name="position[]">');
+           						html.push('</div>');
+	           					html.push('<div class="fields">');
+	           						html.push('<div class="add_images">');
+	           							html.push('<form id="img'+i+'" action="../index.php?r=car/car-back/upload-img" method="post" enctype="multipart/form-data">');
+		           							html.push('<input type="file" name="img" onchange="addimg('+i+')">');
+		           						html.push('</form>');
+								    html.push('</div>');
+	           						html.push('<input type="text" class="hide-must" placeholder="" name="img_url[]">');	
+	           					html.push('</div>');
+	           				html.push('</div>');	           				
+           				}
+           				$(html.join('')).appendTo('#json_before');
+           				if(datai.data.state != 3 && datai.data.state != 4){//判断是否需要时间插件
+           				}else{
+	           				for(var i = 0; i < datai.data.plate_numbers.length; i++){
+		           				//日期控件
+						  		$('#into_time_'+i).jeDate({
+									format:"YYYY-MM-DD hh:mm:ss",
+									isinitVal:false,
+									isTime:true, //isClear:false,
+								})
+							}
+						}
+						$('input[name="is_back[]"]').click(function(){
+							$(this).parent('div.checkbox').siblings('input[name="is_back[]"]').trigger('click');
+						})
+						$('input[name="no_storage[]"]').click(function(){
+							$(this).parent('div.checkbox').siblings('input[name="no_storage[]"]').trigger('click');
+						})
+
+
+	           				
+	           			//添加数据检验是否存在
+	           			for(var i = 0 ; i < datai.data.plate_numbers.length; i++){
+           					for(var j = 0 ; j < datai.data.damage_text.length; j ++){
+           						if(datai.data.plate_numbers[i] == datai.data.damage_text[j].plate_number){
+           							$('input[name="position[]"]').eq(i).val(datai.data.damage_text[j].position);
+           							$('input[name="damage_money[]"]').eq(i).val(datai.data.damage_text[j].damage_money);
+           							$('input[name="damage_people[]"]').eq(i).val(datai.data.damage_text[j].damage_people);
+           							$('input[name="img_url[]"]').eq(i).val(datai.data.damage_text[j].img_url);
+           							$('input[name="into_time[]"]').eq(i).val(datai.data.damage_text[j].into_time);
+           							if(datai.data.damage_text[j].is_back == "1"){
+           								$('.damage_list').eq(i).find('.checkbox').children('input[name="is_back[]"]').trigger('click');
+           							}
+           							if(datai.data.damage_text[j].no_storage == "1"){
+           								$('.damage_list').eq(i).find('.checkbox').children('input[name="no_storage[]"]').trigger('click');
+           							}
+           							if($('input[name="img_url[]"]').eq(i).val() != ''){
+           								var result = $('input[name="img_url[]"]').eq(i).val().split(',');
+           								for(var m = 0; m < result.length ; m++){
+           									if(result[m] != ''){
+           										var html = [];
+           										html.push('<div class="ui left floated tiny image" id="image_'+i+'_'+m+'">');
+											      html.push('<a class="ui left red corner label" onclick="img_remove('+i+','+m+')">');
+											        html.push('<i class="icon rotate-45">移除</i>');
+											      html.push('</a>');
+											      html.push('<img src="../'+result[m]+'" uc="'+result[m]+'" onclick=img_largen("../'+result[m]+'")>');
+											    html.push('</div>');
+												$(html.join('')).appendTo($('.add_images').eq(i));
+           									}
+           								}
+           							}
+           						}
+           					}
+           				}
+
+	           				
+	           			//操作人和操作时间赋值
+	           			var oper_user = datai.data["oper_user"+4];
+	           			var oper_time = datai.data["oper_time"+4];
+	           			user_time(4,oper_user,oper_time);
+
+	           			able_or_dis();
+	           		}      		
+	   			},
+	            error: function (msg) {}
+		   	});
+		})
+
+		//刷新违章
+		function refresh(){
+			$('#b_modal').modal('show');
+			
+		}
+		function sure_refresh(){
+			$('#b_modal').modal('hide');
+			$.ajax({
+	           	url:'../index.php?r=car/car-back/wz-refresh&id='+page_id,
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(data){	           			
+	           	},
+	           	error: function (msg) {}
+	        })
+		}
+		
+		//添加图片
+		function addimg(i){
+			$('#img'+i).ajaxSubmit({
+				dataType : "json",
+				success : function(data){
+					var html = [];
+					var mm = $('.damage_list').eq(i).find('.image:last').attr('id');
+					if(mm == undefined){
+						m = 0
+					}else{
+						m = parseInt(mm.split('_')[2]) + 1;
+					}	
+					html.push('<div class="ui left floated tiny image" id="image_'+i+'_'+m+'">');
+				      html.push('<a class="ui left red corner label" onclick="img_remove('+i+','+m+')">');
+				        html.push('<i class="icon rotate-45">移除</i>');
+				      html.push('</a>');
+				      html.push('<img src="../'+data.img_url+'" uc="'+data.img_url+'" onclick=img_largen("../'+data.img_url+'")>');
+				    html.push('</div>');
+					$(html.join('')).appendTo($('.add_images').eq(i));
+					var old_url = $('input[name="img_url[]"]').eq(i).val();
+					$('input[name="img_url[]"]').eq(i).val(old_url+data.img_url+',');
+
+				},
+				error: function(xhr){
+
+				}
+			});
+		}
+
+		function img_remove(i,m){
+			var url =  $('#image_'+i+'_'+m+'').find('img').attr("uc");
+			var result = $('input[name="img_url[]"]').eq(i).val().split(',');
+			for(var k = 0 ; k < result.length ; k++ ){
+				if(url == result[k]){
+					result[k] = '';
+				}
+			}
+			var n_url = '';
+			for(var k = 0 ; k < result.length ; k++ ){
+				if(result[k] != ''){
+					n_url += result[k]+','
+				}
+			}
+			$('input[name="img_url[]"]').eq(i).val(n_url);
+			$('#image_'+i+'_'+m+'').detach();
+		}
+
+		function img_largen(img_url){
+			$('#img_modal').modal('show');
+			$('#img_modal').children('img').attr("src",img_url);
+			var wid = $('#img_modal').children('img').width();
+			$('#img_modal').css({"width":wid,"margin-left":-wid/2});
+		}
+
+
+		function add4(){
+			//验证
+			//
+			$('#form1').ajaxSubmit({
+				dataType : "json",
+				success : function(data){
+					if(data.status){
+						a_modal_show();
+					}else{
+						alert('您非该站点负责人，提交无效！');
+					}
+				},
+				error: function(xhr){
+					alert("提交失败");
+				}
+			});
+		}
+
+		
+		function able_or_dis(){
+			if(page_state != 3 && page_state != 4){
+				$('input').attr("readonly","readonly");
+				$('input').click(function (event) {
+		           event.preventDefault();   // 如果<a>定义了 target="_blank“ 需要这句来阻止打开新页面
+				});
+				$('#form1').find('a').removeAttr("onclick");
+			}
+		}
+		
+
+  	</script>
+  
+</html>

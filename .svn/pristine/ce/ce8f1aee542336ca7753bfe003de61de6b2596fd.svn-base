@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>出险理赔流程</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css" >
+	<link rel="stylesheet" type="text/css" href="css/lyz.calendar.css"  />
+</head>
+<body>
+	<div class='control-box'>
+		<div class='mainview'>
+			<div class='product product-full product-col-1 sidebar-trans'>
+				<div class='mbody'>
+					<div class='container'>
+						<div class='console-table-wapper margin-top'>
+							<div class='one-block'>
+								<div class='block-title'>
+									出险理赔流程
+								</div>
+								<div class='block-content clear'>
+									<div class='flow-nav fl'>
+										<ul id='page_nav_ul'>
+											<a href="index.html" class='have-done'><li>1、报案出险</li></a>
+											<a href="index1.html" class='have-done'><li>2、查勘结论</li></a>
+											<a href="index2.html" class='have-done'><li>3、保险定损</li></a>
+											<a href="index3.html" class='have-done'><li>4、车辆维修</li></a>
+											<a href="index4.html" class='have-done'><li>5、保险理赔</li></a>
+											<a href="index5.html" class='have-done'><li>6、保险请款</li></a>
+											<a href="index6.html" class='active'><li>7、转账结案</li></a>
+										</ul>
+									</div>
+									<div class='flow-container fr content10-noborder'>
+										<form id="myform">
+											<input name='id' class="hide" />
+											
+				
+											<div class='save-cancel clear mg-8'>
+												<input type="button" id='save' class="btn btn-ra5 btn-normal" value="保存">
+												<input type="button" class="btn btn-ra5 btn-cannot" value="取消" onclick="cancel()">
+											</div>
+											<div id='oper' class="block-content10 clear hide" >
+												<div class="col-12">
+													<div class="title">上一次操作人员:</div>
+													<div class="content" id='oper_user7'>
+													</div>
+												</div>
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='remind'>
+		<div style='display: none;'>
+		</div>
+	</div>
+	<script type="text/javascript" src='js/jqueryv183.js'></script>
+	<script type="text/javascript" src='js/flow.js'></script>
+	<script type="text/javascript" src='js/jquery.ajaxSubmit.js'></script>
+	<script src="js/lyz.calendar.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	//获取页面尾部?代码
+	function getQueryString(name) { 
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+		var r = window.location.search.substr(1).match(reg); 
+		if (r != null) return unescape(r[2]); return null; 
+	}
+	var page_id = getQueryString('id');
+
+	//初始跳转
+	var page_step = getQueryString('step');
+	var page_have = getQueryString('have');
+	//对左侧A标签加ID
+	ahref_add_id(page_id,page_step,page_have);
+
+	$(document).ready(function(){
+		$.ajax({
+           	url:'../index.php?r=car/insurance-claim/get7',
+           	data: {id:page_id},
+           	type:'get',
+           	dataType:'json',
+           	success:function(datai){
+           		if(datai.status){
+	           		$('input[name="id"]').val(page_id);
+	           		if(datai.data.oper_user7 == 0){
+		           			$('#oper').hide();
+		           		}else{
+		           			$('#oper').show();
+		           			$('#oper_user7').text(datai.data.oper_user7);
+		           		}
+	           		for(i = datai.data.pay_text.length-1;  i >= 0 ; i--){
+	           			num_i = i+1;
+	           			if(datai.data.transfer_text == null){
+	           				datai.data.transfer_text ={};
+	           			}
+	           			if(datai.data.transfer_text[i] == undefined){
+	           				datai.data.transfer_text[i] = {};
+	           				datai.data.transfer_text[i].transfer_time = '';
+	           				datai.data.transfer_text[i].append_url = '';
+	           			}
+	           			var c_name = datai.data.pay_text[i].customer_name;
+	           			if(datai.data.pay_text[i].customer_name == '其他'){
+	           				c_name = datai.data.pay_text[i].customer_name_details;
+	           			}
+	           			
+	           			var html = [];
+	           			html.push('<div class="block-content10 clear">');
+	           				html.push('<div class="col-12">');
+	           					html.push(c_name);
+	           				html.push('</div>');
+	           			html.push('</div>');
+	           			html.push('<div class="block-content10 clear">');
+	           				html.push('<div class="col-4">');
+	           					html.push('<div class="title">转账时间</div>');
+								html.push('<div class="content">');
+									html.push('<input name="transfer_time[]" id="txtBeginDate'+i+'" class="form-control col-10" readonly="readonly" value='+datai.data.transfer_text[i].transfer_time+'>');
+								html.push('</div>');
+							html.push('</div>');
+						html.push('</div>');
+						html.push('<div class="block-content10 clear">');
+	           				html.push('<div class="col-4">');
+	           					html.push('<div class="title">转账凭证</div>');
+								html.push('<div class="content">');
+									if(datai.data.transfer_text[i].append_url == "" || datai.data.transfer_text[i].append_url == null){
+									}else{
+									html.push('<img src="../'+datai.data.transfer_text[i].append_url+'" style="height:100px; width:100px;">');
+									html.push('<input class="hide" name="append_url[]" value="'+datai.data.transfer_text[i].append_url+'"/>');
+									}
+									html.push('<input type="file" name="append'+num_i+'">');
+								html.push('</div>');
+							html.push('</div>');
+						html.push('</div>');
+
+						$(html.join('')).prependTo('#myform');
+
+						$(function () {
+					        $("#txtBeginDate" + i).calendar();
+					        if($("#txtBeginDate" + i).val() == ''){
+					        	var myDate = new Date();
+						        var year = myDate.getFullYear();
+						        var month = myDate.getMonth() + 1;
+						        var day = myDate.getDate();
+						        $('#txtBeginDate' + i).val(year+'-'+month+'-'+day); 
+					        }
+					    });
+	           		}
+
+           		}; 
+   			},
+            error: function (msg) {}
+	   	});
+	})
+
+	$('#save').on('click', function() {
+        $("#myform").ajaxSubmit({
+            type: 'post', // 提交方式 get/post
+            url: '../index.php?r=car/insurance-claim/add7', // 需要提交的 url
+            dataType: "json",
+            success: function(data) {
+            	var app_len =$('input[name="transfer_time[]"]').length;
+            	var n = 0;
+            	for( var i = 0 ; i < app_len; i++){
+            		j = i+1;
+            		if(($('input[name="append'+j+'"]').val() != '' || !($('input[name="append_url[]"]').eq(i).val() == null)) && $('input[name="transfer_time[]"]').eq(i).val() != ''){
+            			n++;
+            		}else{
+            			alert('已保存');
+            			return; 
+            		}
+            	}
+            	if(n == $('input[name="transfer_time[]"]').length){
+            		alert('已结案');
+            	}
+            },
+            error: function (msg) {
+            }
+        });
+        	     
+	});
+	</script>
+</body>
+</html>

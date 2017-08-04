@@ -1,0 +1,106 @@
+<?php
+namespace backend\modules\repair\controllers;
+use backend\controllers\BaseController;
+use backend\models\PurchaseOrderMain;
+use backend\models\PurchaseExpress;
+
+use backend\models\Car;
+use backend\models\ConfigCategory;
+use backend\models\CarFault;
+use backend\models\CarDrivingLicense;
+use backend\models\CarBrand;
+use backend\models\Owner;
+use backend\models\OperatingCompany;
+use backend\models\Battery;
+use backend\models\Motor;
+use backend\models\MotorMonitor;
+use backend\classes\UserLog;
+use common\models\Excel;
+use common\models\File;
+use yii;
+use yii\base\Object;
+use yii\data\Pagination;
+use backend\models\Admin;
+use common\classes\Category;
+use backend\models\CarType;
+class RepairInfoController extends BaseController
+{
+    public function actionIndex()
+    {
+        $buttons = $this->getCurrentActionBtn();
+        //售后修理厂
+        $query = (new \yii\db\Query())
+            ->select('id,site_name')
+            ->from('oa_service_site');
+        $searchFormOptions['repair_company'] = $query->all();
+        return $this->render('index',['buttons'=>$buttons,'formoption'=>$searchFormOptions]);
+    }
+
+    public function actionAdd()
+    {
+        return $this->render('add');
+    }
+
+    public function actionEdit()
+    {
+        return $this->render('edit');
+    }
+
+    public function actionGetList()
+    {
+        $pageSize = isset($_GET['rows']) && $_GET['rows'] <= 50 ? intval($_GET['rows']) : 10;
+        //var_dump($pageSize);exit;
+        $query = (new \yii\db\Query())
+            ->select('c.parts_name as parents_name,c.is_del,d.is_del,d.parts_name as son_name,b.name,a.parts_id,a.car_brand,a.parts_name,a.parts_brand,a.vender_code,a.dst_code,a.unit,a.main_engine_price')
+            ->from('cs_parts_info as a')
+            ->leftjoin('cs_car_brand as b','a.car_brand = b.id')
+            ->leftJoin('cs_parts_kind as c','a.parts_type = c.id')
+            ->leftJoin('cs_parts_kind as d','a.parts_kind = d.id')
+            ->where(['a.is_del'=>'0','c.is_del'=>'0','d.is_del'=>'0']);
+        $configItems = ['part_type','part_kind'];
+        $config = (new ConfigCategory)->getCategoryConfig($configItems,'value');
+        if (yii::$app->request->isGet){
+            $dat = $_GET;
+            if($dat['car_brand'] != ''){
+                $query->andFilterWhere(['=','car_brand',trim($dat['car_brand'])]);
+            }
+            if($dat['parts_type'] != ''){
+                $query->andFilterWhere(['=','parts_type',trim($dat['parts_type'])]);
+            }
+            if($dat['parts_kind'] != ''){
+                $query->andFilterWhere(['=','parts_kind',trim($dat['parts_kind'])]);
+            }
+            if($dat['parts_name'] != ''){
+                $query->andFilterWhere(['like','a.parts_name',trim($dat['parts_name'])]);
+            }
+            if($dat['parts_brand'] != ''){
+                $query->andFilterWhere(['like','a.parts_brand',trim($dat['parts_brand'])]);
+            }
+            if($dat['vender_code'] != ''){
+                $query->andFilterWhere(['like','vender_code',trim($dat['vender_code'])]);
+            }
+            if($dat['dst_code'] != ''){
+                $query->andFilterWhere(['like','dst_code',trim($dat['dst_code'])]);
+            }
+        }
+        $total = $query->count();
+        //var_dump($total);exit;
+        $pages = new Pagination(['totalCount' =>$total, 'pageSize' => $pageSize]);
+
+        $data = $query->offset($pages->offset)->limit($pages->limit)->all();
+
+        $carBrand = CarBrand::getCarBrands();
+        //echo '<pre>';
+        //var_dump($data);exit;
+        foreach($data as &$dataItem){
+            if(isset($carBrand[$dataItem['car_brand']]) && $carBrand[$dataItem['car_brand']]){
+                $dataItem['car_brand'] = $carBrand[$dataItem['car_brand']]['name'];
+            }
+        }
+        //数据转换
+        $allData=array();
+        $allData['rows'] = $data;
+        $allData['total'] = $total;
+        return json_encode($allData);
+    }
+}

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+	<head>
+  		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  		<meta name="Generator" content="EditPlus®">
+  		<meta name="Author" content="">
+  		<meta name="Keywords" content="">
+  		<meta name="Description" content="">
+  		<title>退车流程</title>
+  		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+  		<link rel="stylesheet" type="text/css" href="css/docs.css">
+  		<style type="text/css">
+  			.dimmed.dimmable>.ui.animating.dimmer.d1, .dimmed.dimmable>.ui.visible.dimmer.d1, .ui.active.dimmer.d1 {
+			    display: block;
+			    opacity: 0.1;
+			}
+  		</style>
+	</head>
+	<body>
+		<div class="main ui container" style="margin-top:16px;">
+			<div class="ui grid">
+		    	<div class="four wide column">
+		    		<div class="ui fluid vertical steps">
+		        		<a class="step" href="index1.html">
+				    		<div class="content">
+				      			<div class="title">1.客户退车意愿登记</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index2.html">
+				    		<div class="content">
+				      			<div class="title">2.销售沟通确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index3.html">
+				    		<div class="content">
+				      			<div class="title">3.销售负责人审批</div>
+				    		</div>
+				  		</a>
+						<a class="step" href="index4.html">
+				    		<div class="content">
+				      			<div class="title">4.售后验车</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index5.html">
+				    		<div class="content">
+				      			<div class="title">5.车辆入库</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index6.html">
+				    		<div class="content">
+				      			<div class="title">6.押金结算</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index7.html">
+				    		<div class="content">
+				      			<div class="title">7.结算异常审批</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index8.html">
+				    		<div class="content">
+				      			<div class="title">8.财务转账收款确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="active step" href="index9.html">
+				    		<div class="content">
+				      			<div class="title">9.归档</div>
+				    		</div>
+				  		</a>
+		        	</div>
+		      	</div>
+		      	<div class="twelve wide column ui segments">
+		      		<div class="field id_test hide">
+		      			<div class="ui error message">
+					        <div class="header">您没有权限操作此步骤!</div>
+					    </div>
+					    <div></div>
+		      		</div>
+		      		<div class="ui dimmer d1">
+				   		<div class="content">
+				     	<div class="center">
+				        	<h2 class="ui inverted icon header"> 您没有权限操作此步骤! </h2>
+				     	 </div>
+				    	</div>
+				  	</div>
+		      		<form class="ui form" id="form1"  action="../index.php?r=car/car-back/add9" method="post">
+		      			<input name='id' class="hide" />
+						<div class="field">
+				          	<label>备注</label>
+				          	<textarea name="note8" placeholder="请输入备注信息" rows="2"></textarea>
+				        </div>
+
+				        <div class="field">
+					    	<div class="a-upload">
+							    <input type="file" name="append4" id="append4">
+							    <span class="showFileName">上传相关附件</span>
+							</div>
+						</div>
+        				<div class="ui column grid">
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide save_cancel_div">
+					          		<div class="ui submit button green" onclick="add9()">保存</div>
+		        					<div class="ui submit button" onclick="cancel()">取消</div>
+		        			  	</div>
+					        </div>
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide">
+					          		<span class="oper_user mg-r-10"></span><span class="oper_time"></span>
+		        			  	</div>
+					        </div>
+					    </div>
+			        </form>
+		      	</div>
+		    </div>
+		</div>
+		<div class="ui small modal" id="a_modal" >
+			<input name='id' class="hide" />
+		  	<div class="header">保存成功！</div>
+		  	<div class="content">
+		      	<p>已签订《合同终止书》，此次退车流程结束</p>
+		    </div>
+		    <div class="actions">
+		      	<div class="ui green button" onclick="cancel()">确定</div>
+		    </div>
+		</div>
+	</body>
+	<script src="js/jqueryv183.js"></script>
+  	<script src="js/jquery.form.js"></script>
+  	<script src="js/semantic.min.js"></script>
+  	<script src="js/flow.js"></script>
+
+	
+ 	
+  	<script>
+  		//预处理弹出输入框
+  		function a_modal_show(){
+	  		$('#a_modal').modal('show');
+  		}
+  		function modal_close(){
+	  		$('.ui.modal').modal('hide');
+  		}
+  		//处理步骤显示
+  		var page_id = getQueryString('id');
+  		var page_state = getQueryString('state');
+  		var page_role_ids = getQueryString('role_ids');
+		step_show_hide(page_id,page_state,8,page_role_ids);
+
+		//判断角色是否能修改该页面
+		$.ajax({
+           	url:'../index.php?r=car/car-back/rbac-access&index=9',
+           	type:'get',
+           	dataType:'json',
+           	success:function(data){
+           		if(data == false){
+           			/*
+           			//预处理遮盖层
+			  		$('.ui .segments').dimmer('show','on');
+			  		$('.ui .segments').off("click");//让点击事件取消
+			  		*/
+			  	
+			  		//不可操作
+			  		$('.id_test').show();
+			  		$('.save_cancel_div').hide();
+           		}
+           	},
+           	error: function (msg) {}
+        })
+  		
+  		//获取客户列表
+  		$(document).ready(function(){
+       		//获取页面值
+       		$.ajax({
+	           	url:'../index.php?r=car/car-back/get9',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(datai){
+	           		if(datai.status){
+	           			$('textarea[name="note8"]').val(datai.data.note8);
+
+	           			//判断是否有图片
+	           			if(datai.data.append_url4 != null && datai.data.append_url4 != ''){
+							var my_format_length = datai.data.append_url4.split('.').length;
+							var my_format = datai.data.append_url4.split('.')[my_format_length - 1]
+							var html = [];
+							if(my_format == 'jpg' || my_format == 'jpeg' || my_format == 'png'){
+								html.push('<div class="field my_show">');
+									html.push('<img src="../'+datai.data.append_url4+'" style="width:100%;">');
+									html.push('<input class="hide" name="append_url4" value="'+datai.data.append_url4+' "/>');
+								html.push('</div>');
+								$('.a-upload').parent().before(html.join(''));
+							}else if(my_format == 'pdf'){
+								html.push('<div class="field my_show"">');
+									html.push('<iframe src="../'+datai.data.append_url4+'" width="800" height="600"></iframe> ');
+									html.push('<input class="hide" name="append_url4" value="'+datai.data.append_url4+' "/>');
+								html.push('</div>');
+								$('.a-upload').parent().before(html.join(''));
+							}else{
+								alert('上传文件格式错误请联系程序员处理问题')
+							}		
+						}
+	           			//操作人和操作时间赋值
+	           			var oper_user = datai.data["oper_user"+8];
+	           			var oper_time = datai.data["oper_time"+8];
+	           			user_time(8,oper_user,oper_time);
+	           		} 		
+	   			},
+	            error: function (msg) {}
+		   	});   			
+		})
+
+		
+		$("#append4").change(function(){
+			readURL(this);
+		})
+	
+
+		function readURL(input) {
+			
+		    if (input.files && input.files[0]) {
+		    	var my_name = input.files[0].name;
+		    	var my_format_length = my_name.split('.').length;
+		    	var my_format = my_name.split('.')[my_format_length - 1];
+		    	if(my_format == 'jpg' || my_format == 'jpeg' || my_format == 'png'){
+		    		$('.my_show').detach();
+		    		var reader = new FileReader();
+			        reader.onload = function (e) {
+			            var my_img = '<div class="field my_show">'+
+					            		'<img src="'+e.target.result+'" style="width:100%;">'+
+					            	'</div>'
+						$('.a-upload').parent().before(my_img);
+			        }
+			        reader.readAsDataURL(input.files[0]);
+		    	}else if(my_format == 'pdf'){
+		    		$('.my_show').detach();
+		    		var reader = new FileReader();
+			        reader.onload = function (e) {
+			            var my_img = '<div class="field my_show">'+
+			            			'<iframe src="'+e.target.result+'" width="800" height="600"></iframe> '+
+			            			'</div>'
+						$('.a-upload').parent().before(my_img);
+			        }
+			        reader.readAsDataURL(input.files[0]);
+		    	}else{
+		    		alert('文件格式有问题禁止上传');
+		    	}
+		   }
+		}
+
+		function add9(){
+			//验证
+			//
+			$('#form1').ajaxSubmit({
+				dataType : "json",
+				success : function(data){
+					if(data.status){
+						a_modal_show();
+					}else {
+						alert(data.info);
+					}
+				},
+				error: function(xhr){
+					alert("提交失败");
+				}
+			});
+		}
+  	</script>
+</html>

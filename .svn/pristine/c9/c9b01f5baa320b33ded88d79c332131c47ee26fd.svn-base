@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>出险理赔流程</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css" >
+	<link rel="stylesheet" type="text/css" href="css/lyz.calendar.css"  />
+	<link rel="stylesheet" type="text/css" href="css/cityset.css" >
+</head>
+<body>
+	<div class='control-box'>
+		<div class='mainview'>
+			<div class='product product-full product-col-1 sidebar-trans'>
+				<div class='mbody'>
+					<div class='container'>
+						<div class='console-table-wapper margin-top'>
+							<div class='one-block'>
+								<div class='block-title'>
+									出险理赔流程
+								</div>
+								<div class='block-content clear'>
+									<div class='flow-nav fl'>
+										<ul id='page_nav_ul'>
+											<a href="index.html" class='have-done'><li>1、报案出险</li></a>
+											<a href="index1.html" class='have-done'><li>2、查勘结论</li></a>
+											<a href="index2.html" class='have-done'><li>3、保险定损</li></a>
+											<a href="index3.html" class='have-done'><li>4、车辆维修</li></a>
+											<a href="index4.html" class='have-done'><li>5、保险理赔</li></a>
+											<a href="index5.html" class='active'><li>6、保险请款</li></a>
+											<a href="index6.html" class='disableCss'><li>7、转账结案</li></a>
+										</ul>
+									</div>
+									<div class='flow-container fr content10-noborder'>
+										<form id="myform">
+											<input name='id' class="hide" />
+											<div class="block-content10 clear">
+												<div class="col-4">
+													<div class="title">司机自付</div>
+													<div class="content"><input name="damaged_money2" class="form-control col-10" /></div>
+												</div>
+												<div class="col-4">
+													<div class="title"><span class="warncolor">*</span>抵租金额</div>
+													<div class="content"><input name="rent_amount" class="form-control col-10 must" onChange="javascript:claim_change()" /></div>
+												</div>
+											</div>
+
+											<div class='qksq' style="margin-top:20px;">
+												<div class="block-content10 clear">
+													<div class="col-6">
+														<div class="title zhkh">1、转账客户或对象</div>
+														<div class="content">
+															<input name="customer_name[]" class="form-control col-10  drop-down-i" type="text">
+															<ul id="customer_name_u" class='drop-down-u'>
+															</ul>
+														</div>
+													</div>
+													<div class="col-4 khxq hide">
+														<div class="title">客户名称详情</div>
+														<div class="content">
+															<input name="customer_name_details[]" class="form-control col-10">
+														</div>
+													</div>
+													<div class='col-2' style='display: none;'>
+														<div class='btn btn-ra5 btn-cannot remove'>
+															移除
+														</div>
+													</div>
+												</div>
+												<div class="block-content10 clear">
+													<div class="col-12">
+														<div class="title">开户银行</div>
+														<div class="content"><input name="bank_account[]" class="form-control col-10"></div>
+													</div>
+												</div>
+												<div class="block-content10 clear">
+													<div class="col-4">
+														<div class="title">账户名</div>
+														<div class="content"><input name="account_name[]" class="form-control col-10"></div>
+													</div>
+													<div class="col-4">
+														<div class="title">开户帐号</div>
+														<div class="content"><input name="account_opening[]" class="form-control col-10"></div>
+													</div>
+												</div>
+												<div class="block-content10 clear">
+													<div class="col-4">
+														<div class="title"><span class="warncolor">*</span>实际转账金额</div>
+														<div class="content"><input name="transfer_amount[]" class="form-control col-10 must" onChange="javascript:claim_change()" /></div>
+													</div>
+												</div>
+												<div class="block-content10 clear">
+													<div class="col-12">
+														<div class="title">请款用途</div>
+														<div class="content"><input name="please_use[]" class="form-control col-10"></div>
+													</div>
+												</div>
+											</div>
+											
+											<div class='btn btn-ra5 btn-normal mg-8'' id='addqksq'>添加请款申请</div>
+
+											<div class="block-content10 clear">
+												<div class="col-2">
+													<div class="title">应转理赔总额:</div>
+													<div class="content zzze"></div>
+												</div>
+												<div class="col-2">
+													<div class="title">理赔余额:</div>
+													<div class="content lpye"></div>
+												</div>
+											</div>
+
+											<div class='save-cancel clear mg-8'>
+												<input type="button" id='save' class="btn btn-ra5 btn-normal" value="保存并下一步">
+												<input type="button" class="btn btn-ra5 btn-cannot" value="取消" onclick="cancel()">
+											</div>
+											<div id='oper' class="block-content10 clear hide" >
+												<div class="col-12">
+													<div class="title">上一次操作人员:</div>
+													<div class="content" id='oper_user6'>
+													</div>
+												</div>
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='remind'>
+		<div style='display: none;'>
+		</div>
+	</div>
+	<script type="text/javascript" src='js/jqueryv183.js'></script>
+	<script type="text/javascript" src='js/flow.js'></script>
+	<script type="text/javascript" src='js/jquery.ajaxSubmit.js'></script>
+	<script type="text/javascript">
+		//获取页面尾部?代码
+		function getQueryString(name) { 
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+			var r = window.location.search.substr(1).match(reg); 
+			if (r != null) return unescape(r[2]); return null; 
+		}
+		var page_id = getQueryString('id');
+
+		//初始跳转
+		var page_step = getQueryString('step');
+		var page_have = getQueryString('have');
+		//对左侧A标签加ID
+		ahref_add_id(page_id,page_step,page_have);
+
+		//计算保险余额
+		var balance = 0;
+		function claim_change(){
+			var amount = 0;
+			if($('input[name="rent_amount"]').val() != ''){
+				amount += parseFloat($('input[name="rent_amount"]').val());
+			}
+			for(i=0 ; i < $('input[name="transfer_amount[]"]').length ; i++){
+				if($('input[name="transfer_amount[]"]').eq(i).val() != ''){
+					amount += parseFloat($('input[name="transfer_amount[]"]').eq(i).val());
+				}
+			}//余额实际转账和低阻金额相加
+			$('.zzze').text(amount.toFixed(2)+'元');
+			$('.lpye').text((balance - amount).toFixed(2)+'元');
+		}
+		//页面加载
+		$(document).ready(function(){
+			$.ajax({
+	           	url:'../index.php?r=car/insurance-claim/get6',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(dataget){
+	           		if(dataget.status){
+	           			$('input[name="id"]').val(page_id);
+	           			$('input[name="damaged_money2"]').val(dataget.data.damaged_money2);
+	           			$('input[name="rent_amount"]').val(dataget.data.rent_amount);
+	           			balance = dataget.data.claim_amount;//获取理赔总额
+		           		$('input[name="customer_name[]"]').eq(0).val(dataget.data.pay_text[0].customer_name);
+		           		if(dataget.data.pay_text[0].customer_name == "其他"){
+		           			$('.khxq').eq(0).show();
+		           		}
+		           		$('input[name="customer_name_details[]"]').eq(0).val(dataget.data.pay_text[0].customer_name_details);
+		           		$('input[name="bank_account[]"]').eq(0).val(dataget.data.pay_text[0].bank_account);
+		           		$('input[name="account_name[]"]').eq(0).val(dataget.data.pay_text[0].account_name);
+		           		$('input[name="account_opening[]"]').eq(0).val(dataget.data.pay_text[0].account_opening);
+		           		$('input[name="transfer_amount[]"]').eq(0).val(dataget.data.pay_text[0].transfer_amount);
+		           		$('input[name="please_use[]"]').eq(0).val(dataget.data.pay_text[0].please_use);
+		           		//
+		           		if(dataget.data.oper_user6 == 0){
+		           			$('#oper').hide();
+		           		}else{
+		           			$('#oper').show();
+		           			$('#oper_user6').text(dataget.data.oper_user6);
+		           		}
+		           		for( var i = 1 ; i < dataget.data.pay_text.length ; i++){
+		           			var qksq = $('.qksq:first').clone();
+							qksq.find('input').val('');
+							qksq.find('.khxq').hide();
+							qksq.find('.zhkh').text(i+1+'、转账客户或对象');
+							qksq.find('input[name="customer_name[]"]').val(dataget.data.pay_text[i].customer_name);
+							if(dataget.data.pay_text[i].customer_name == "其他"){
+								qksq.find('.khxq').show();
+							} 
+							qksq.find('input[name="customer_name_details[]"]').val(dataget.data.pay_text[i].customer_name_details);
+							qksq.find('input[name="bank_account[]"]').val(dataget.data.pay_text[i].bank_account);
+							qksq.find('input[name="account_name[]"]').val(dataget.data.pay_text[i].account_name);							
+							qksq.find('input[name="account_opening[]"]').val(dataget.data.pay_text[i].account_opening);
+							qksq.find('input[name="transfer_amount[]"]').val(dataget.data.pay_text[i].transfer_amount);
+							qksq.find('input[name="please_use[]"]').val(dataget.data.pay_text[i].please_use);
+							$('.qksq:last').after(qksq);
+							$('.qksq').find('.remove').parent('div').show();
+							$('.qksq:first').find('.remove').parent('div').hide();
+							$('.remove').on('click' , function(){
+								$(this).parents('.qksq').detach();
+								for(var j = 0; j <= $('.zhkh').length ; j++){
+									$('body').find('.zhkh').eq(j).text(j+1+'、转账客户或对象');
+								}
+								claim_change()
+							});
+		           		}
+
+		           		claim_change()//计算下面的金额
+	           		}; 
+	   			},
+	            error: function (msg) {}
+		   	});
+		})
+
+		//输入客户名称
+		$('input[name="customer_name[]"]').keyup(function(){
+			var i_val = $(this).val();
+			$.ajax({
+		        type: "get",
+		        url: "../index.php?r=car/insurance-claim/get-customers",
+		        data: {q:i_val},
+		        dataType: "json",
+		        success: function (data) {//ajax请求成功后触发的方法
+		        	$('.drop-down-u li').detach();
+		        	var html = [];
+		        	html.push('<li>其他</li>');
+		        	for(var i = 0; i < data.length; i++){
+		        		html.push('<li>' + data[i].company_name + '</li>');
+		        	}
+		        	$(html.join('')).appendTo('.drop-down-u');
+		        	$('.drop-down-u li').click(function(){
+						var v_li = $(this).text();
+						$(this).parent().siblings('.drop-down-i').val(v_li);
+						$(this).parent().hide();
+						if($(this).parent().siblings('.drop-down-i').val() == '其他'){
+							$(this).parents('.block-content10').find('.khxq').show();
+						}else{
+							$(this).parents('.block-content10').find('.khxq').hide();
+						}
+					})
+		        },
+		        error: function (msg) {}
+		    });
+		})
+
+		$('#addqksq').click(function(){
+			var qksq = $('.qksq:first').clone();
+			qksq.find('input').val('');
+			qksq.find('input[name="customer_name_details[]"]').parents('.khxq').hide();
+			var qksq_num = $('.qksq').length;
+			qksq.find('.zhkh').text(qksq_num+1+'、转账客户或对象');
+			$('.qksq:last').after(qksq);
+			$('.qksq').find('.remove').parent('div').show();
+			$('.qksq:first').find('.remove').parent('div').hide();
+			$('.remove').on('click' , function(){
+				$(this).parents('.qksq').detach();
+				for(var j = 0; j <= $('.zhkh').length ; j++){
+					$('body').find('.zhkh').eq(j).text(j+1+'、转账客户或对象');
+				}
+				claim_change()
+			});
+
+			//输入下拉
+			$('.drop-down-i').keyup(function(){
+				var i_width = $(this).width()-8;
+				$(this).siblings('.drop-down-u').width(i_width);
+				$(this).siblings('.drop-down-u').show();
+			});
+			$('.drop-down-u').mouseleave(function(){
+				$(this).hide()
+			})
+
+			$('input[name="customer_name[]"]').keyup(function(){
+				var i_val = $(this).val();
+				$.ajax({
+			        type: "get",
+			        url: "../index.php?r=car/insurance-claim/get-customers",
+			        data: {q:i_val},
+			        dataType: "json",
+			        success: function (data) {//ajax请求成功后触发的方法
+			        	$('.drop-down-u li').detach();
+			        	var html = [];
+			        	html.push('<li>其他</li>');
+			        	for(var i = 0; i < data.length; i++){
+			        		html.push('<li>' + data[i].company_name + '</li>');
+			        	}
+			        	$(html.join('')).appendTo('.drop-down-u');
+			        	$('.drop-down-u li').click(function(){
+							var v_li = $(this).text();
+							$(this).parent().siblings('.drop-down-i').val(v_li);
+							$(this).parent().hide();
+							if($(this).parent().siblings('.drop-down-i').val() == '其他'){
+								$(this).parents('.block-content10').find('.khxq').show();
+							}else{
+								$(this).parents('.block-content10').find('.khxq').hide();
+							}
+						})
+			        },
+			        error: function (msg) {}
+			    });
+			})
+		})
+
+		$('#save').on('click', function() {
+			$('.warn').detach();
+			$('.must').each(function(){
+				if($(this).val() == ''){
+					$(this).after('<div class="warn">请填写完整内容</div>');
+				}
+			});
+			$('.must').keyup(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			$('.must').change(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			$('.must').mouseover(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			if($('.warn').length){
+				return false;
+			}
+	        $("#myform").ajaxSubmit({
+	            type: 'post', // 提交方式 get/post
+	            url: '../index.php?r=car/insurance-claim/add6', // 需要提交的 url
+	            dataType: "json",
+	            success: function(data) { 
+	            	window.location.href="index6.html?id="+page_id+"&step="+page_step+"&have=1";
+	            },
+	            error: function (msg) {
+	            }
+	        });
+	        	     
+		});
+
+	</script>
+</body>
+</html>

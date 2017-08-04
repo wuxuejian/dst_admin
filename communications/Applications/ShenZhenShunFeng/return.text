@@ -1,0 +1,31 @@
+2016-12-09 11:14:47 | Send: 7e0200001c010008875137001700000000000400030159d77c06cc74d90000000000b0161209111420ea7e
+2016-12-09 11:14:47 | Reply(hex): 7e80010005010008875137001400140200006e7e
+Unpack: array (
+  0 => 
+  array (
+    'msgId' => 32769,
+    'msgProperty' => '0000000000000101',
+    'terninalMobile' => '010008875137',
+    'msgNumber' => 20,
+    'replyNumber' => 20,
+    'replyId' => 512,
+    'replyResult' => 0,
+    'checkCode' => 110,
+  ),
+)
+
+2016-12-09 11:14:47 | Reply(hex): 7e80010005010008875137001500160200006d7e
+Unpack: array (
+  0 => 
+  array (
+    'msgId' => 32769,
+    'msgProperty' => '0000000000000101',
+    'terninalMobile' => '010008875137',
+    'msgNumber' => 21,
+    'replyNumber' => 22,
+    'replyId' => 512,
+    'replyResult' => 0,
+    'checkCode' => 109,
+  ),
+)
+

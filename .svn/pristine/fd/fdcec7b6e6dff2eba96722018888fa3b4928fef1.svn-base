@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+	<head>
+  		<meta charset="UTF-8">
+  		<meta name="Generator" content="EditPlus®">
+  		<meta name="Author" content="">
+  		<meta name="Keywords" content="">
+  		<meta name="Description" content="">
+  		<title>退车流程</title>
+  		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+  		<link rel="stylesheet" type="text/css" href="css/docs.css">
+  		<style type="text/css">
+  			.dimmed.dimmable>.ui.animating.dimmer.d1, .dimmed.dimmable>.ui.visible.dimmer.d1, .ui.active.dimmer.d1 {
+			    display: block;
+			    opacity: 0.1;
+			}
+  		</style>
+	</head>
+	<body>
+		<div class="main ui container" style="margin-top:16px;">
+			<div class="ui grid">
+		    	<div class="four wide column">
+		    		<div class="ui fluid vertical steps">
+		        		<a class="active step" href="index1.html">
+				    		<div class="content">
+				      			<div class="title">1.客户退车意愿登记</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index2.html">
+				    		<div class="content">
+				      			<div class="title">2.销售沟通确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index3.html">
+				    		<div class="content">
+				      			<div class="title">3.销售负责人审批</div>
+				    		</div>
+				  		</a>
+						<a class="step" href="index4.html">
+				    		<div class="content">
+				      			<div class="title">4.售后验车</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index5.html">
+				    		<div class="content">
+				      			<div class="title">5.车辆入库</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index6.html">
+				    		<div class="content">
+				      			<div class="title">6.押金结算</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index7.html">
+				    		<div class="content">
+				      			<div class="title">7.结算异常审批</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index8.html">
+				    		<div class="content">
+				      			<div class="title">8.财务转账收款确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index9.html">
+				    		<div class="content">
+				      			<div class="title">9.归档</div>
+				    		</div>
+				  		</a>
+		        	</div>
+		      	</div>
+		      	<div class="twelve wide column ui segments">
+		      		<div class="field id_test hide">
+		      			<div class="ui error message">
+					        <div class="header">您没有权限操作此步骤!</div>
+					    </div>
+					    <div></div>
+		      		</div>
+		      		<div class="ui dimmer d1">
+				   		<div class="content">
+				     	<div class="center">
+				        	<h2 class="ui inverted icon header"> 您没有权限操作此步骤! </h2>
+				     	 </div>
+				    	</div>
+				  	</div>
+		      		<form class="ui form" id="form1" action="../index.php?r=car/car-back/add1" method="post">
+		      			<input name='id' class="hide" />
+			        	<div class="eight wide field" style="display:block !important">
+        					<label><span class="c-red">*</span>客户名称</label>
+        					<div class="ui search dropdown selection">
+        						<select name="customer_name" class="customer_name_s">
+							        <option value="">请选择客户</option>
+							    </select>
+							    <i class="dropdown icon"></i>
+							    <input class="search print_input" autocomplete="off" tabindex="0">
+							    <div class="default text print_down customer_name_show">请选择客户</div>
+							    <div class="menu transition hidden customer_name_d print_div" tabindex="-1">
+							    </div>
+							</div>
+        				</div>
+        				<div class="eight wide field hide print_ture">
+        					<input type="text" name="other_customer_name" maxlength="16" placeholder="请输入客户名">
+        				</div>
+        				<div class="eight wide field">
+        					<label><span class="c-red">*</span>联系电话</label>
+        					<input type="text" name="customer_tel" maxlength="16" placeholder="请输入联系电话">
+        				</div>
+        				<div class="ui column grid">
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide save_cancel_div">
+					          		<div class="ui submit button green" onclick="add1()">保存</div>
+		        					<div class="ui submit button" onclick="cancel()">取消</div>
+		        			  	</div>
+					        </div>
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide">
+					          		<span class="oper_user mg-r-10"></span><span class="oper_time"></span>
+		        			  	</div>
+					        </div>
+					    </div>
+			        </form>
+		      	</div>
+		    </div>
+		</div>
+		<div class="ui small modal" id="a_modal" >
+			<input name='id' class="hide" />
+		  	<div class="header">保存成功！</div>
+		  	<div class="content">
+		      	<p>客户退车登记成功，等待销售与客户沟通</p>
+		    </div>
+		    <div class="actions">
+		      	<div class="ui green button" onclick="cancel()">确定</div>
+		    </div>
+		</div>
+	</body>
+	<script src="js/jqueryv183.js"></script>
+  	<script src="js/jquery.form.js"></script>
+  	<script src="js/semantic.min.js"></script>
+  	<script src="js/flow.js"></script>
+  	<script>
+
+  		//预处理下拉框
+  		$('.selection.dropdown').dropdown();
+  		//预处理弹出输入框
+  		function a_modal_show(){
+	  		$('#a_modal').modal('show');
+  		}
+  		function modal_close(){
+	  		$('.ui.modal').modal('hide');
+  		}
+
+
+  		//处理步骤显示
+  		var page_id = getQueryString('id');
+  		var page_state = getQueryString('state');
+  		var page_role_ids = getQueryString('role_ids');
+		step_show_hide(page_id,page_state,8,page_role_ids);
+
+		//判断角色是否能修改该页面
+		//400==51,销售==52,领导==53,售后==54,商务==55,车管==56,黄总==59,财务==60
+		/*if(page_role_ids.indexOf(51) != -1 || page_role_ids.indexOf(52) != -1 || page_role_ids.indexOf(53) != -1 || page_role_ids.indexOf(59) != -1 ){
+	  	}else{
+	  		//预处理遮盖层
+	  		$('.ui .segments').dimmer('show','on');
+	  		$('.ui .segments').off("click");//让点击事件取消
+	  	}*/
+		$.ajax({
+           	url:'../index.php?r=car/car-back/rbac-access&index=1',
+           	type:'get',
+           	dataType:'json',
+           	success:function(data){
+           		if(data == false){
+           			/*
+           			//预处理遮盖层
+			  		$('.ui .segments').dimmer('show','on');
+			  		$('.ui .segments').off("click");//让点击事件取消
+			  		*/
+			  	
+			  		//不可操作
+			  		$('.id_test').show();
+			  		$('.save_cancel_div').hide();
+           		}
+           	},
+           	error: function (msg) {}
+        })
+
+		
+  		
+  		//获取客户列表
+  		$(document).ready(function(){
+			$.ajax({
+	           	url:'../index.php?r=car/car-back/get-customers',
+	           	data: {q:''},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(data){
+	           		var html1=[];
+	           		var html2=[];
+	           		for( i = 0 ; i < data.length ; i++ ){
+	           			html1.push('<option value='+data[i].customer_name+'>'+data[i].customer_name+'</option>');
+	           			html2.push('<div class="item" data-value='+data[i].customer_name+'>'+data[i].customer_name+'</div>');
+	           		}
+	           		$(html1.join('')).appendTo('.customer_name_s');
+	           		$(html2.join('')).appendTo('.customer_name_d');
+
+	           		//获取页面值
+	           		$.ajax({
+			           	url:'../index.php?r=car/car-back/get1',
+			           	data: {id:page_id},
+			           	type:'get',
+			           	dataType:'json',
+			           	success:function(datai){
+			           		if(datai.status){
+								if(datai.data.state != 0 && datai.data.state != 1){
+									$('.ui .segments').dimmer('show','on');
+									$('.ui .segments').off("click");//让点击事件取消
+									$('.dimmer .header').text("");
+								}
+			           			if(datai.data.company_name != null){
+			           				$('select[name="customer_name"]').val(datai.data.company_name);
+			           				$('.customer_name_show').text(datai.data.company_name);
+			           				$('.customer_name_show').removeClass('default');
+			           			}else if(datai.data.id_name != null){
+			           				$('select[name="customer_name"]').val(datai.data.id_name);
+			           				$('.customer_name_show').text(datai.data.id_name);
+			           				$('.customer_name_show').removeClass('default');
+			           			}else{
+			           				$('#select[name="customer_name"]').val('0');
+			           				$('.customer_name_show').text('其它');
+			           				$('.customer_name_show').removeClass('default');
+			           			}
+			           			if(datai.data.company_name == null && datai.data.id_name == null){
+			           				$('input[name="other_customer_name"]').val(datai.data.other_customer_name);
+			           				$('.print_ture').show();
+			           			}
+			           			$('input[name="customer_tel"]').val(datai.data.customer_tel);
+			           			//操作人和操作时间赋值
+			           			var oper_user = datai.data["oper_user"+1];
+			           			var oper_time = datai.data["oper_time"+1];
+			           			user_time(1,oper_user,oper_time);
+			           		}      		
+			   			},
+			            error: function (msg) {}
+				   	});
+
+	   			},
+	            error: function (msg) {}
+		   	});
+		})
+
+		$('.print_input').keyup(function(){
+			var p_int = $('.print_input').val();
+			$.ajax({
+	           	url:'../index.php?r=car/car-back/get-customers',
+	           	data: {q:p_int},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(data){
+
+	           		var html1=[];
+	           		var html2=[];
+	           		for( i = 0 ; i < data.length ; i++ ){
+	           			html1.push('<option value='+data[i].customer_name+'>'+data[i].customer_name+'</option>');
+	           			html2.push('<div class="item" data-value='+data[i].customer_name+'>'+data[i].customer_name+'</div>');
+	           		}
+	           		$('.customer_name_s > option').remove();
+	           		$('.customer_name_d > div').remove();
+	           		$(html1.join('')).appendTo('.customer_name_s');
+	           		$(html2.join('')).appendTo('.customer_name_d');
+	        	},
+	            error: function (msg) {}
+		   	});
+		})
+
+		function add1(){
+			$('#form1').ajaxSubmit({
+				dataType : "json",
+				success : function(data){
+					if(data.status){
+						a_modal_show();
+					}else {
+						alert(data.info);
+					}
+				},
+				error: function(xhr){
+					alert("提交失败");
+				}
+			});
+		}
+  	</script>
+</html>

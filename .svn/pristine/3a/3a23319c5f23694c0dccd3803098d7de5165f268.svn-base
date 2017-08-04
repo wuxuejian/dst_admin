@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+	<head>
+  		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  		<meta name="Generator" content="EditPlus®">
+  		<meta name="Author" content="">
+  		<meta name="Keywords" content="">
+  		<meta name="Description" content="">
+  		<title>退车流程</title>
+  		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+  		<link rel="stylesheet" type="text/css" href="css/docs.css">
+  		<link rel="stylesheet" type="text/css" href="jedate/skin/jedate.css">
+  		<style type="text/css">
+  			.dimmed.dimmable>.ui.animating.dimmer.d1, .dimmed.dimmable>.ui.visible.dimmer.d1, .ui.active.dimmer.d1 {
+			    display: block;
+			    opacity: 0.1;
+			}
+  		</style>
+	</head>
+	<body>
+		<div class="main ui container" style="margin-top:16px;">
+			<div class="ui grid">
+		    	<div class="four wide column">
+		    		<div class="ui fluid vertical steps">
+		        		<a class="step" href="index1.html">
+				    		<div class="content">
+				      			<div class="title" >1.客户退车意愿登记</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index2.html">
+				    		<div class="content">
+				      			<div class="title">2.销售沟通确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index3.html">
+				    		<div class="content">
+				      			<div class="title">3.销售负责人审批</div>
+				    		</div>
+				  		</a>
+						<a class="step" href="index4.html">
+				    		<div class="content">
+				      			<div class="title">4.售后验车</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index5.html">
+				    		<div class="content">
+				      			<div class="title">5.车辆入库</div>
+				    		</div>
+				  		</a>
+				  		<a class="active step" href="index6.html">
+				    		<div class="content">
+				      			<div class="title">6.押金结算</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index7.html">
+				    		<div class="content">
+				      			<div class="title">7.结算异常审批</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index8.html">
+				    		<div class="content">
+				      			<div class="title">8.财务转账收款确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index9.html">
+				    		<div class="content">
+				      			<div class="title">9.归档</div>
+				    		</div>
+				  		</a>
+		        	</div>
+		      	</div>
+		      	<div class="twelve wide column ui segments">
+		      		<div class="field id_test hide">
+		      			<div class="ui error message">
+					        <div class="header">您没有权限操作此步骤!</div>
+					    </div>
+					    <div></div>
+		      		</div>
+		      		<div class="ui dimmer d1">
+				   		<div class="content">
+				     	<div class="center">
+				        	<h2 class="ui inverted icon header"> 您没有权限操作此步骤! </h2>
+				     	 </div>
+				    	</div>
+				  	</div>
+				  	<div class="field reject_cause hide">
+		      			<div class="ui error message">
+					        <div class="header">驳回原因</div>
+					        <p name="reject_cause2"></p>
+					    </div>
+					    <div></div>
+		      		</div>
+		      		<form class="ui form" id="form1"  action="../index.php?r=car/car-back/add6" method="post">
+		      			<input name='id' class="hide" />
+		      			 <div class="two fields">
+					    	<div class="field">
+					        	<label>违章罚款总额</label>
+						        <div class="ui right labeled input">
+							      	<input type="text" placeholder="请输入违章罚款总额" name="wzfkze" readonly>
+							      	<div class="ui basic label">元 </div>
+							    </div>
+							</div>
+							<div class="field">
+					        	<label>违约金额</label>
+						        <div class="ui right labeled input">
+							      	<input type="text" placeholder="请输入违约金额" name="penalty_money">
+							      	<div class="ui basic label">元 </div>
+							    </div>
+							</div>
+					        			        
+					    </div>
+					    <div class="two fields">
+					    	<div class="field">
+					        	<label>车辆定损总额</label>
+						        <div class="ui right labeled input">
+							      	<input type="text" placeholder="请输入车辆定损总额" name="cldsze" readonly>
+							      	<div class="ui basic label">元 </div>
+							    </div>
+							</div>
+							<div class="field">
+					        	<label><span class="c-red">*</span>实际定损赔付</label>
+						        <div class="ui right labeled input">
+							      	<input type="text" placeholder="请输入实际定损赔付" name="payment_money" required="required" id="name11">
+							      	<div class="ui basic label">元 </div>
+							    </div>
+							</div>				        
+					    </div>
+					    <div class="two fields">
+					    	<div class="field">
+					        	<label><span class="c-red">*</span>电卡余额</label>
+						        <div class="ui right labeled input">
+							      	<input type="text" placeholder="请输点卡余额" name="charge_card" id="name22">
+							      	<div class="ui basic label">元 </div>
+							    </div>
+							</div>
+							<div class="field">
+					        	<label><span class="c-red">*</span>押金</label>
+						        <div class="ui right labeled input">
+							      	<input type="text" placeholder="请输入押金金额" name="foregift_money" id="name33">
+							      	<div class="ui basic label">元 </div>
+							    </div>
+							</div>	     	        
+					    </div>
+					    <div class="two fields">
+					    	<div class="field">
+					        	<label><span class="c-red">*</span>财务结算退还金额</label>
+						        <div class="ui right labeled input">
+							      	<input type="text" placeholder="请输入结算退还金额" name="back_money" id="name44">
+							      	<div class="ui basic label">元 </div>
+							    </div>
+							</div>
+							<div class="field">
+					          	<label><span class="c-red">*</span>退还时间</label>
+					          	<input class="date_picker" id="back_time3" placeholder="请输入退还时间" name="back_time3" type="text" readonly="">
+					        </div>			        
+					    </div>
+					    <div class="inline fields" id='json_before'>
+					        <div class="field">
+					          	<div class="ui submit button green" onclick="add_arrears()">添加欠款</div><span>租金欠款总额：<label id="money_all"></label>元</span>
+					        </div>
+					    </div>
+						<div class="field">
+				          	<label>备注</label>
+				          	<textarea name="note5" placeholder="请输入备注信息" rows="2"></textarea>
+				        </div>
+        				<div class="ui column grid">
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide save_cancel_div">
+					          		<div class="ui submit button green" onclick="add6()" id="btn">保存</div>
+		        					<div class="ui submit button" onclick="cancel()">取消</div>
+		        			  	</div>
+					        </div>
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide">
+					          		<span class="oper_user mg-r-10"></span><span class="oper_time"></span>
+		        			  	</div>
+					        </div>
+					    </div>
+			        </form>
+		      	</div>
+		    </div>
+		</div>
+		<div class="ui small modal" id="a_modal" >
+			<input name='id' class="hide" />
+		  	<div class="header">保存成功！</div>
+		  	<div class="content">
+		      	<p>结算额填写完毕，金额等待副总审批</p>
+		    </div>
+		    <div class="actions">
+		      	<div class="ui green button" onclick="cancel()">确定</div>
+		    </div>
+		</div>
+	</body>
+	<script src="js/jqueryv183.js"></script>
+  	<script src="js/jquery.form.js"></script>
+  	<script src="js/semantic.min.js"></script>
+  	<script src="js/flow.js"></script>
+  	<script type="text/javascript" src="jedate/jquery.jedate.min.js"></script>
+
+	
+ 	
+  	<script>
+
+  		 
+  		// alert(oTxt);
+
+    	var oBtn = document.getElementById('btn');
+    	 function isnull(val) {
+
+        var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+
+        if (str == '' || str == undefined || str == null) {
+            //return true;
+            //console.log('空')
+            alert('必填项不能为空');//exit();
+        } 
+ 
+    	}
+    
+  		/*//日期控件
+  		jeDate({
+			dateCell:"#back_time3",
+			format:"YYYY-MM-DD",
+			isinitVal:true,
+			isTime:false, //isClear:false,
+		})*/
+		//日期控件
+  		$('#back_time3').jeDate({
+			format:"YYYY-MM-DD",
+			isinitVal:true,
+			isTime:false, //isClear:false,
+		})
+  		//预处理弹出输入框
+  		function a_modal_show(){
+	  		$('#a_modal').modal('show');
+  		}
+  		function modal_close(){
+	  		$('.ui.modal').modal('hide');
+  		}
+  		//处理步骤显示
+  		var page_id = getQueryString('id');
+  		var page_state = getQueryString('state');
+  		var page_role_ids = getQueryString('role_ids');
+		step_show_hide(page_id,page_state,8,page_role_ids);
+
+		//判断角色是否能修改该页面
+		$.ajax({
+           	url:'../index.php?r=car/car-back/rbac-access&index=6',
+           	type:'get',
+           	dataType:'json',
+           	success:function(data){
+           		if(data == false){
+           			/*
+           			//预处理遮盖层
+			  		$('.ui .segments').dimmer('show','on');
+			  		$('.ui .segments').off("click");//让点击事件取消
+			  		*/
+			  	
+			  		//不可操作
+			  		$('.id_test').show();
+			  		$('.save_cancel_div').hide();
+           		}
+           	},
+           	error: function (msg) {}
+        })
+  		
+  		//获取客户列表
+  		$(document).ready(function(){
+       		//获取页面值
+       		$.ajax({
+	           	url:'../index.php?r=car/car-back/get6',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(datai){
+	           		if(datai.status){
+						if(datai.data.state != 5 && datai.data.state != 6 && datai.data.state != 22){
+							$('.ui .segments').dimmer('show','on');
+							$('.ui .segments').off("click");//让点击事件取消
+							$('.dimmer .header').text("");
+						}
+	           			if(datai.data.penalty_money == ''){
+	           				$('input[name="penalty_money"]').val(datai.data.break_contract_money);
+	           			}else{
+	           				$('input[name="penalty_money"]').val(datai.data.penalty_money);
+	           			}
+	           			$('input[name="foregift_money"]').val(datai.data.foregift_money);
+	           			$('input[name="back_money"]').val(datai.data.back_money);
+	           			$('input[name="back_time3"]').val(datai.data.back_time3);
+	           			$('input[name="charge_card"]').val(datai.data.charge_card);
+	           			$('input[name="payment_money"]').val(datai.data.payment_money);
+	           			$('textarea[name="note5"]').val(datai.data.note5);
+	           			//判断是否被驳回
+	           			if(datai.data.is_reject2 == 1){
+	           				$('.reject_cause').hide();
+	           			}else if(datai.data.is_reject2 == 2){
+	           				$('.reject_cause').show();
+	           				$('p[name="reject_cause2"]').text(datai.data.reject_cause2);
+	           			}else{
+	           			}
+	           			//计算违章总额和定损总额
+	           			var cldsze_money = 0;
+	           			var wzfkze_money = 0;
+	           			for(var i = 0; i < datai.data.damage_text.length; i++){
+	           				cldsze_money += parseFloat(datai.data.damage_text[i].damage_money);
+	           			}
+	           			$('input[name="cldsze"]').val(cldsze_money);
+	           			if(datai.data.wz_text != ''){
+		           			for (var i =0; i < datai.data.wz_text.length; i++){
+		           				for(var j = 0; j < datai.data.wz_text[i].lists.length; j++){
+		           					wzfkze_money += parseFloat(datai.data.wz_text[i].lists[j].money);
+		           				}
+		           			}
+	           			}
+	           			$('input[name="wzfkze"]').val(wzfkze_money);
+	           			for(var i = 0; i < datai.data.arrear_text.length; i++){
+	           				a_l++;
+							var html = [];
+							html.push('<div class="fields every_arrears" id="every_arrears'+a_l+'">');
+						        html.push('<div class="five wide field">');
+						        	html.push('<label>租金欠款</label>');
+							        html.push('<div class="ui right labeled input">');
+								      	html.push('<input type="text" placeholder="请输入租金欠款金额" name="arrear_money[]" value="'+datai.data.arrear_text[i].money+'" onchange="money_all()">');
+								      	html.push('<div class="ui basic label">元 </div>');
+								    html.push('</div>');
+								html.push('</div>');
+						        html.push('<div class="five wide field">');
+						          	html.push('<label>欠款时间</label>');
+						          	html.push('<input class="date_picker" id="arrear_date'+a_l+'" placeholder="请选择欠款时间" name="arrear_date[]" type="text" value="'+datai.data.arrear_text[i].date+'" readonly>');
+						        html.push('</div>');
+						        html.push('<div class="four wide field">');
+						          	html.push('<label>&nbsp;</label>');
+						          	html.push('<div class="ui submit button" onclick="remove_arrears('+a_l+')">移除欠款</div>');
+						        html.push('</div>');
+						    html.push('</div>');
+						    $('#json_before').before(html.join(''));
+						    //日期控件
+					  		$('#arrear_date'+a_l).jeDate({
+								format:"YYYY-MM",
+								isinitVal:true,
+								isTime:false, //isClear:false,
+							})
+	           			}
+	           			money_all();
+	           			//操作人和操作时间赋值
+	           			var oper_user = datai.data["oper_user"+5];
+	           			var oper_time = datai.data["oper_time"+5];
+	           			user_time(5,oper_user,oper_time);
+	           		}      		
+	   			},
+	            error: function (msg) {}
+		   	});   			
+		})
+		var a_l = 0;
+  		function add_arrears(){
+  			a_l++;
+			var html = [];
+			html.push('<div class="fields every_arrears" id="every_arrears'+a_l+'">');
+		        html.push('<div class="five wide field">');
+		        	html.push('<label>租金欠款</label>');
+			        html.push('<div class="ui right labeled input">');
+				      	html.push('<input type="text" placeholder="请输入租金欠款金额" name="arrear_money[]" onchange="money_all()">');
+				      	html.push('<div class="ui basic label">元 </div>');
+				    html.push('</div>');
+				html.push('</div>');
+		        html.push('<div class="five wide field">');
+		          	html.push('<label>欠款时间</label>');
+		          	html.push('<input class="date_picker" id="arrear_date'+a_l+'" placeholder="请选择欠款时间" name="arrear_date[]" type="text">');
+		        html.push('</div>');
+		        html.push('<div class="four wide field">');
+		          	html.push('<label>&nbsp;</label>');
+		          	html.push('<div class="ui submit button" onclick="remove_arrears('+a_l+')">移除欠款</div>');
+		        html.push('</div>');
+		    html.push('</div>');
+		    $('#json_before').before(html.join(''));
+		    //日期控件
+	  		$('#arrear_date'+a_l).jeDate({
+				format:"YYYY-MM",
+				isinitVal:false,
+				isTime:false, 
+			})
+  		}
+  		function remove_arrears(i){
+  			$('#every_arrears'+i).detach();
+  			money_all();
+  		}
+  		function money_all(){
+  			var m_a = 0;
+  			for(var i = 0; i < $('.every_arrears').length; i++){
+  				m_a += parseFloat($('.every_arrears').eq(i).find('input[name="arrear_money[]"]').val());
+  			}
+  			$('#money_all').text(m_a);
+  		}
+
+  		
+		function add6(){
+			var oTxt = document.getElementById('name11');
+			var oTxt2 = document.getElementById('name22');
+			var oTxt3 = document.getElementById('name33');
+			var oTxt4 = document.getElementById('name44');
+			var oTxt5 = document.getElementById('back_time3');
+			//alert(oTxt.value)
+			if(!oTxt.value) {
+			 isnull(oTxt.value);return false;
+			}
+			if(!oTxt2.value) {
+			 isnull(oTxt2.value);return false;
+			}
+			if(!oTxt3.value) {
+			 isnull(oTxt3.value);return false;
+			}
+			if(!oTxt4.value) {
+			 isnull(oTxt4.value);return false;
+			}
+			if(!oTxt5.value) {
+			 isnull(oTxt5.value);return false;
+			}
+			//验证
+			$('#form1').ajaxSubmit({
+				dataType : "json",
+				success : function(data){
+					if(data.status){
+						a_modal_show();
+					}else {
+						alert(data.info);
+					}
+				},
+				error: function(xhr){
+					alert("提交失败");
+				}
+			});
+		}
+
+	/*function validate_form($this) {
+		alert(456);
+		var odi = document.getElementsByTagName("#payment_money");
+		if(odi=='') {
+			alert(123);
+		}
+
+	}*/
+
+	
+  	</script>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>出险理赔流程</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css" >
+	<link rel="stylesheet" type="text/css" href="css/lyz.calendar.css"  />
+</head>
+<body>
+	<div class='control-box'>
+		<div class='mainview'>
+			<div class='product product-full product-col-1 sidebar-trans'>
+				<div class='mbody'>
+					<div class='container'>
+						<div class='console-table-wapper margin-top'>
+							<div class='one-block'>
+								<div class='block-title'>
+									出险理赔流程
+								</div>
+								<div class='block-content clear'>
+									<div class='flow-nav fl'>
+										<ul id='page_nav_ul'>
+											<a href="index.html" class='have-done'><li>1、报案出险</li></a>
+											<a href="index1.html" class='have-done'><li>2、查勘结论</li></a>
+											<a href="index2.html" class='have-done'><li>3、保险定损</li></a>
+											<a href="index3.html" class='active'><li>4、车辆维修</li></a>
+											<a href="index4.html" class='disableCss'><li>5、保险理赔</li></a>
+											<a href="index5.html" class='disableCss'><li>6、保险请款</li></a>
+											<a href="index6.html" class='disableCss'><li>7、转账结案</li></a>
+										</ul>
+									</div>
+									<div class='flow-container fr content10-noborder'>
+										<form id="myform">
+											<input name='id' class="hide" />
+											<div class='save-cancel clear mg-8'>
+												<input type="button" id='save' class="btn btn-ra5 btn-normal" value="保存并下一步">
+												<input type="button" class="btn btn-ra5 btn-cannot" value="取消" onclick="cancel()">
+											</div>
+											<div id='oper' class="block-content10 clear hide" >
+												<div class="col-12">
+													<div class="title">上一次操作人员:</div>
+													<div class="content" id='oper_user4'>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='remind'>
+		<div style='display: none;'>
+		</div>
+	</div>
+	<script type="text/javascript" src='js/jqueryv183.js'></script>
+	<script type="text/javascript" src='js/flow.js'></script>
+	<script src="js/lyz.calendar.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src='js/jquery.ajaxSubmit.js'></script>
+	<script type="text/javascript">
+		//获取页面尾部?代码
+		function getQueryString(name) { 
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+			var r = window.location.search.substr(1).match(reg); 
+			if (r != null) return unescape(r[2]); return null; 
+		}
+		var page_id = getQueryString('id');
+		//初始跳转
+		var page_step = getQueryString('step');
+		var page_have = getQueryString('have');
+
+		//对左侧A标签加ID
+		ahref_add_id(page_id,page_step,page_have);
+
+
+		$(document).ready(function(){
+			var main_shop=[];
+			var main_shop_l;	
+			$.ajax({
+		        type: "get",
+		        url: "../index.php?r=car/insurance-claim/get-maintenance-shop",
+		        data: {},
+		        dataType: "json",
+		        success: function (data) {//ajax请求成功后触发的方法
+		        	for(var i = 0; i < data.length; i++){
+	        			main_shop[i] = data[i].site_name;
+		        	}
+		        	main_shop_l = data.length;
+		        	$.ajax({
+				        type: "get",
+				        url: "../index.php?r=car/insurance-claim/get4",
+				        data: {id:page_id},
+				        dataType: "json",
+				        success: function (datai) {//ajax请求成功后触发的方法
+				        	$('input[name="id"]').val(page_id);
+				        	if(datai.data.oper_user4 == 0){
+			           			$('#oper').hide();
+			           		}else{
+			           			$('#oper').show();
+			           			$('#oper_user4').text(datai.data.oper_user4);
+			           		}
+			           		var no_page = 0;
+				        	for(var i = datai.data.responsibility_text.length-1; i >= 0 ; i--){
+					        	var data_stata = datai.data.responsibility_text[i].responsibility_object;
+					        	if(data_stata != 4 && data_stata != 3){
+					        		var name;
+					        		no_page++;
+					        		if(data_stata == 1){
+				        				name = "标的车";
+				        			}else if(data_stata == 2){
+				        				name = datai.data.responsibility_text[i].plate_number;
+				        			}
+				        			var html = [];
+				        			if(datai.data.maintenance_text == null){
+				        				datai.data.maintenance_text = {};
+				        			}
+				        			if(datai.data.maintenance_text[i] == undefined){
+				        				datai.data.maintenance_text[i] ={};
+				        				datai.data.maintenance_text[i].is_maintenance = '';
+				        				datai.data.maintenance_text[i].maintenance_shop ='';
+				        				datai.data.maintenance_text[i].maintenance_shop_details ='';
+				        				datai.data.maintenance_text[i].maintenance_time ='';
+				        				datai.data.maintenance_text[i].contacts ='';
+				        				datai.data.maintenance_text[i].contact_number ='';
+				        				datai.data.maintenance_text[i].maintenance_condition ='';
+				        			}
+				        			if(data_stata == 1 && datai.data.maintenance_text[i].maintenance_shop ==''){
+				        				datai.data.maintenance_text[i].maintenance_shop = "novalue";
+				        			}
+				        			if(data_stata == 1){
+						        		html.push('<div class="clwx">');
+						        		html.push('<div class="block-content10 clear">');
+						        			html.push('<div class="col-4">');
+						        				html.push('<div class="title"><span class="warncolor">*</span>是否维修</div>');
+						        				html.push('<div class="content">');
+						        					if(datai.data.maintenance_text[i].is_maintenance == 1){
+						        						html.push('<input type="radio" style="vertical-align:middle" name="is_maintenance[]" value="1" checked="checked">维修');
+						        						html.push('<input type="radio" style="margin-left:20px; vertical-align:middle" name="is_maintenance[]" value="0">不维修');
+					        						}else if(datai.data.maintenance_text[i].is_maintenance == 0){
+					        							html.push('<input type="radio" style="vertical-align:middle" name="is_maintenance[]" value="1" >维修');
+						        						html.push('<input type="radio" style="margin-left:20px; vertical-align:middle" name="is_maintenance[]" value="0" checked="checked">不维修');
+					        						}else{
+					        							html.push('<input type="radio" style="vertical-align:middle" name="is_maintenance[]" value="1" checked="checked">维修');
+						        						html.push('<input type="radio" style="margin-left:20px; vertical-align:middle" name="is_maintenance[]" value="0">不维修');
+					        						}
+						        				html.push('</div>');
+						        			html.push('</div>');
+						        			if(datai.data.maintenance_text[i].is_maintenance == 1){
+							        			html.push('<div class="col-4 wx_sh">');
+							        				html.push('<div class="title" id="maintenance_shop_name'+i+'">' +name+ '维修厂</div>');
+							        				html.push('<div class="content">');
+						        						html.push('<select name="maintenance_shop[]" class="form-control col-12" value="'+datai.data.maintenance_text[i].maintenance_shop+'">');
+						        							html.push('<option value="novalue" selected="selected"></option>');
+						        							for(j=0 ; j<main_shop_l ; j++){
+						        							html.push('<option value="'+main_shop[j]+'">'+main_shop[j]+'</option>');
+						        							}
+						        							html.push('<option value="0">其他</option>');
+						        						html.push('</select>');
+						        						html.push('<input name="maintenance_shop_details[]" class="form-control col-4 mayhide" type="text" style="display:none" value="'+datai.data.maintenance_text[i].maintenance_shop_details+'">');
+							        				html.push('</div>');
+							        			html.push('</div>');
+						        			}else if(datai.data.maintenance_text[i].is_maintenance == 0){
+							        			html.push('<div class="col-4  wx_sh hide">');
+							        				html.push('<div class="title" id="maintenance_shop_name'+i+'">' +name+ '维修厂</div>');
+							        				html.push('<div class="content">');
+						        						html.push('<select name="maintenance_shop[]" class="form-control col-12" value="'+datai.data.maintenance_text[i].maintenance_shop+'">');
+						        							html.push('<option value="novalue" selected="selected"></option>');
+						        							for(j=0 ; j<main_shop_l ; j++){
+						        							html.push('<option value="'+main_shop[j]+'">'+main_shop[j]+'</option>');
+						        							}
+						        							html.push('<option value="0">其他</option>');
+						        						html.push('</select>');
+						        						html.push('<input name="maintenance_shop_details[]" class="form-control col-4 mayhide" type="text" style="display:none" value="'+datai.data.maintenance_text[i].maintenance_shop_details+'">');
+							        				html.push('</div>');
+							        			html.push('</div>');
+						        			}
+					        			html.push('</div>');
+					        			if(datai.data.maintenance_text[i].is_maintenance == 1){
+						        			html.push('<div class="block-content10 clear wx_sh">');
+							        			html.push('<div class="col-4">');
+							        				html.push('<div class="title">送修时间</div>');
+							        				html.push('<div class="content">');
+						    							html.push('<input name="maintenance_time[]" id="txtBeginDate' +i+ '" class="form-control col-12" readonly="readonly" value="'+datai.data.maintenance_text[i].maintenance_time+'">');
+							        				html.push('</div>');
+							        			html.push('</div>');
+							        			html.push('<div class="col-4">');
+							        				html.push('<div class="title">联系人</div>');
+							        				html.push('<div class="content">');
+						    							html.push('<input name="contacts[]" class="form-control col-12" value="'+datai.data.maintenance_text[i].contacts+'">');
+							        				html.push('</div>');
+							        			html.push('</div>');
+							        			html.push('<div class="col-4">');
+							        				html.push('<div class="title">联系电话</div>');
+							        				html.push('<div class="content">');
+						    							html.push('<input name="contact_number[]" class="form-control col-12" value="'+datai.data.maintenance_text[i].contact_number+'">');
+							        				html.push('</div>');
+							        			html.push('</div>');
+						        			html.push('</div>');
+											html.push('<div class="block-content10 clear wx_sh">');
+												html.push('<div class="col-12">');
+													html.push('<div class="title">维修情况</div>');
+													html.push('<div class="content">');
+														html.push('<input name="maintenance_condition[]" class="form-control col-10" type="text" placeholder="" value="'+datai.data.maintenance_text[i].maintenance_condition+'"/>');
+													html.push('</div>');
+												html.push('</div>');
+											html.push('</div>');
+											html.push('<div class="block-content10 clear wx_sh">');
+												html.push('<div class="col-12">');
+													html.push('<div class="title">上传图片</div>');
+													html.push('<div class="content">');
+														if(datai.data.maintenance_text[i].img_url == null){
+															html.push('<input name="img_url" class="form-control col-10 must hide" type="text" placeholder="" value="'+datai.data.maintenance_text[i].img_url+'"/>');
+															html.push('<input name="img" type="file"/>');
+														}else{
+															html.push('<img src="../'+datai.data.maintenance_text[i].img_url+'" style="height:100px; width:100px;">');
+															html.push('<input name="img_url" class="form-control col-10 must hide" type="text" placeholder="" value="'+datai.data.maintenance_text[i].img_url+'"/>');
+															html.push('<input name="img" type="file"/>');
+														}
+													html.push('</div>');
+												html.push('</div>');
+											html.push('</div>');
+										}else if(datai.data.maintenance_text[i].is_maintenance == 0){
+											html.push('<div class="block-content10 clear hide wx_sh">');
+							        			html.push('<div class="col-4">');
+							        				html.push('<div class="title">送修时间</div>');
+							        				html.push('<div class="content">');
+						    							html.push('<input name="maintenance_time[]" id="txtBeginDate' +i+ '" class="form-control col-12" readonly="readonly" value="'+datai.data.maintenance_text[i].maintenance_time+'">');
+							        				html.push('</div>');
+							        			html.push('</div>');
+							        			html.push('<div class="col-4">');
+							        				html.push('<div class="title">联系人</div>');
+							        				html.push('<div class="content">');
+						    							html.push('<input name="contacts[]" class="form-control col-12" value="'+datai.data.maintenance_text[i].contacts+'">');
+							        				html.push('</div>');
+							        			html.push('</div>');
+							        			html.push('<div class="col-4">');
+							        				html.push('<div class="title">联系电话</div>');
+							        				html.push('<div class="content">');
+						    							html.push('<input name="contact_number[]" class="form-control col-12" value="'+datai.data.maintenance_text[i].contact_number+'">');
+							        				html.push('</div>');
+							        			html.push('</div>');
+						        			html.push('</div>');
+											html.push('<div class="block-content10 clear hide wx_sh">');
+												html.push('<div class="col-12">');
+													html.push('<div class="title">维修情况</div>');
+													html.push('<div class="content">');
+														html.push('<input name="maintenance_condition[]" class="form-control col-10" type="text" placeholder="" value="'+datai.data.maintenance_text[i].maintenance_condition+'"/>');
+													html.push('</div>');
+												html.push('</div>');
+											html.push('</div>');
+											html.push('<div class="block-content10 clear hide wx_sh">');
+												html.push('<div class="col-12">');
+													html.push('<div class="title">上传图片</div>');
+													html.push('<div class="content">');
+														if(datai.data.maintenance_text[i].img_url == null){
+															html.push('<input name="img_url" class="form-control col-10 must hide" type="text" placeholder="" value="'+datai.data.maintenance_text[i].img_url+'"/>');
+															html.push('<input name="img" type="file"/>');
+														}else{
+															html.push('<img src="../'+datai.data.maintenance_text[i].img_url+'" style="height:100px; width:100px;">');
+															html.push('<input name="img_url" class="form-control col-10 must hide" type="text" placeholder="" value="'+datai.data.maintenance_text[i].img_url+'"/>');
+															html.push('<input name="img" type="file"/>');
+														}
+													html.push('</div>');
+												html.push('</div>');
+											html.push('</div>');
+										}
+										html.push('<div class="car_br"></div>');
+										html.push('</div>');
+					        		}else{
+					        			html.push('<div class="clwx">');
+						        		html.push('<div class="block-content10 clear">');
+						        			html.push('<div class="col-4 hide">');
+						        				html.push('<div class="title"><span class="warncolor">*</span>是否维修</div>');
+						        				html.push('<div class="content">');
+					        						html.push('<input type="text" style="vertical-align:middle" name="is_maintenance[]" value="2">');
+						        				html.push('</div>');
+						        			html.push('</div>');
+						        			html.push('<div class="col-12">');
+						        				html.push('<div class="title" id="maintenance_shop_name'+i+'">' +name+ '维修厂</div>');
+						        				html.push('<div class="content">');
+					        						html.push('<select name="maintenance_shop[]" class="form-control col-3" value='+datai.data.maintenance_text[i].maintenance_shop+'>');
+					        							for(j=0 ; j<main_shop_l ; j++){
+					        							html.push('<option value="'+main_shop[j]+'">'+main_shop[j]+'</option>');
+					        							}
+					        							html.push('<option value="0">其他</option>');
+					        						html.push('</select>');
+					        						html.push('<input name="maintenance_shop_details[]" class="form-control col-3 mayhide" type="text" style="display:none" value="'+datai.data.maintenance_text[i].maintenance_shop_details+'">');
+						        				html.push('</div>');
+						        			html.push('</div>');
+					        			html.push('</div>');
+					        			html.push('<div class="block-content10 clear">');
+						        			html.push('<div class="col-4">');
+						        				html.push('<div class="title">送修时间</div>');
+						        				html.push('<div class="content">');
+					    							html.push('<input name="maintenance_time[]" id="txtBeginDate' +i+ '" class="form-control col-12" readonly="readonly" value="'+datai.data.maintenance_text[i].maintenance_time+'">');
+						        				html.push('</div>');
+						        			html.push('</div>');
+						        			html.push('<div class="col-4">');
+						        				html.push('<div class="title">联系人</div>');
+						        				html.push('<div class="content">');
+					    							html.push('<input name="contacts[]" class="form-control col-12" value="'+datai.data.maintenance_text[i].contacts+'">');
+						        				html.push('</div>');
+						        			html.push('</div>');
+						        			html.push('<div class="col-4">');
+						        				html.push('<div class="title">联系电话</div>');
+						        				html.push('<div class="content">');
+					    							html.push('<input name="contact_number[]" class="form-control col-12" value="'+datai.data.maintenance_text[i].contact_number+'">');
+						        				html.push('</div>');
+						        			html.push('</div>');
+					        			html.push('</div>');
+										html.push('<div class="block-content10 clear">');
+											html.push('<div class="col-12">');
+												html.push('<div class="title">维修情况</div>');
+												html.push('<div class="content">');
+													html.push('<input name="maintenance_condition[]"class="form-control col-10" type="text" placeholder="" value="'+datai.data.maintenance_text[i].maintenance_condition+'"/>');
+												html.push('</div>');
+											html.push('</div>');
+										html.push('</div>');
+										html.push('<div class="car_br"></div>');
+										html.push('</div>');
+					        		}
+
+						        	$(html.join('')).prependTo('#myform');
+						        	$('input[name="is_maintenance[]"]').click(function(){
+					        			if($(this).val() == 1){
+					        				$(".wx_sh").show()
+					        			}else{
+					        				$(".wx_sh").hide()
+					        			}
+					        		})
+
+					        		$(function () {
+								        $("#txtBeginDate" + i).calendar();
+								        if($("#txtBeginDate" + i).val() == ''){
+								        	var myDate = new Date();
+									        var year = myDate.getFullYear();
+									        var month = myDate.getMonth() + 1;
+									        var day = myDate.getDate();
+									        $('#txtBeginDate' + i).val(year+'-'+month+'-'+day); 
+								        }
+								    });
+								    if($("#maintenance_shop_name"+i).text() =='标的车维修厂'){
+								    	$("#maintenance_shop_name"+i).parents('.clwx').find("input[name='contacts[]']").parents('.col-4').hide();
+								    	$("#maintenance_shop_name"+i).parents('.clwx').find("input[name='contact_number[]']").parents('.col-4').hide();
+								    }
+								    $("select[name='maintenance_shop[]']").eq(0).attr("value",datai.data.maintenance_text[i].maintenance_shop);
+								    if($("select[name='maintenance_shop[]']").eq(0).val() == 0){
+								    	$("input[name='maintenance_shop_details[]']").eq(0).show();
+								    }
+								    $("select[name='maintenance_shop[]']").on('change',function(){
+								    	if($(this).val() == 0){
+								    		$(this).parents('.clwx').find("input[name='maintenance_shop_details[]']").show();
+								    	}else{
+								    		$(this).parents('.clwx').find("input[name='maintenance_shop_details[]']").hide();
+								    	}
+								    })	
+						        }
+					        }
+					        if(no_page == 0){
+					        	window.location.href="index4.html?id="+page_id+"&step="+page_step;
+					        }
+
+				        },
+				        error: function (msg) {
+				        	alert('请求失败请刷新页面');
+				        }
+				    });
+		        },
+		        error: function (msg) {
+		        	alert('维修站加载失败');
+		        }
+		    });
+
+
+
+		})
+		$('#save').on('click', function() {
+			$('.warn').detach();
+			$('.must').each(function(){
+				if($(this).val() == ''){
+					$(this).after('<div class="warn">请填写完整内容</div>');
+				}
+			});
+			$('.must').keyup(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			$('.must').change(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			$('.must').mouseover(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			if($('.warn').length){
+				return false;
+			}
+	        $("#myform").ajaxSubmit({
+	            type: 'post', // 提交方式 get/post
+	            url: '../index.php?r=car/insurance-claim/add4', // 需要提交的 url
+	            dataType: "json",
+	            success: function(data) { 
+	            	window.location.href="index4.html?id="+page_id+"&step="+page_step+"&have=1";
+	            },
+	            error: function (msg) {
+	            }
+	        });   	     
+		});
+	</script>
+	</script>
+</body>
+</html>

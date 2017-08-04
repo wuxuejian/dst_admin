@@ -1,0 +1,327 @@
+<table id="easyui-datagrid-repair-repair-info-index"></table>
+<div id="easyui-datagrid-repair-repair-info-index-toolbar">
+    <div class="easyui-panel" title="数据检索" style="width:100%" data-options="
+        iconCls: 'icon-search',
+        border: false
+    ">
+        <div class="data-search-form">
+            <form id="search-form-repair-info-index" method="post">
+                <ul class="search-main">
+                    <li>
+                        <div class="item-name">车牌号</div>
+                        <div class="item-input">
+                            <select
+                                    class="easyui-combobox"
+                                    style="width:180px;"
+                                    name="car_id"
+                                    editable="true"
+                                    listHeight="200px"
+                            >
+                                <option value=" ">请选择</option>
+                                <?php foreach($formoption['car_id'] as $val){?>
+                                    <option value="<?php echo $val['id']; ?>"><?php echo $val['plate_number']; ?></option>
+                                <?php }?>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-name">工单号</div>
+                        <div class="item-input">
+                            <input class="easyui-textbox" name="order_number" style="width:150px;" data-options="prompt:'请输入',">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-name">工单类型</div>
+                        <div class="item-input">
+                            <select class="easyui-combobox" name="order_type" style="width:150px;">
+                                <option value=" ">请选择</option>
+                                <option value="1">我方报修</option>
+                                <option value="0">客户报修</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-name">售后修理厂</div>
+                        <div class="item-input">
+                            <select
+                                    class="easyui-combobox"
+                                    style="width:180px;"
+                                    name="sale_factory"
+                                    editable="true"
+                                    listHeight="200px"
+                            >
+                                <option value=" ">请选择</option>
+                                <?php foreach($formoption['repair_company'] as $val){?>
+                                    <option value="<?php echo $val['id']; ?>"><?php echo $val['site_name']; ?></option>
+                                <?php }?>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-name">审批状态</div>
+                        <div class="item-input">
+                            <select class="easyui-combobox" name="check_status" style="width:150px;">
+                                <option value=" ">请选择</option>
+                                <option value="1">维修方案待审核</option>
+                                <option value="2">维修方案未通过</option>
+                                <option value="3">维修方案已通过</option>
+                                <option value="4">完工结算未通过</option>
+                                <option value="5">完工结算已通过</option>
+                                <option value="6">付款驳回</option>
+                                <option value="7">付款完结</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-name">单据状态</div>
+                        <div class="item-input">
+                            <select class="easyui-combobox" name="bill_status" style="width:150px;">
+                                <option value="1">正常</option>
+                                <option value="0">作废</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="search-button">
+                        <button type="submit" onclick="RepairInfoIndex.search()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</button>
+                        <button type="submit" onclick="RepairInfoIndex.resetForm()" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">重置</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <?php if($buttons){ ?>
+        <div class="easyui-panel" title="数据列表" style="padding:3px 2px;width:100%;" data-options="
+        iconCls: 'icon-table-list',
+        border: false
+    ">
+            <?php foreach($buttons as $val){ ?>
+                <button onclick="<?= $val['on_click']; ?>" class="easyui-linkbutton" data-options="iconCls:'<?= $val['icon']; ?>'"><?= $val['text']; ?></button>
+            <?php } ?>
+        </div>
+    <?php } ?>
+</div>
+<!-- 窗口 -->
+<div id="easyui-dialog-repair-info-index-add"></div>
+<div id="easyui-dialog-parts-parts-info-index-edit"></div>
+<script>
+    var RepairInfoIndex = new Object();
+    RepairInfoIndex.init = function(){
+        //获取列表数据
+        $('#easyui-datagrid-repair-repair-info-index').datagrid({
+            method: 'get',
+            url:'<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/get-list']); ?>',
+            fit: true,
+            border: false,
+            toolbar: "#easyui-datagrid-repair-repair-info-index-toolbar",
+            pagination: true,
+            loadMsg: '数据加载中...',
+            striped: true,
+            checkOnSelect: true,
+            rownumbers: true,
+            singleSelect: true,
+            columns:[[
+                {field: 'ck',checkbox: true},
+                {field: 'plate_number',title: '车牌号',width: 100},
+                {field: 'order_no',title: '工单号',width: 100},
+                {field: 'order_type',title: '工单类型',width: 100},
+                {field: 'site_name',title: '售后修理厂',width: 100},
+                {field: 'check_status',title: '审核状态',width: 100},
+                {field: 'repair_price',title: '维修报价',width: 100},
+                {field: 'account_price',title: '结算金额',width: 100},
+                {field: 'project_human',title: '维修方案审核人',width: 100},
+                {field: 'account_human',title: '完工结算审核人',width: 100},
+                {field: 'money_human',title: '付款审核人',width: 100},
+                {field: 'service_human',title: '服务顾问',width: 100},
+                {field: 'create_time',title: '创建时间',width: 100},
+                {field: 'finish_time',title: '完结时间',width: 100},
+                {field: 'bill_status',title: '单据状态',width: 100}
+            ]]
+        });
+        //初始化添加窗口`
+        $('#easyui-dialog-repair-info-index-add').dialog({
+            title: '维修方案',
+             width: '1100px',   
+            height: '400px', 
+            cache: true,
+            modal: true,
+            resizable:true,
+            maximizable: true,
+            closed: true,
+            scroll:true,
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',
+                handler:function(){
+                    var form = $('#search-form-parts-info-add');
+                    if(!form.form('validate')){
+                        return false;
+                    }
+                    var data = form.serialize();
+                    var button = $(this);
+                    button.linkbutton('disable');
+                    $.ajax({
+                        type: 'post',
+                        url: "<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/add']); ?>",
+                        data: data,
+                        dataType: 'json',
+                        success: function(data){
+                            if(data.status == 1){
+                                $.messager.alert('新建成功',data.info,'info');
+                                $('#easyui-dialog-repair-info-index-add').dialog('close');
+                                $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                                button.linkbutton('enable');
+                            }else if(data.status == 2){
+                                $.messager.alert('新建失败',data.info,'error');
+                                button.linkbutton('enable');
+                            }else{
+                                $.messager.alert('新建失败',data.info,'error');
+                                button.linkbutton('enable');
+                            }
+                        }
+                    });
+                    $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                    $('#easyui-dialog-repair-info-index-add').dialog('close');
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-repair-info-index-add').dialog('close');
+                }
+            }]
+        });
+        //初始化修改窗口
+        $('#easyui-dialog-parts-parts-info-index-edit').dialog({
+            title: '修改配置信息',
+            width: 1000,
+            height: 250,
+            closed: true,
+            cache: true,
+            modal: true,
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',
+                handler:function(){
+                    var data = $('#info-edit-feng').serialize();
+                    var button = $(this);
+                    button.linkbutton('disable');
+                    $.ajax({
+                        type: 'post',
+                        url: '<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/edit']); ?>',
+                        data: data,
+                        dataType: 'json',
+                        success: function(data){
+                            if(data.status == 1){
+                                $.messager.alert('修改成功',data.info,'info');
+                                $('#easyui-dialog-parts-parts-info-index-edit').dialog('close');
+                                $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                                button.linkbutton('enable');
+                            }else if(data.status == 2){
+                                $.messager.alert('修改失败',data.info,'error');
+                                button.linkbutton('enable');
+                            }else{
+                                $.messager.alert('修改失败',data.info,'error');
+                                button.linkbutton('enable');
+                            }
+                        }
+                    });
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-parts-parts-info-index-edit').dialog('close');
+                }
+            }]
+        });
+        //绑定记录双击事件
+        $('#easyui-datagrid-repair-repair-info-index').datagrid({
+            onDblClickRow: function(rowIndex,rowData){
+                RepairInfoIndex.edit(rowData.id);
+            }
+        });
+    }
+    RepairInfoIndex.init();
+    //添加方法
+    RepairInfoIndex.add = function(){
+        $('#easyui-dialog-repair-info-index-add').dialog('open');
+        $('#easyui-dialog-repair-info-index-add').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/add']); ?>');
+    }
+    //删除配件信息
+    RepairInfoIndex.del = function(){
+        var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+        var partsData = datagrid.datagrid('getSelected');
+        if(partsData == null){
+            $.messager.alert('删除失败','请选择删除项','error');
+            return false;
+        }
+        var id = partsData.parts_id;
+        $.messager.confirm('确认对话框', '确定删除配件信息？', function(r){
+            if (r){
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/del']); ?>",
+                    data: {'id':id},
+                    dataType: 'json',
+                    success: function(data){
+                        if(data.status == 1){
+                            $.messager.alert('删除成功',data.info,'info');
+                            $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                        }else if(data.status == 2){
+                            $.messager.alert('删除失败',data.info,'error');
+                        }else{
+                            $.messager.alert('删除失败',data.info,'error');
+                        }
+                    }
+                });
+            }
+        });
+    }
+    RepairInfoIndex.edit = function(){
+        var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+        var partsData = datagrid.datagrid('getSelected');
+        if(partsData == null){
+            $.messager.alert('修改失败','请选择修改项','error');
+            return false;
+        }
+        var id = partsData.parts_id;
+        $('#easyui-dialog-parts-parts-info-index-edit').dialog('open');
+        $('#easyui-dialog-parts-parts-info-index-edit').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/edit']); ?>&parts='+id);
+    }
+    //构建查询表单
+    var searchForm = $('#search-form-repair-info-index');
+    /**查询表单提交事件**/
+    searchForm.submit(function(){
+        var data = {};
+        var searchCondition = $(this).serializeArray();
+        for(var i in searchCondition){
+            data[searchCondition[i]['name']] = searchCondition[i]['value'];
+        }
+        $('#easyui-datagrid-repair-repair-info-index').datagrid('load',data);
+        return false;
+    });
+
+    //汽车品牌下拉
+    searchForm.find('input[name=car_brand]').combotree({
+        url: "<?php echo yii::$app->urlManager->createUrl(['car/combotree/get-car-brands']); ?>",
+        editable: false,
+        panelHeight:'auto',
+        lines:false,
+    });
+    //重置查询表单
+    RepairInfoIndex.resetForm = function(){
+        var easyuiForm = $('#search-form-repair-info-index');
+        easyuiForm.form('reset');
+    }
+
+    //条件搜索查询
+    RepairInfoIndex.search = function(){
+        var form = $('#search-form-repair-info-index');
+        var data = {};
+        var searchCondition = form.serializeArray();
+        for(var i in searchCondition){
+            data[searchCondition[i]['name']] = searchCondition[i]['value'];
+        }
+        $('#easyui-datagrid-repair-repair-info-index').datagrid('load',data);
+    }
+</script>

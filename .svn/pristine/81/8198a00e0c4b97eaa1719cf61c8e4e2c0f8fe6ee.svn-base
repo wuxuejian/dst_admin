@@ -1,0 +1,274 @@
+2016-05-10 11:09:18 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '9248.84|203' ,`day_01` = '999.00|18' ,`day_02` = '859.00|16' ,`day_03` = '1456.02|26' ,`day_04` = '710.00|19' ,`day_05` = '830.02|21' ,`day_06` = '1157.00|29' ,`day_07` = '763.80|19' ,`day_08` = '818.00|22' ,`day_09` = '1473.00|28' ,`day_10` = '183.00|5'  WHERE `year_month` = '2016-05' 
+2016-05-10 11:09:18 Complete daily statistics.
+2016-05-23 17:40:01 UPDATE `cs_report_recharge_statistics_app` SET `day_22` = '1657.92|33' ,`day_23` = '1134.30|26'  WHERE `year_month` = '2016-05' 
+2016-05-23 17:40:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '28657.06|585' WHERE  `year_month` = '2016-05'
+2016-05-23 17:40:01 UPDATE `cs_report_recharge_statistics_card` SET `day_23` = '450.00|1'  WHERE `year_month` = '2016-05' 
+2016-05-23 17:40:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '41257.3|44' WHERE  `year_month` = '2016-05'
+2016-05-23 17:40:01 Complete statistics.
+2016-05-24 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_23` = '1919.30|36'  WHERE `year_month` = '2016-05' 
+2016-05-24 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '29442.06|595' WHERE  `year_month` = '2016-05'
+2016-05-24 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_23` = '450.00|1'  WHERE `year_month` = '2016-05' 
+2016-05-24 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '41257.3|44' WHERE  `year_month` = '2016-05'
+2016-05-24 00:00:01 Complete statistics.
+2016-05-25 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_24` = '1471.85|27'  WHERE `year_month` = '2016-05' 
+2016-05-25 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '30913.91|622' WHERE  `year_month` = '2016-05'
+2016-05-25 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_24` = '500.00|1'  WHERE `year_month` = '2016-05' 
+2016-05-25 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '41757.3|45' WHERE  `year_month` = '2016-05'
+2016-05-25 00:00:01 Complete statistics.
+2016-05-26 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_25` = '1254.00|21'  WHERE `year_month` = '2016-05' 
+2016-05-26 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '32167.91|643' WHERE  `year_month` = '2016-05'
+2016-05-26 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_25` = '1950.00|2'  WHERE `year_month` = '2016-05' 
+2016-05-26 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '43707.3|47' WHERE  `year_month` = '2016-05'
+2016-05-26 00:00:02 Complete statistics.
+2016-05-27 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_26` = '1845.00|31'  WHERE `year_month` = '2016-05' 
+2016-05-27 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '34012.91|674' WHERE  `year_month` = '2016-05'
+2016-05-27 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_26` = '3000.00|6'  WHERE `year_month` = '2016-05' 
+2016-05-27 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '46707.3|53' WHERE  `year_month` = '2016-05'
+2016-05-27 00:00:02 Complete statistics.
+2016-05-28 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_27` = '1403.00|34'  WHERE `year_month` = '2016-05' 
+2016-05-28 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '35415.91|708' WHERE  `year_month` = '2016-05'
+2016-05-28 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_27` = '9000.00|18'  WHERE `year_month` = '2016-05' 
+2016-05-28 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '55707.3|71' WHERE  `year_month` = '2016-05'
+2016-05-28 00:00:01 Complete statistics.
+2016-05-29 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_28` = '2275.00|50'  WHERE `year_month` = '2016-05' 
+2016-05-29 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '37690.91|758' WHERE  `year_month` = '2016-05'
+2016-05-29 00:00:02 Complete statistics.
+2016-05-30 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_29` = '1832.00|35'  WHERE `year_month` = '2016-05' 
+2016-05-30 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '39522.91|793' WHERE  `year_month` = '2016-05'
+2016-05-30 00:00:01 Complete statistics.
+2016-05-31 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_30` = '3092.00|45'  WHERE `year_month` = '2016-05' 
+2016-05-31 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '42614.91|838' WHERE  `year_month` = '2016-05'
+2016-05-31 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_30` = '2650.00|6'  WHERE `year_month` = '2016-05' 
+2016-05-31 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '58357.3|77' WHERE  `year_month` = '2016-05'
+2016-05-31 00:00:01 Complete statistics.
+2016-06-01 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_31` = '1811.00|35'  WHERE `year_month` = '2016-05' 
+2016-06-01 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '44425.91|873' WHERE  `year_month` = '2016-05'
+2016-06-01 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_31` = '2000.00|4'  WHERE `year_month` = '2016-05' 
+2016-06-01 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '60357.3|81' WHERE  `year_month` = '2016-05'
+2016-06-01 00:00:01 Complete statistics.
+2016-06-02 00:00:01 INSERT INTO `cs_report_recharge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-06','2347.00|32','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-06-02 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '2347|32' WHERE  `year_month` = '2016-06'
+2016-06-02 00:00:01 INSERT INTO `cs_report_recharge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-06','15000.00|12','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-06-02 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '15000|12' WHERE  `year_month` = '2016-06'
+2016-06-02 00:00:01 Complete statistics.
+2016-06-03 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_02` = '1923.10|37'  WHERE `year_month` = '2016-06' 
+2016-06-03 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '4270.1|69' WHERE  `year_month` = '2016-06'
+2016-06-03 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_02` = '20300.00|13'  WHERE `year_month` = '2016-06' 
+2016-06-03 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '35300|25' WHERE  `year_month` = '2016-06'
+2016-06-03 00:00:01 Complete statistics.
+2016-06-04 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_03` = '2459.00|42'  WHERE `year_month` = '2016-06' 
+2016-06-04 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '6729.1|111' WHERE  `year_month` = '2016-06'
+2016-06-04 00:00:02 Complete statistics.
+2016-06-05 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_04` = '2604.00|40'  WHERE `year_month` = '2016-06' 
+2016-06-05 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '9333.1|151' WHERE  `year_month` = '2016-06'
+2016-06-05 00:00:01 Complete statistics.
+2016-06-06 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_05` = '1671.00|29'  WHERE `year_month` = '2016-06' 
+2016-06-06 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '11004.1|180' WHERE  `year_month` = '2016-06'
+2016-06-06 00:00:01 Complete statistics.
+2016-06-07 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_06` = '1705.00|32'  WHERE `year_month` = '2016-06' 
+2016-06-07 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '12709.1|212' WHERE  `year_month` = '2016-06'
+2016-06-07 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_06` = '11400.00|8'  WHERE `year_month` = '2016-06' 
+2016-06-07 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '46700|33' WHERE  `year_month` = '2016-06'
+2016-06-07 00:00:02 Complete statistics.
+2016-06-08 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_07` = '1995.01|30'  WHERE `year_month` = '2016-06' 
+2016-06-08 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '14704.11|242' WHERE  `year_month` = '2016-06'
+2016-06-08 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_07` = '3000.00|2'  WHERE `year_month` = '2016-06' 
+2016-06-08 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '49700|35' WHERE  `year_month` = '2016-06'
+2016-06-08 00:00:02 Complete statistics.
+2016-06-09 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_08` = '1402.00|36'  WHERE `year_month` = '2016-06' 
+2016-06-09 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '16106.11|278' WHERE  `year_month` = '2016-06'
+2016-06-09 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_08` = '2000.00|1'  WHERE `year_month` = '2016-06' 
+2016-06-09 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '51700|36' WHERE  `year_month` = '2016-06'
+2016-06-09 00:00:01 Complete statistics.
+2016-06-10 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_09` = '2131.00|39'  WHERE `year_month` = '2016-06' 
+2016-06-10 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '18237.11|317' WHERE  `year_month` = '2016-06'
+2016-06-10 00:00:01 Complete statistics.
+2016-06-11 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_10` = '1960.00|40'  WHERE `year_month` = '2016-06' 
+2016-06-11 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '20197.11|357' WHERE  `year_month` = '2016-06'
+2016-06-11 00:00:02 Complete statistics.
+2016-06-12 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_11` = '904.00|22'  WHERE `year_month` = '2016-06' 
+2016-06-12 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '21101.11|379' WHERE  `year_month` = '2016-06'
+2016-06-12 00:00:02 Complete statistics.
+2016-06-13 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_12` = '1930.00|41'  WHERE `year_month` = '2016-06' 
+2016-06-13 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '23031.11|420' WHERE  `year_month` = '2016-06'
+2016-06-13 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_12` = '18058.70|13'  WHERE `year_month` = '2016-06' 
+2016-06-13 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '69758.7|49' WHERE  `year_month` = '2016-06'
+2016-06-13 00:00:01 Complete statistics.
+2016-06-14 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_13` = '1745.00|41'  WHERE `year_month` = '2016-06' 
+2016-06-14 00:00:03 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '24776.11|461' WHERE  `year_month` = '2016-06'
+2016-06-14 00:00:03 UPDATE `cs_report_recharge_statistics_card` SET `day_13` = '5000.00|3'  WHERE `year_month` = '2016-06' 
+2016-06-14 00:00:03 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '74758.7|52' WHERE  `year_month` = '2016-06'
+2016-06-14 00:00:03 Complete statistics.
+2016-06-15 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_14` = '1990.50|43'  WHERE `year_month` = '2016-06' 
+2016-06-15 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '26766.61|504' WHERE  `year_month` = '2016-06'
+2016-06-15 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_14` = '1900.00|2'  WHERE `year_month` = '2016-06' 
+2016-06-15 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '76658.7|54' WHERE  `year_month` = '2016-06'
+2016-06-15 00:00:02 Complete statistics.
+2016-06-16 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_15` = '2711.00|40'  WHERE `year_month` = '2016-06' 
+2016-06-16 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '29477.61|544' WHERE  `year_month` = '2016-06'
+2016-06-16 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_15` = '1000.00|1'  WHERE `year_month` = '2016-06' 
+2016-06-16 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '77658.7|55' WHERE  `year_month` = '2016-06'
+2016-06-16 00:00:02 Complete statistics.
+2016-06-17 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_16` = '1598.50|34'  WHERE `year_month` = '2016-06' 
+2016-06-17 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '31076.11|578' WHERE  `year_month` = '2016-06'
+2016-06-17 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_16` = '2500.00|5'  WHERE `year_month` = '2016-06' 
+2016-06-17 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '80158.7|60' WHERE  `year_month` = '2016-06'
+2016-06-17 00:00:01 Complete statistics.
+2016-06-18 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_17` = '2521.00|44'  WHERE `year_month` = '2016-06' 
+2016-06-18 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '33597.11|622' WHERE  `year_month` = '2016-06'
+2016-06-18 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_17` = '600.00|2'  WHERE `year_month` = '2016-06' 
+2016-06-18 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '80758.7|62' WHERE  `year_month` = '2016-06'
+2016-06-18 00:00:01 Complete statistics.
+2016-06-19 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_18` = '2070.00|43'  WHERE `year_month` = '2016-06' 
+2016-06-19 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '35667.11|665' WHERE  `year_month` = '2016-06'
+2016-06-19 00:00:02 Complete statistics.
+2016-06-20 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_19` = '1871.00|42'  WHERE `year_month` = '2016-06' 
+2016-06-20 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '37538.11|707' WHERE  `year_month` = '2016-06'
+2016-06-20 00:00:01 Complete statistics.
+2016-06-21 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_20` = '1999.01|40'  WHERE `year_month` = '2016-06' 
+2016-06-21 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '39537.12|747' WHERE  `year_month` = '2016-06'
+2016-06-21 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_20` = '3500.00|4'  WHERE `year_month` = '2016-06' 
+2016-06-21 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '84258.7|66' WHERE  `year_month` = '2016-06'
+2016-06-21 00:00:01 Complete statistics.
+2016-06-22 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_21` = '2790.50|55'  WHERE `year_month` = '2016-06' 
+2016-06-22 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '42327.62|802' WHERE  `year_month` = '2016-06'
+2016-06-22 00:00:02 Complete statistics.
+2016-06-23 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_22` = '2259.31|47'  WHERE `year_month` = '2016-06' 
+2016-06-23 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '44586.93|849' WHERE  `year_month` = '2016-06'
+2016-06-23 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_22` = '3000.00|2'  WHERE `year_month` = '2016-06' 
+2016-06-23 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '87258.7|68' WHERE  `year_month` = '2016-06'
+2016-06-23 00:00:02 Complete statistics.
+2016-06-24 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_23` = '2629.00|53'  WHERE `year_month` = '2016-06' 
+2016-06-24 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '47215.93|902' WHERE  `year_month` = '2016-06'
+2016-06-24 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_23` = '21500.00|13'  WHERE `year_month` = '2016-06' 
+2016-06-24 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '108758.7|81' WHERE  `year_month` = '2016-06'
+2016-06-24 00:00:01 Complete statistics.
+2016-06-25 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_24` = '3347.00|58'  WHERE `year_month` = '2016-06' 
+2016-06-25 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '50562.93|960' WHERE  `year_month` = '2016-06'
+2016-06-25 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_24` = '6500.00|4'  WHERE `year_month` = '2016-06' 
+2016-06-25 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '115258.7|85' WHERE  `year_month` = '2016-06'
+2016-06-25 00:00:01 Complete statistics.
+2016-06-26 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_25` = '2242.00|48'  WHERE `year_month` = '2016-06' 
+2016-06-26 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '52804.93|1008' WHERE  `year_month` = '2016-06'
+2016-06-26 00:00:01 Complete statistics.
+2016-06-27 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_26` = '2038.00|53'  WHERE `year_month` = '2016-06' 
+2016-06-27 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '54842.93|1061' WHERE  `year_month` = '2016-06'
+2016-06-27 00:00:02 Complete statistics.
+2016-06-28 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_27` = '2338.00|55'  WHERE `year_month` = '2016-06' 
+2016-06-28 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '57180.93|1116' WHERE  `year_month` = '2016-06'
+2016-06-28 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_27` = '6800.00|6'  WHERE `year_month` = '2016-06' 
+2016-06-28 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '122058.7|91' WHERE  `year_month` = '2016-06'
+2016-06-28 00:00:01 Complete statistics.
+2016-06-29 00:00:04 UPDATE `cs_report_recharge_statistics_app` SET `day_28` = '2295.50|37'  WHERE `year_month` = '2016-06' 
+2016-06-29 00:00:04 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '59476.43|1153' WHERE  `year_month` = '2016-06'
+2016-06-29 00:00:04 UPDATE `cs_report_recharge_statistics_card` SET `day_28` = '12000.00|8'  WHERE `year_month` = '2016-06' 
+2016-06-29 00:00:04 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '134058.7|99' WHERE  `year_month` = '2016-06'
+2016-06-29 00:00:04 Complete statistics.
+2016-06-30 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_29` = '2749.00|48'  WHERE `year_month` = '2016-06' 
+2016-06-30 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '62225.43|1201' WHERE  `year_month` = '2016-06'
+2016-06-30 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_29` = '500.00|1'  WHERE `year_month` = '2016-06' 
+2016-06-30 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '134558.7|100' WHERE  `year_month` = '2016-06'
+2016-06-30 00:00:02 Complete statistics.
+2016-07-01 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_30` = '2110.10|46'  WHERE `year_month` = '2016-06' 
+2016-07-01 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '64335.53|1247' WHERE  `year_month` = '2016-06'
+2016-07-01 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_30` = '1500.00|3'  WHERE `year_month` = '2016-06' 
+2016-07-01 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '136058.7|103' WHERE  `year_month` = '2016-06'
+2016-07-01 00:00:02 Complete statistics.
+2016-07-02 00:00:01 INSERT INTO `cs_report_recharge_statistics_app`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-07','2513.02|49','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-07-02 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '2513.02|49' WHERE  `year_month` = '2016-07'
+2016-07-02 00:00:01 INSERT INTO `cs_report_recharge_statistics_card`(
+                  `id`,`year_month`,
+                  `day_01`,`day_02`,`day_03`,`day_04`,`day_05`,`day_06`,`day_07`,`day_08`,`day_09`,`day_10`,
+                  `day_11`,`day_12`,`day_13`,`day_14`,`day_15`,`day_16`,`day_17`,`day_18`,`day_19`,`day_20`,
+                  `day_21`,`day_22`,`day_23`,`day_24`,`day_25`,`day_26`,`day_27`,`day_28`,`day_29`,`day_30`,`day_31`,`month_total`)
+                VALUES (NULL,'2016-07','24945.80|12','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','') 
+2016-07-02 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '24945.8|12' WHERE  `year_month` = '2016-07'
+2016-07-02 00:00:01 Complete statistics.
+2016-07-03 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_02` = '1952.00|47'  WHERE `year_month` = '2016-07' 
+2016-07-03 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '4465.02|96' WHERE  `year_month` = '2016-07'
+2016-07-03 00:00:02 Complete statistics.
+2016-07-04 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_03` = '2183.00|45'  WHERE `year_month` = '2016-07' 
+2016-07-04 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '6648.02|141' WHERE  `year_month` = '2016-07'
+2016-07-04 00:00:02 Complete statistics.
+2016-07-05 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_04` = '1606.00|36'  WHERE `year_month` = '2016-07' 
+2016-07-05 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '8254.02|177' WHERE  `year_month` = '2016-07'
+2016-07-05 00:00:04 UPDATE `cs_report_recharge_statistics_card` SET `day_04` = '3000.00|2'  WHERE `year_month` = '2016-07' 
+2016-07-05 00:00:04 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '27945.8|14' WHERE  `year_month` = '2016-07'
+2016-07-05 00:00:04 Complete statistics.
+2016-07-06 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_05` = '3243.60|47'  WHERE `year_month` = '2016-07' 
+2016-07-06 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '11497.62|224' WHERE  `year_month` = '2016-07'
+2016-07-06 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_05` = '2000.00|4'  WHERE `year_month` = '2016-07' 
+2016-07-06 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '29945.8|18' WHERE  `year_month` = '2016-07'
+2016-07-06 00:00:02 Complete statistics.
+2016-07-07 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_06` = '2783.00|58'  WHERE `year_month` = '2016-07' 
+2016-07-07 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '14280.62|282' WHERE  `year_month` = '2016-07'
+2016-07-07 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_06` = '2500.00|2'  WHERE `year_month` = '2016-07' 
+2016-07-07 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '32445.8|20' WHERE  `year_month` = '2016-07'
+2016-07-07 00:00:02 Complete statistics.
+2016-07-08 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_07` = '1710.00|36'  WHERE `year_month` = '2016-07' 
+2016-07-08 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '15990.62|318' WHERE  `year_month` = '2016-07'
+2016-07-08 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_07` = '500.00|1'  WHERE `year_month` = '2016-07' 
+2016-07-08 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '32945.8|21' WHERE  `year_month` = '2016-07'
+2016-07-08 00:00:02 Complete statistics.
+2016-07-09 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_08` = '2698.00|58'  WHERE `year_month` = '2016-07' 
+2016-07-09 00:00:04 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '18688.62|376' WHERE  `year_month` = '2016-07'
+2016-07-09 00:00:04 UPDATE `cs_report_recharge_statistics_card` SET `day_08` = '2200.00|3'  WHERE `year_month` = '2016-07' 
+2016-07-09 00:00:04 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '35145.8|24' WHERE  `year_month` = '2016-07'
+2016-07-09 00:00:04 Complete statistics.
+2016-07-10 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_09` = '2731.00|60'  WHERE `year_month` = '2016-07' 
+2016-07-10 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '21419.62|436' WHERE  `year_month` = '2016-07'
+2016-07-10 00:00:02 Complete statistics.
+2016-07-11 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_10` = '2790.60|60'  WHERE `year_month` = '2016-07' 
+2016-07-11 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '24210.22|496' WHERE  `year_month` = '2016-07'
+2016-07-11 00:00:02 Complete statistics.
+2016-07-12 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_11` = '2049.00|47'  WHERE `year_month` = '2016-07' 
+2016-07-12 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '26259.22|543' WHERE  `year_month` = '2016-07'
+2016-07-12 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `day_11` = '25900.00|16'  WHERE `year_month` = '2016-07' 
+2016-07-12 00:00:02 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '61045.8|40' WHERE  `year_month` = '2016-07'
+2016-07-12 00:00:02 Complete statistics.
+2016-07-13 00:00:02 UPDATE `cs_report_recharge_statistics_app` SET `day_12` = '2914.00|46'  WHERE `year_month` = '2016-07' 
+2016-07-13 00:00:05 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '29173.22|589' WHERE  `year_month` = '2016-07'
+2016-07-13 00:00:05 UPDATE `cs_report_recharge_statistics_card` SET `day_12` = '1900.00|2'  WHERE `year_month` = '2016-07' 
+2016-07-13 00:00:05 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '62945.8|42' WHERE  `year_month` = '2016-07'
+2016-07-13 00:00:05 Complete statistics.
+2016-07-14 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_13` = '2565.88|52'  WHERE `year_month` = '2016-07' 
+2016-07-14 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '31739.1|641' WHERE  `year_month` = '2016-07'
+2016-07-14 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_13` = '1500.00|2'  WHERE `year_month` = '2016-07' 
+2016-07-14 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '64445.8|44' WHERE  `year_month` = '2016-07'
+2016-07-14 00:00:01 Complete statistics.
+2016-07-15 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_14` = '2086.00|57'  WHERE `year_month` = '2016-07' 
+2016-07-15 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '33825.1|698' WHERE  `year_month` = '2016-07'
+2016-07-15 00:00:01 Complete statistics.
+2016-07-16 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_15` = '3036.00|77'  WHERE `year_month` = '2016-07' 
+2016-07-16 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '36861.1|775' WHERE  `year_month` = '2016-07'
+2016-07-16 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_15` = '6000.00|5'  WHERE `year_month` = '2016-07' 
+2016-07-16 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '70445.8|49' WHERE  `year_month` = '2016-07'
+2016-07-16 00:00:01 Complete statistics.
+2016-07-17 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_16` = '2225.59|57'  WHERE `year_month` = '2016-07' 
+2016-07-17 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '39086.69|832' WHERE  `year_month` = '2016-07'
+2016-07-17 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_16` = '2000.00|1'  WHERE `year_month` = '2016-07' 
+2016-07-17 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '72445.8|50' WHERE  `year_month` = '2016-07'
+2016-07-17 00:00:01 Complete statistics.
+2016-07-18 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_17` = '1901.00|52'  WHERE `year_month` = '2016-07' 
+2016-07-18 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '40987.69|884' WHERE  `year_month` = '2016-07'
+2016-07-18 00:00:01 Complete statistics.
+2016-07-19 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `day_18` = '4394.00|63'  WHERE `year_month` = '2016-07' 
+2016-07-19 00:00:01 UPDATE `cs_report_recharge_statistics_app` SET `month_total` = '45381.69|947' WHERE  `year_month` = '2016-07'
+2016-07-19 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `day_18` = '11963.32|8'  WHERE `year_month` = '2016-07' 
+2016-07-19 00:00:01 UPDATE `cs_report_recharge_statistics_card` SET `month_total` = '84409.12|58' WHERE  `year_month` = '2016-07'
+2016-07-19 00:00:01 Complete statistics.

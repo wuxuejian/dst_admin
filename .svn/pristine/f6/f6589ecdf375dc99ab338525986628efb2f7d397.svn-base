@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>出险理赔流程</title>
+	<link rel="stylesheet" type="text/css" href="css/base.css" >
+</head>
+<body>
+	<div class='control-box'>
+		<div class='mainview'>
+			<div class='product product-full product-col-1 sidebar-trans'>
+				<div class='mbody'>
+					<div class='container'>
+						<div class='console-table-wapper margin-top'>
+							<div class='one-block'>
+								<div class='block-title'>
+									出险理赔流程
+								</div>
+								<div class='block-content clear'>
+									<div class='flow-nav fl'>
+										<ul id='page_nav_ul'>
+											<a href="index.html" class='have-done'><li>1、报案出险</li></a>
+											<a href="index1.html" class='active'><li>2、查勘结论</li></a>
+											<a href="index2.html" class='disableCss'><li>3、保险定损</li></a>
+											<a href="index3.html" class='disableCss'><li>4、车辆维修</li></a>
+											<a href="index4.html" class='disableCss'><li>5、保险理赔</li></a>
+											<a href="index5.html" class='disableCss'><li>6、保险请款</li></a>
+											<a href="index6.html" class='disableCss'><li>7、转账结案</li></a>
+										</ul>
+									</div>
+									<div class='flow-container fr content10-noborder' >
+										<form id="myform" method="post" enctype="multipart/form-data">
+											<input class="hide" name="id">
+											<div class="block-content10 clear">
+												<div class="col-12">
+													<div class="title"><span class="warncolor">*</span>查勘类型</div>
+													<div class="content">
+														<select class="form-control col-2 must" name="type_of_survey" id="type_of_survey">
+															<option value="1">保险公司查勘</option>
+															<option value="2">快处快赔</option>
+															<option value="3">交警查勘</option>
+															<option value="4">公估公司</option>
+															<option value="5">互碰自赔</option>
+															<option value="0">其他</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class='zrpd' id='zrpd_0'>
+												<div class="block-content10 clear">
+													<div class="col-4">
+														<div class="title">责任对象</div>
+														<div class="content">
+															<select class="form-control col-12 must" name='responsibility_object[]'>
+																<option value="1">标的车</option>
+																<option value="2">三者车</option>
+																<option value="3">三者物</option>
+																<option value="4">三者人</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-4" style='display: none;'>
+														<div class="title"><span class="warncolor">*</span>车牌号</div>
+														<div class="content">
+															<input class="form-control col-12 must" type="text" placeholder='' name='plate_number[]'/>
+														</div>
+													</div>
+													<div class="col-4" style='display: none;'>
+														<div class="title"><span class="warncolor">*</span>姓名</div>
+														<div class="content">
+															<input class="form-control col-12 must" type="text" placeholder='' name='full_name[]'/>
+														</div>
+													</div>
+													<div class="col-4" style='display: none;'>
+														<div class="title"><span class="warncolor">*</span>物体名称</div>
+														<div class="content">
+															<input class="form-control col-12 must" type="text" placeholder='' name='object_name[]'/>
+														</div>
+													</div>
+													<div class='col-2' style='display: none;'>
+														<div class='btn btn-ra5 btn-cannot remove'>
+															移除
+														</div>
+													</div>
+												</div>
+												<div class="block-content10 clear people_injury" style='display: none;'>
+													<div class="col-4">
+														<div class="title">就诊类型</div>
+														<div class="content">
+															<select class="form-control col-12" name="medical_treatment[]">
+																<option value="1">门诊</option>
+																<option value="2">住院</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-4">
+														<div class="title">伤残等级</div>
+														<div class="content">
+															<select class="form-control col-12" name="disability_rating[]">
+																<option value="0">0</option>
+																<option value="1">1</option>
+																<option value="2">2</option>
+																<option value="3">3</option>
+																<option value="4">4</option>
+																<option value="5">5</option>
+																<option value="6">6</option>
+																<option value="7">7</option>
+																<option value="8">8</option>
+																<option value="9">9</option>
+																<option value="10">10</option>
+															</select>
+														</div>
+													</div>		
+												</div>
+												<div class="block-content10 clear">
+													<div class="col-4">
+														<div class="title">责任比重</div>
+														<div class="content">
+															<input class="form-control col-12" type="text" placeholder='%' name='specific_gravity[]'/>
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="title">受损情况</div>
+														<div class="content">
+															<input class="form-control col-12" type="text" placeholder='' name="damage_condition[]"/>
+														</div>
+													</div>		
+												</div>
+												<div class='car_br'></div>
+											</div>
+
+											<div class='btn btn-ra5 btn-normal mg-8'' id='addzrpd'>添加责任判定</div>
+
+											<div class='btn btn-ra5 btn-normal mg-8'' id='addbxgs'>添加保险公司</div>
+											
+											<div class="block-content10 clear">
+												<div class="col-2">
+													<div class="title">出险资料</div>
+													<div class="content add_img_box">
+													</div>
+												</div>
+											</div>
+
+											<div class='save-cancel clear mg-8'>
+												<input type="button" id='save' class="btn btn-ra5 btn-normal" value="保存并下一步">
+												<input type="button" class="btn btn-ra5 btn-cannot" value="取消" onclick="cancel()">
+											</div>
+											<div id='oper' class="block-content10 clear hide" >
+												<div class="col-12">
+													<div class="title">上一次操作人员:</div>
+													<div class="content" id='oper_user2'>
+													</div>
+												</div>
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='remind'>
+		<div style='display: none;'>
+		</div>
+	</div>
+	<script type="text/javascript" src='js/jqueryv183.js'></script>
+	<script type="text/javascript" src='js/flow.js'></script>
+	<script type="text/javascript" src='js/jquery.ajaxSubmit.js'></script>
+	<script type="text/javascript">
+		//获取页面尾部?代码
+		function getQueryString(name) { 
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+			var r = window.location.search.substr(1).match(reg); 
+			if (r != null) return unescape(r[2]); return null; 
+		}
+		var page_id = getQueryString('id');
+		$('input[name="id"]').val(page_id);
+		//初始跳转
+		var page_step = getQueryString('step');
+		var page_have = getQueryString('have');
+
+		//对左侧A标签加ID
+		ahref_add_id(page_id,page_step,page_have);
+
+
+		$('#type_of_survey').change(function(){
+			if($(this).val() == 0){
+				var html = [];
+				html.push('<input class="form-control col-2 must" type="text" name="type_detail" id="type_detail">');
+				$('#type_of_survey').after(html.join(''));
+			}else{
+				if($('#type_detail').length){
+					$('#type_detail').detach();
+				}
+			}
+		})
+		$('#addzrpd').click(function(){
+			var zrpd = $('.zrpd:first').clone();
+			zrpd.find('input').val('');
+			zrpd.find("select[name='responsibility_object[]']").val('1');
+			zrpd.find("input[name='plate_number[]']").parents('.col-4').hide();
+			zrpd.find("input[name='full_name[]']").parents('.col-4').hide();
+			zrpd.find("input[name='object_name[]']").parents('.col-4').hide();
+			zrpd.find(".people_injury").hide();
+			$('.zrpd:last').after(zrpd);
+			$('.zrpd').find('.remove').parent('div').show();
+			$('.zrpd:first').find('.remove').parent('div').hide();
+			$('.remove').on('click' , function(){
+				$(this).parents('.zrpd').detach();
+			});
+			$("select[name='responsibility_object[]']").on('change' , function(){
+				if($(this).val() == 1){
+					$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find(".people_injury").hide();
+				}else if($(this).val() == 2){
+					$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').show();
+					$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find(".people_injury").hide();
+				}else if($(this).val() == 3){
+					$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').show();
+					$(this).parents('.zrpd').find(".people_injury").hide();
+				}else if($(this).val() == 4){
+					$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').show();
+					$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+					$(this).parents('.zrpd').find(".people_injury").show();
+				}else{
+				}
+			})
+		})
+
+		$("select[name='responsibility_object[]']").on('change' , function(){
+			if($(this).val() == 1){
+				$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find(".people_injury").hide();
+			}else if($(this).val() == 2){
+				$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').show();
+				$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find(".people_injury").hide();
+			}else if($(this).val() == 3){
+				$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').show();
+				$(this).parents('.zrpd').find(".people_injury").hide();
+			}else if($(this).val() == 4){
+				$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').show();
+				$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+				$(this).parents('.zrpd').find(".people_injury").show();
+			}else{
+
+			}
+		})
+		$('#addbxgs').click(function(){
+			var bxgs = $('.bxgs:first').clone();
+			bxgs.find('input').val('');
+			bxgs.find("select[name='responsibility_object[]']").val('1');
+			bxgs.find("input[type='checkbox']").attr('checked',false);
+			$('.bxgs:last').after(bxgs);
+			$('.bxgs').find('.remove').parent('div').show();
+			$('.bxgs:first').find('.remove').parent('div').hide();
+			$('.remove').on('click' , function(){
+				$(this).parents('.bxgs').detach();
+				bxgs_num();
+			});
+			bxgs_num();
+			$('select[name="insurance_company[]"]').change(function(){
+				for(var i=0; i<safe_length; i++){
+					if($(this).val() == safe_value[i]){
+						var this_name = $(this).parents('.bxgs').find('.bxxz').find('input').eq(0).attr("name");
+						$(this).parents('.bxgs').find('.bxxz').detach();
+						var html =[];
+						html.push('<div class="block-content10 clear bxxz">');
+							for(var length1 = 0; length1<safe_insurance_xz[i].length;length1++){
+								for(var length2 = 0; length2<safe_insurance_xz[i][length1].length;length2++){
+									html.push('<div class="col-2">');
+										html.push('<div class="title">');
+											html.push('<input type="checkbox" name="'+this_name+'" value="'+safe_insurance_xz[i][length1][length2]+'">');
+										html.push('</div>');
+										html.push('<div class="content">'+safe_insurance_xz[i][length1][length2]+'</div>');
+									html.push('</div>');
+								}
+							}
+						html.push('</div>');
+						$(html.join('')).appendTo($(this).parents('.bxgs'));
+					}
+				}
+			})
+		})
+		function bxgs_num(){
+			var bxgs_amount = $('.bxgs').length;
+			for(var i = 1; i <= bxgs_amount; i++){
+				$('.bxxz').eq(i-1).find('input[type="checkbox"]').attr("name","insurance" + i +"[]");
+			}
+		}
+
+		//获取保险公司列表以及险种
+		var safe_length;
+		var safe_value = [];
+		var safe_text = [];
+		var safe_insurance = [];
+		var safe_insurance_xz = new Array();
+		$(document).ready(function(){
+			
+			$.ajax({
+	           	url:'../index.php?r=car/insurance-claim/insurance-company',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(dataget){
+	           		//处理保险公司
+	           		safe_length = dataget.company.length;
+	           		for(var i=0; i<safe_length; i++){
+	           			safe_insurance_xz[i] = new Array();
+	           			safe_value[i] = dataget.company[i].value;
+	           			safe_text[i] = dataget.company[i].text;
+						var insurances = dataget.company[i].insurance;
+						for(j=0; j<insurances.length;j++){
+							safe_insurance_xz[i][j] = new Array();
+							var insurance = insurances[j];
+							if(!isNaN(insurance) && (insurance != null)){
+								safe_insurance_xz[i][j][0] = '交强险';
+							}else if(insurance == null){
+								if(safe_insurance_xz[i][j][0] == undefined){
+									safe_insurance_xz[i][j][0] = '商业险';
+								}else if(safe_insurance_xz[i][j][0] == '交强险'){
+									safe_insurance_xz[i][j][1] = '商业险'
+								}
+							}
+							else if(insurance != null) {
+								for(var x=0;x<insurance.length;x++){
+									safe_insurance_xz[i][j][x] = insurance[x][0];
+								}	
+							}
+						}
+	           		}
+	           		$.ajax({
+			           	url:'../index.php?r=car/insurance-claim/get2',
+			           	data: {id:page_id},
+			           	type:'get',
+			           	dataType:'json',
+			           	success:function(datai){
+			           		if(datai.data.oper_user2 == 0){
+			           			$('#oper').hide();
+			           		}else{
+			           			$('#oper').show();
+			           			$('#oper_user2').text(datai.data.oper_user2);
+			           		}
+			           		if(datai.data.responsibility_text != null){
+				           		$("select[name='responsibility_object[]']").val(datai.data.responsibility_text[0].responsibility_object);
+				           		$('input[name="plate_number[]"]').val(datai.data.responsibility_text[0].plate_number);
+				           		$('input[name="full_name[]"]').val(datai.data.responsibility_text[0].full_name);
+				           		$('input[name="object_name[]"]').val(datai.data.responsibility_text[0].object_name);
+				           		$('select[name="medical_treatment[]"]').val(datai.data.responsibility_text[0].medical_treatment);
+				           		$('select[name="disability_rating[]"]').val(datai.data.responsibility_text[0].disability_rating);
+				           		$('input[name="specific_gravity[]"]').val(datai.data.responsibility_text[0].specific_gravity);
+				           		$('input[name="damage_condition[]"]').val(datai.data.responsibility_text[0].damage_condition);
+			           		}
+			           		if($("select[name='responsibility_object[]']").val() == 1){
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find(".people_injury").hide();
+							}else if($("select[name='responsibility_object[]']").val() == 2){
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').show();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find(".people_injury").hide();
+							}else if($("select[name='responsibility_object[]']").val() == 3){
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').show();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find(".people_injury").hide();
+							}else if($("select[name='responsibility_object[]']").val() == 4){
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').show();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+								$("select[name='responsibility_object[]']").parents('.zrpd').find(".people_injury").show();
+							}else{}
+							if(datai.data.responsibility_text != null){
+								for(var j = 1; j < datai.data.responsibility_text.length; j++){
+									var zrpd = $('.zrpd:first').clone();
+									zrpd.find('input').val('');
+									zrpd.find("select[name='responsibility_object[]']").val(datai.data.responsibility_text[j].responsibility_object);
+					           		zrpd.find('input[name="plate_number[]"]').val(datai.data.responsibility_text[j].plate_number);
+					           		zrpd.find('input[name="full_name[]"]').val(datai.data.responsibility_text[j].full_name);
+					           		zrpd.find('input[name="object_name[]"]').val(datai.data.responsibility_text[j].object_name);
+					           		zrpd.find('select[name="medical_treatment[]"]').val(datai.data.responsibility_text[j].medical_treatment);
+					           		zrpd.find('select[name="disability_rating[]"]').val(datai.data.responsibility_text[j].disability_rating);
+					           		zrpd.find('input[name="specific_gravity[]"]').val(datai.data.responsibility_text[j].specific_gravity);
+					           		zrpd.find('input[name="damage_condition[]"]').val(datai.data.responsibility_text[j].damage_condition);
+
+					           		if(zrpd.find("select[name='responsibility_object[]']").val() == 1){
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find(".people_injury").hide();
+									}else if(zrpd.find("select[name='responsibility_object[]']").val() == 2){
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').show();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find(".people_injury").hide();
+									}else if(zrpd.find("select[name='responsibility_object[]']").val() == 3){
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').show();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find(".people_injury").hide();
+									}else if(zrpd.find("select[name='responsibility_object[]']").val() == 4){
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').show();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+										zrpd.find("select[name='responsibility_object[]']").parents('.zrpd').find(".people_injury").show();
+									}else{
+
+									}
+
+									$('.zrpd:last').after(zrpd);
+									$('.zrpd').find('.remove').parent('div').show();
+									$('.zrpd:first').find('.remove').parent('div').hide();
+									$('.remove').on('click' , function(){
+										$(this).parents('.zrpd').detach();
+									});
+
+									$("select[name='responsibility_object[]']").on('change' , function(){
+										if($(this).val() == 1){
+											$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find(".people_injury").hide();
+										}else if($(this).val() == 2){
+											$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').show();
+											$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find(".people_injury").hide();
+										}else if($(this).val() == 3){
+											$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').show();
+											$(this).parents('.zrpd').find(".people_injury").hide();
+										}else if($(this).val() == 4){
+											$(this).parents('.zrpd').find("input[name='plate_number[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find("input[name='full_name[]']").parents('.col-4').show();
+											$(this).parents('.zrpd').find("input[name='object_name[]']").parents('.col-4').hide();
+											$(this).parents('.zrpd').find(".people_injury").show();
+										}else{
+
+										}
+									})
+								}
+							}
+
+							//动态添加保险公司
+							if(datai.data.insurance_text == null){
+								var html = [];
+								var num_i = 1;
+								html.push('<div class="bxgs">');
+									html.push('<div class="block-content10 clear">');
+										html.push('<div class="col-6">');
+											html.push('<div class="title"><span class="warncolor">*</span>保险公司</div>');
+											html.push('<div class="content">');
+												html.push('<select class="form-control col-12 must" name="insurance_company[]">');
+													for( var j = 0; j < safe_length; j++){
+													html.push('<option value="'+safe_value[j]+'">'+safe_text[j]+'</option>');
+													}
+												html.push('</select>');
+											html.push('</div>');
+										html.push('</div>');
+										html.push('<div class="col-2" style="display: none;">');
+											html.push('<div class="btn btn-ra5 btn-cannot remove">移除</div>');
+										html.push('</div>');
+									html.push('</div>');
+									html.push('<div class="block-content10 clear bxxz">');
+										for(var length1 = 0; length1<safe_insurance_xz[0].length;length1++){
+											for(var length2 = 0; length2<safe_insurance_xz[0][length1].length;length2++){
+												html.push('<div class="col-2">');
+													html.push('<div class="title">');
+														html.push('<input type="checkbox" name="insurance'+num_i+'[]" value="'+safe_insurance_xz[0][length1][length2]+'">');
+													html.push('</div>');
+													html.push('<div class="content">'+safe_insurance_xz[0][length1][length2]+'</div>');
+												html.push('</div>');
+											}
+										}
+									html.push('</div>');
+								html.push('</div>');
+								$("#addbxgs").before(html.join(''));
+								//选择保险公司后转换对应险种
+								$('select[name="insurance_company[]"]').change(function(){
+									for(var i=0; i<safe_length; i++){
+										if($(this).val() == safe_value[i]){
+											var this_name = $(this).parents('.bxgs').find('.bxxz').find('input').eq(0).attr("name");
+											$(this).parents('.bxgs').find('.bxxz').detach();
+											var html =[];
+											html.push('<div class="block-content10 clear bxxz">');
+												for(var length1 = 0; length1<safe_insurance_xz[i].length;length1++){
+													for(var length2 = 0; length2<safe_insurance_xz[i][length1].length;length2++){
+														html.push('<div class="col-2">');
+															html.push('<div class="title">');
+																html.push('<input type="checkbox" name="'+this_name+'" value="'+safe_insurance_xz[i][length1][length2]+'">');
+															html.push('</div>');
+															html.push('<div class="content">'+safe_insurance_xz[i][length1][length2]+'</div>');
+														html.push('</div>');
+													}
+												}
+											html.push('</div>');
+											$(html.join('')).appendTo($(this).parents('.bxgs'));
+										}
+									}
+								})
+							}
+							if(datai.data.insurance_text != null){
+								for(var i = 0 ; i < datai.data.insurance_text.length ; i++){
+									num_i = i+1;
+									var html = [];
+									html.push('<div class="bxgs">');
+										html.push('<div class="block-content10 clear">');
+											html.push('<div class="col-6">');
+												html.push('<div class="title"><span class="warncolor">*</span>保险公司</div>');
+												html.push('<div class="content">');
+													html.push('<select class="form-control col-12 must" name="insurance_company[]" value="'+datai.data.insurance_text[i].insurance_company+'">');
+														for( var j = 0; j < safe_length; j++){
+														html.push('<option value="'+safe_value[j]+'">'+safe_text[j]+'</option>');
+														}
+													html.push('</select>');
+												html.push('</div>');
+											html.push('</div>');
+											html.push('<div class="col-2">');
+												html.push('<div class="btn btn-ra5 btn-cannot remove">移除</div>');
+											html.push('</div>');
+										html.push('</div>');
+										html.push('<div class="block-content10 clear bxxz">');
+											for(var length1 = 0; length1<safe_insurance_xz[0].length;length1++){
+												for(var length2 = 0; length2<safe_insurance_xz[0][length1].length;length2++){
+													html.push('<div class="col-2">');
+														html.push('<div class="title">');
+															html.push('<input type="checkbox" name="insurance'+num_i+'[]" value="'+safe_insurance_xz[0][length1][length2]+'">');
+														html.push('</div>');
+														html.push('<div class="content">'+safe_insurance_xz[0][length1][length2]+'</div>');
+													html.push('</div>');
+												}
+											}
+										html.push('</div>');
+									html.push('</div>');;
+
+									$("#addbxgs").before(html.join(''));
+									$('.bxgs').last().find('select[name="insurance_company[]"]').attr("value",datai.data.insurance_text[i].insurance_company);
+									//确定check显示哪些
+									for(var safe_i=0;safe_i<safe_length;safe_i++){
+										if($('.bxgs').last().find('select[name="insurance_company[]"]').val() == safe_value[safe_i]){
+											var this_name = $('.bxgs').last().find('.bxxz').find('input').eq(0).attr("name");
+											$('.bxgs').last().find('.bxxz').detach();
+											var html =[];
+											html.push('<div class="block-content10 clear bxxz">');
+												for(var length1 = 0; length1<safe_insurance_xz[safe_i].length;length1++){
+													for(var length2 = 0; length2<safe_insurance_xz[safe_i][length1].length;length2++){
+														html.push('<div class="col-2">');
+															html.push('<div class="title">');
+																html.push('<input type="checkbox" name="'+this_name+'" value="'+safe_insurance_xz[safe_i][length1][length2]+'">');
+															html.push('</div>');
+															html.push('<div class="content">'+safe_insurance_xz[safe_i][length1][length2]+'</div>');
+														html.push('</div>');
+													}
+												}
+											html.push('</div>');
+											$(html.join('')).appendTo($('.bxgs').last());
+											//判断checked是否选中
+											for(var length1 = 0; length1<safe_insurance_xz[safe_i].length;length1++){
+												for(var length2 = 0; length2<safe_insurance_xz[safe_i][length1].length;length2++){
+													if(datai.data.insurance_text[i].insurance != null){
+														for(var check_safe=0 ; check_safe < datai.data.insurance_text[i].insurance.length; check_safe++){
+															if(datai.data.insurance_text[i].insurance[check_safe] == safe_insurance_xz[safe_i][length1][length2]){
+																$('input[name="insurance'+num_i+'[]"]').eq(length2).attr('checked',true);
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+									//删除保险公司
+									$('.bxgs').find('.remove').parent('div').show();
+									$('.bxgs:first').find('.remove').parent('div').hide();
+									$('.remove').on('click' , function(){
+										$(this).parents('.bxgs').detach();
+										bxgs_num();
+									});
+										
+									//选择保险公司后转换对应险种
+									$('select[name="insurance_company[]"]').change(function(){
+										for(var i=0; i<safe_length; i++){
+											if($(this).val() == safe_value[i]){
+												var this_name = $(this).parents('.bxgs').find('.bxxz').find('input').eq(0).attr("name");
+												$(this).parents('.bxgs').find('.bxxz').detach();
+												var html =[];
+												html.push('<div class="block-content10 clear bxxz">');
+													for(var length1 = 0; length1<safe_insurance_xz[i].length;length1++){
+														for(var length2 = 0; length2<safe_insurance_xz[i][length1].length;length2++){
+															html.push('<div class="col-2">');
+																html.push('<div class="title">');
+																	html.push('<input type="checkbox" name="'+this_name+'" value="'+safe_insurance_xz[i][length1][length2]+'">');
+																html.push('</div>');
+																html.push('<div class="content">'+safe_insurance_xz[i][length1][length2]+'</div>');
+															html.push('</div>');
+														}
+													}
+												html.push('</div>');
+												$(html.join('')).appendTo($(this).parents('.bxgs'));
+											}
+										}
+									})
+								}
+							}
+
+							//动态添加图片
+							for(var i = 0 ; i < 10 ; i++){
+								if(datai.data.append1_urls == null){
+									var num_i = i + 1;
+									var html = [];
+									html.push('<div class="add_img clear">');
+										html.push('<input type="file" name="append'+num_i+'" class="cxzl_img_up fl" onChange="javascript:img_up('+num_i+')">');
+										html.push('<input type="button" class="cxzl_remove fl" value="移除" style="width:50px">');
+									html.push('</div>');
+									$(html.join('')).appendTo('.add_img_box');
+									$('.cxzl_remove').click(function(){
+										$(this).parent('.add_img').detach();
+									})
+									return;
+								}
+								if(datai.data.append1_urls[i] != undefined){
+									var html = [];
+									html.push('<div class="add_img clear">');
+										html.push('<img src="../'+datai.data.append1_urls[i]+'" style="height:100px; width:100px;">');
+										html.push('<input class="hide" name="append_url[]" value="'+datai.data.append1_urls[i]+' "/>');
+										html.push('<input type="button" class="cxzl_remove fl" value="移除" style="width:50px">');
+									html.push('</div>');
+									$(html.join('')).appendTo('.add_img_box');
+								}
+								if(datai.data.append1_urls[i] == undefined){
+									var num_i = i + 1;
+									var html = [];
+									html.push('<div class="add_img clear">');
+										html.push('<input type="file" name="append'+num_i+'" class="cxzl_img_up fl" onChange="javascript:img_up('+num_i+')">');
+										html.push('<input type="button" class="cxzl_remove fl" value="移除" style="width:50px">');
+									html.push('</div>');
+									$(html.join('')).appendTo('.add_img_box');
+									$('.cxzl_remove').click(function(){
+										$(this).parent('.add_img').detach();
+									})
+									return;
+								}
+
+							}
+			   			},
+			            error: function (msg) {}
+				   	});
+
+
+	   			},
+	            error: function (msg) {}
+		   	});
+		})
+		function img_up(num_i){
+			var i = num_i + 1;
+			var html = [];
+			html.push('<div class="add_img clear">');
+				html.push('<input type="file" name="append'+i+'" class="cxzl_img_up fl" onChange="javascript:img_up('+i+')">');
+				html.push('<input type="button" class="cxzl_remove fl" value="移除" style="width:50px">');
+			html.push('</div>');
+			$(html.join('')).appendTo('.add_img_box');
+			$('.cxzl_remove').click(function(){
+				$(this).parent('.add_img').detach();
+			})
+		}
+
+		$('#save').click(function(){
+			$('.warn').detach();
+			$('.must').each(function(){
+				if($(this).val() == ''){
+					$(this).after('<div class="warn">请填写完整内容</div>');
+				}
+			});
+			$('.must').keyup(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			$('.must').change(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			$('.must').mouseover(function(){
+				if($(this).val() != ''){
+					$(this).siblings('.warn').detach();
+				}
+			})
+			if($('.warn:visible').length){
+				return false;
+			}
+			var percent = 0;
+			for (i=0 ; i<$('input[name="specific_gravity[]"]').length; i++){
+				percent += parseFloat($('input[name="specific_gravity[]"]').eq(i).val());
+				
+			}
+			if(percent != 100){
+				alert('责任比重相加不等于100%');
+				return;
+			}
+
+	        $("#myform").ajaxSubmit({
+	            type: 'post', // 提交方式 get/post
+	            url: '../index.php?r=car/insurance-claim/add2', // 需要提交的 url
+	            dataType: "json",
+	            success: function(data) { 
+	            	window.location.href="index2.html?id="+page_id+"&step="+page_step+"&have=1";
+	            },
+	            error: function (msg) {
+	            }
+	        });
+	        	     
+		});
+	</script>
+</body>
+</html>

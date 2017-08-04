@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+	<head>
+  		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  		<meta name="Generator" content="EditPlus®">
+  		<meta name="Author" content="">
+  		<meta name="Keywords" content="">
+  		<meta name="Description" content="">
+  		<title>退车流程</title>
+  		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+  		<link rel="stylesheet" type="text/css" href="css/docs.css">
+  		<style type="text/css">
+  			.dimmed.dimmable>.ui.animating.dimmer.d1, .dimmed.dimmable>.ui.visible.dimmer.d1, .ui.active.dimmer.d1 {
+			    display: block;
+			    opacity: 0.1;
+			}
+  		</style>
+	</head>
+	<body>
+		<div class="main ui container" style="margin-top:16px;">
+			<div class="ui grid">
+		    	<div class="four wide column">
+		    		<div class="ui fluid vertical steps">
+		        		<a class="step" href="index1.html">
+				    		<div class="content">
+				      			<div class="title">1.客户退车意愿登记</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index2.html">
+				    		<div class="content">
+				      			<div class="title">2.销售沟通确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index3.html">
+				    		<div class="content">
+				      			<div class="title">3.销售负责人审批</div>
+				    		</div>
+				  		</a>
+						<a class="step" href="index4.html">
+				    		<div class="content">
+				      			<div class="title">4.售后验车</div>
+				    		</div>
+				  		</a>
+				  		<a class="active step" href="index5.html">
+				    		<div class="content">
+				      			<div class="title">5.车辆入库</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index6.html">
+				    		<div class="content">
+				      			<div class="title">6.押金结算</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index7.html">
+				    		<div class="content">
+				      			<div class="title">7.结算异常审批</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index8.html">
+				    		<div class="content">
+				      			<div class="title">8.财务转账收款确认</div>
+				    		</div>
+				  		</a>
+				  		<a class="step" href="index9.html">
+				    		<div class="content">
+				      			<div class="title">9.归档</div>
+				    		</div>
+				  		</a>
+		        	</div>
+		      	</div>
+		      	<div class="twelve wide column ui segments">
+		      		<div class="ui dimmer d1">
+				   		<div class="content">
+				     	<div class="center">
+				        	<h2 class="ui inverted icon header"> 您没有权限操作此步骤! </h2>
+				     	 </div>
+				    	</div>
+				  	</div>
+				  	<div class="field">
+		      			<div class="ui blue message">
+					        <p><span class="c-red">*红色车牌号</span>可能因车损或违章不建议入库</p>
+							<p><span class="c-q-gray">*浅色车牌号</span>暂未收回</p>
+							<p><span class="c-black">*黑色车牌号</span>为客户已归还的车辆</p>
+					    </div>
+					    <div></div>
+		      		</div>
+					
+					
+
+		      		<form class="ui form" id="form1"  action="../index.php?r=car/car-back/add5" method="post">
+		      			<input name='id' class="hide" />
+		      			<h3 class="ui black block header">
+					      	不建议入库车辆
+					    </h3>
+					    <table class="ui celled structured table" >
+					      <thead>
+					        <tr>
+					          <th>车牌号</th>
+					          <th>车损情况</th>
+					          <th>违章信息</th>
+					          <th>违章处理结果</th>
+					        </tr>
+					      </thead>
+					      <tbody id='damage_wz'>
+
+					      </tbody>
+					    </table>
+						<div class="field" id="every_contract1">
+				          	<h3 class="ui black block header">
+						      	车辆入库
+						    </h3>
+				          	<table class="ui table" >
+						      <thead>
+						        <tr>
+						          <th colspan="5"><div class="ui checkbox"><input type="checkbox" class="click_all" onclick="all_click(1)"><label>全选（全不选）</label></div></th>
+						        </tr>
+						      </thead>
+						      <tbody id='carbox'>
+						      </tbody>
+						    </table>
+				        </div>
+        				<div class="ui column grid">
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide save_cancel_div">
+					          		<div class="ui submit button green" onclick="add5()">保存</div>
+		        					<div class="ui submit button" onclick="cancel()">取消</div>
+		        			  	</div>
+					        </div>
+					        <div class="row">
+					          	<div class="column ten wide">
+					          	</div>
+					          	<div class="column six wide">
+					          		<span class="oper_user mg-r-10"></span><span class="oper_time"></span>
+		        			  	</div>
+					        </div>
+					    </div>
+			        </form>
+		      	</div>
+		    </div>
+		</div>
+		<div class="ui small modal" id="a_modal" >
+			<input name='id' class="hide" />
+		  	<div class="header">保存成功！</div>
+		  	<div class="content">
+		      	<p>勾选车辆已入库。若全部车辆入库，则等待商务进行金额结算！</p>
+		    </div>
+		    <div class="actions">
+		      	<div class="ui green button" onclick="cancel()">确定</div>
+		    </div>
+		</div>
+	</body>
+	<script src="js/jqueryv183.js"></script>
+  	<script src="js/jquery.form.js"></script>
+  	<script src="js/semantic.min.js"></script>
+  	<script src="js/flow.js"></script>
+
+	
+ 	
+  	<script>
+		//预处理单选按钮
+  		$('.ui.radio.checkbox').checkbox();
+  		//预处理弹出输入框
+  		function a_modal_show(){
+	  		$('#a_modal').modal('show');
+  		}
+  		function modal_close(){
+	  		$('.ui.modal').modal('hide');
+  		}
+  		//处理步骤显示
+  		var page_id = getQueryString('id');
+  		var page_state = getQueryString('state');
+  		var page_role_ids = getQueryString('role_ids');
+		step_show_hide(page_id,page_state,8,page_role_ids);
+
+		//判断角色是否能修改该页面
+		$.ajax({
+           	url:'../index.php?r=car/car-back/rbac-access&index=5',
+           	type:'get',
+           	dataType:'json',
+           	success:function(data){
+           		if(data == false){
+           			/*
+           			//预处理遮盖层
+			  		$('.ui .segments').dimmer('show','on');
+			  		$('.ui .segments').off("click");//让点击事件取消
+			  		*/
+			  	
+			  		//不可操作
+			  		$('.id_test').show();
+			  		$('.save_cancel_div').hide();
+           		}
+           	},
+           	error: function (msg) {}
+        })
+  		
+  		//获取客户列表
+  		$(document).ready(function(){
+       		//获取页面值
+       		$.ajax({
+	           	url:'../index.php?r=car/car-back/get5',
+	           	data: {id:page_id},
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(datai){
+	           		if(datai.status){
+						if(datai.data.state != 4 && datai.data.state != 5){
+							$('.ui .segments').dimmer('show','on');
+							$('.ui .segments').off("click");//让点击事件取消
+							$('.dimmer .header').text("");
+						}
+
+	           			var damage = datai.data.damage_text;
+
+	           			for(var i = 0; i < damage.length; i++){
+	           				if(damage[i].no_storage == 1){
+		           				var html = [];
+		           				var h = datai.data.wz_text[i].lists.length;
+		           				if(h == 0){
+		           					html.push('<tr><td>'+damage[i].plate_number+'</td><td>'+damage[i].position+'</td><td>无</td><td></td></tr>');
+		           				}else if (h == 1){
+		           					var clqk = null;
+		           					if(datai.data.wz_text[i].lists[0].handled == 0){
+		           						clqk = "未处理";
+		           					}else{
+		           						clqk = "已处理";
+		           					}
+		           					html.push('<tr><td>'+damage[i].plate_number+'</td><td>'+damage[i].position+'</td><td>'+datai.data.wz_text[i].lists[0].act+'</td><td>'+clqk+'</td></tr>');
+		           				}else if( h > 1){
+		           					for( var j = 0 ; j < h ; j++){
+		           						var clqk = null;
+		           						if(datai.data.wz_text[i].lists[j].handled == 0){
+			           						clqk = "未处理";
+			           					}else{
+			           						clqk = "已处理";
+			           					}
+		           						if(j == 0){
+		           							html.push('<tr><td rowspan="'+h+'">'+damage[i].plate_number+'</td><td rowspan="'+h+'">'+damage[i].position+'</td><td>'+datai.data.wz_text[i].lists[j].act+'</td><td>'+clqk+'</td></tr>');
+		           						}else{
+		           							html.push('<tr><td>'+datai.data.wz_text[i].lists[j].act+'</td><td>'+clqk+'</td></tr>');
+		           						}
+		           					}
+		           				}
+		           				$(html.join('')).appendTo('#damage_wz');
+	           				}
+	           			}	
+	           			
+	           			if( true ){//保护html作用域
+	           				var html = [];
+	           				var num = 0;
+		           			for(var i = 0; i < damage.length ; i++){
+		      
+	           					num++;
+	           					if(num % 5 == 1){
+
+	           						html.push('<tr>');
+	           							if(damage[i].is_back == 0){
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'" disabled="disabled" ><label class="c-q-gray">'+damage[i].plate_number+'</label></div></td>');
+	           							}else if(damage[i].no_storage == 1){
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'"><label class="c-red">'+damage[i].plate_number+'</label></div></td>');
+	           							}else{
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'"><label>'+damage[i].plate_number+'</label></div></td>');
+	           							}
+
+	           					}else if(num % 5 == 0){
+
+		           						if(damage[i].is_back == 0){
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'" disabled="disabled"><label class="c-q-gray">'+damage[i].plate_number+'</label></div></td>');
+	           							}else if(damage[i].no_storage == 1){
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'"><label class="c-red">'+damage[i].plate_number+'</label></div></td>');
+	           							}else{
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'"><label>'+damage[i].plate_number+'</label></div></td>');
+	           							}
+		           					html.push('</tr>');
+
+	           					}else{
+
+	           							if(damage[i].is_back == 0){
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'" disabled="disabled"><label class="c-q-gray">'+damage[i].plate_number+'</label></div></td>');
+	           							}else if(damage[i].no_storage == 1){
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'"><label class="c-red">'+damage[i].plate_number+'</label></div></td>');
+	           							}else{
+	           								html.push('<td><div class="ui checkbox"><input type="checkbox" name="car_no[]" value="'+damage[i].plate_number+'"><label>'+damage[i].plate_number+'</label></div></td>');
+	           							}
+
+	           					}           					
+
+		           			}
+		           			if(num % 5 != 0){html.push('<td colspan="'+(5 - (num % 5))+'"></td></tr>');}
+		           			$(html.join('')).appendTo('#carbox');
+		           			for(var i = 0; i < datai.data.car_storage_text.length; i++){
+		           				for(var j = 0; j < num ; j++){
+		           					if(datai.data.car_storage_text[i].plate_number == $('input[name="car_no[]"]').eq(j).val()){
+		           						$('input[name="car_no[]"]').eq(j).trigger("click");
+										$('input[name="car_no[]"]').eq(j).click(function (event) {
+						                   event.preventDefault();   // 如果<a>定义了 target="_blank“ 需要这句来阻止打开新页面
+										 });
+										//$('input[name="car_no[]"]').eq(j).onchange();
+										$('input[name="car_no[]"]').eq(j).parent("div").css("opacity",".5");
+		           					}
+		           				}
+		           			}
+		           		}
+	           			
+	           			
+	           			//操作人和操作时间赋值
+	           			var oper_user = datai.data["oper_user4_1"];
+	           			var oper_time = datai.data["oper_time4_1"];
+	           			user_time(5,oper_user,oper_time);
+	           		}      		
+	   			},
+	            error: function (msg) {}
+		   	});   			
+		})
+		function all_click(num){
+			if( $('#every_contract'+num).find('.click_all').attr('checked')){
+				for(var i = 0; i < $('#every_contract'+num).find('td').length; i++){
+					if(!$('#every_contract'+num).find('tbody').find('input').eq(i).attr('checked')){
+						$('#every_contract'+num).find('tbody').find('input').eq(i).trigger("click");
+					}		
+				}
+			}else if( !$('#every_contract'+num).find('.click_all').attr('checked') ){
+				for(var i = 0; i < $('#every_contract'+num).find('td').length; i++){
+					if($('#every_contract'+num).find('tbody').find('input').eq(i).attr('checked')){
+						$('#every_contract'+num).find('tbody').find('input').eq(i).trigger("click");
+					}		
+				}
+			}
+		}
+
+		function add5(){
+			//验证
+			//
+			$('#form1').ajaxSubmit({
+				dataType : "json",
+				success : function(data){
+					if(data.status){
+						a_modal_show();
+					}else {
+						alert(data.info);
+					}
+					
+				},
+				error: function(xhr){
+					alert("提交失败");
+				}
+			});
+		}
+  	</script>
+</html>
