@@ -42,64 +42,43 @@
                 </td>
                 <td align="right"><div style="width:70px;">维修厂类型</div></td>
                 <td>
-                    <input
-                        class="easyui-textbox"
-                        required="true"
-                        style="width:160px;"
-                        name="sale_factory"
-                        validType="length[100]"
-                        editable="false"
+                    <input 
+                        type="text"
+                        style="width:160px;" 
+                        name="sale_factory" 
+                        id="sale_factory" 
                         disabled="disabled"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
-                    />
+                    >
                 </td>
             </tr>
             <tr>
                 <td align="right"><div style="width:70px;">车型</div></td>
                 <td>
                     <input
-                        class="easyui-textbox"
                         required="true"
+                        id="car_model"
                         style="width:160px;"
                         name="car_model"
-                        validType="length[100]"
-                        editable="false"
                         disabled="disabled"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
                     />
                 </td>
                <td align="right"><div style="width:70px;">车架号</div></td>
                 <td>
                     <input
-                        class="easyui-textbox"
-                        required="true"
+                        id="car_jia_no"
                         style="width:160px;"
                         name="car_jia_no"
-                        validType="length[100]"
-                        editable="false"
                         disabled="disabled"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
                     />
                 </td>
                 <td align="right"><div style="width:70px;">机动车所有人</div></td>
                 <td>
                     <input
-                        class="easyui-textbox"
                         required="true"
                         style="width:160px;"
+                        id="car_user"
                         name="car_user"
-                        validType="length[100]"
-                        editable="false"
                         disabled="disabled"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
                     />
                 </td>
             </tr>
@@ -107,31 +86,19 @@
                 <td align="right"><div style="width:70px;">上次保养时间</div></td>
                 <td>
                     <input
-                        class="easyui-textbox"
-                        required="true"
                         style="width:160px;"
+                        id="before_repair_time"
                         name="before_repair_time"
-                        validType="length[100]"
-                        editable="false"
                         disabled="disabled"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
-                    />
                 </td>
                <td align="right"><div style="width:70px;">上次保养里程</div></td>
                 <td>
                     <input
-                        class="easyui-textbox"
-                        required="true"
+                        id="before_repair_li"
                         style="width:160px;"
                         name="before_repair_li"
                         validType="length[100]"
-                        editable="false"
                         disabled="disabled"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
                     />
                 </td>
                 <td align="right"><div style="width:70px;">送修人</div></td>
@@ -142,9 +109,7 @@
                         style="width:160px;"
                         name="repair_person"
                         validType="length[100]"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
+                       
                     />
                 </td>
             </tr>
@@ -157,10 +122,7 @@
                         style="width:160px;"
                         name="repair_person_tel"
                         validType="length[100]"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
-                    />
+                      
                 </td>
                <td align="right"><div style="width:70px;">服务顾问</div></td>
                 <td>
@@ -170,9 +132,7 @@
                         style="width:160px;"
                         name="fuwu_person"
                         validType="length[100]"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
+                     
                     />
                 </td>
                 <td align="right"><div style="width:70px;">服务顾问电话</div></td>
@@ -183,9 +143,7 @@
                         style="width:160px;"
                         name="fuwu_person_tel"
                         validType="length[100]"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
+                     
                     />
                 </td>
             </tr>
@@ -206,11 +164,11 @@
                 </td>
                <td align="right"><div style="width:70px;">进厂时间</div></td>
                 <td>
-                    <input class="easyui-datebox" type="text" name="into_time" style="width:93px;" required="true" />
+                    <input class="easyui-datetimebox" style="width:160px;"  name="in_time"  id="in_time"  required  />
                 </td>
                 <td align="right"><div style="width:70px;">预计出厂时间</div></td>
                 <td>
-                   <input class="easyui-datebox" type="text" name="expect_time" style="width:93px;" required="true"/>
+                   <input class="easyui-datetimebox" type="text" name="expect_time" style="width:160px;" required="true"/>
                 </td>
             </tr>
             <tr>
@@ -222,9 +180,7 @@
                         style="width:160px;"
                         name="into_mile"
                         validType="length[100]"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
+                       
                     />
                 </td>
                 <td align="right"><div style="width:70px;">SOC</div></td>
@@ -235,9 +191,7 @@
                         style="width:160px;"
                         name="soc"
                         validType="length[100]"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
+                     
                     />
                 </td> 
             </tr>
@@ -250,9 +204,7 @@
                         style="width:320px;"
                         name="error_note"
                         validType="length[100]"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
+                      
                     ></textarea>
                 </td>  
             </tr>
@@ -264,9 +216,7 @@
                         style="width:320px;"
                         name="note"
                         validType="length[100]"
-                        data-options="{onChange: function(){
-                            CarBaseinfoAdd.getCarModelName($(this).val());
-                        }}"
+                     
                     ></textarea>
                 </td>  
             </tr>
@@ -308,7 +258,7 @@
                 <tr>
                     <th data-options="field:'task_type',width:100,align:'center',editor:'textbox'">维修类型</th>
                     <th data-options="field:'task_name',width:100,align:'center',editor:'textbox'">维修项目名称</th>
-                    <th data-options="field:'task_fee',width:100,align:'center',editor:{type:'numberbox',options:{precision:1}}"> 工时费金额</th>
+                    <th data-options="field:'task_fee',width:100,align:'center',editor:{type:'numberbox',options:{precision:2}}"> 工时费金额</th>
                     <th data-options="field:'task_note',width:400,align:'center',editor:'textbox'">备注</th>
                 </tr>
             </thead>
@@ -338,7 +288,6 @@
                     iconCls: 'icon-edit',
                     singleSelect: true,
                     toolbar: '#ab',
-                    
                     method: 'get',
                     onClickRow: onClickRow_1
                 ">
@@ -383,7 +332,7 @@
        <table cellpadding="5" cellspacing="0">
            <!--  <div class="ulforform-resizeable-title">上传照片</div> -->
                     <!-- <div class="ulforform-resizeable-input">
-                        <ul style="padding:0;margin:0;list-style:none;overflow:hidden;" id="process-repair-uploadfile">
+                        <ul style="padding:0;margin:0;list-style:none;overflow:hidden;" id="repair-add-uploadfile">
                             <?php
                                 $thumbs = [
                                   ['car_front_img','车头'],
@@ -403,35 +352,40 @@
                         </ul>
                     </div> -->
                     <td>
-                        <ul style="padding:0;margin:0;list-style:none;overflow:hidden;" id="process-repair-uploadfile">
+                        <ul style="padding:0;margin:0;list-style:none;overflow:hidden;" id="repair-add-uploadfile">
                             <?php
                                 $thumbs = [
-                                  ['car_front_img','车辆仪表盘'],
-                                    ['car_left_img','故障位置'],
+                                    ['photoa','车辆仪表盘'],
+                                    ['photoc','故障位置']
                                 ];
                                 foreach($thumbs as $key=>$item){
                             ?>
-                                <li style="float:left;margin-right:16px;position:relative;cursor:pointer" >
+                                <li id="img<?php echo $key;?>" style="float:left;margin-right:16px;position:relative;cursor:pointer;margin-bottom:20px;" >
                                     <div style="width:100px;height:100px;">
-                                        <img  id="<?php echo $item[0]; ?>"  class="repairImg" src="<?php echo !empty($config['image']) ? $licenseInfo['image']:'./images/add.jpg'; ?>" width="100" height="100" />
+                                        <img  id="<?php echo $item[0]; ?>"  class="repairImg" src="./images/add.jpg" width="100" height="100" />
                                         <input type="hidden" name="<?php echo $item[0]; ?>"  />
                                     </div>
                                     <div class="imgTitle" style="position:absolute;bottom:0;left:0;background:rgba(224,236,255,0.5);width:100px;text-align:center;line-height:24px;"><?php echo $item[1]; ?></div>
                                     <div class="removeIcon" style="position:absolute;top:0;right:0;background:rgba(224,236,255,0.5);display:none;"><img src="./jquery-easyui-1.4.3/themes/icons/clear.png" width="14px" height="14px" /></div>
                                 </li>
-                                
                             <?php } ?>
                         </ul>
                     </td>
             
         </table>
     </div>
-</form>
 <input type="hidden" id="car_no_same" name="car_no" value="">
-<!-- <div id="easyui-dialog-process-repair-uploadimage"></div> -->
+<input type="hidden" id="part_info" name="part_info" value="">
+<input type="hidden" id="task_info" name="task_info" value="">
+<input type="hidden" id="repair_price" name="repair_price" value="">
+<input type="hidden" id="is_save_task" name="is_save_task" value="0">
+<input type="hidden" id="is_save_part" name="is_save_part" value="0">
+</form>
 
-<iframe id="iframe-process-repair-uploadimage" name="iframe-process-repair-uploadimage" style="display:none;"></iframe>
-<div id="easyui-dialog-process-repair-uploadimage"></div>
+<!-- <div id="easyui-dialog-repair-add-uploadimage"></div> -->
+
+<iframe id="iframe-repair-add-uploadimage" name="iframe-repair-add-uploadimage" style="display:none;"></iframe>
+<div id="easyui-dialog-repair-add-uploadimage"></div>
 <script>
 
     var CarBaseinfoAdd = {
@@ -471,10 +425,10 @@
     };
 
 
-   var ProcessRepairUpload = new Object();
-    ProcessRepairUpload.init = function(){
+   var RepairAddUpload = new Object();
+    RepairAddUpload.init = function(){
         //初始化照片上传窗口
-        $('#easyui-dialog-process-repair-uploadimage').dialog({
+        $('#easyui-dialog-repair-add-uploadimage').dialog({
             title: '照片上传',   
             width: 500,   
             height: 160,   
@@ -490,7 +444,7 @@
                 text:'上传',
                 iconCls:'icon-ok',
                 handler:function(){
-                    var form = $('#easyui-form-process-repair-upload-window');
+                    var form = $('#easyui-form-repair-add-upload-window');
                     if(!form.form('validate')){
                         return false;
                     }
@@ -500,7 +454,7 @@
                 text:'取消',
                 iconCls:'icon-cancel',
                 handler:function(){
-                    $('#easyui-dialog-process-repair-uploadimage').dialog('close');
+                    $('#easyui-dialog-repair-add-uploadimage').dialog('close');
                 }
             }],
             onClose: function(){
@@ -509,12 +463,12 @@
         });
 
         //给上传故障图片绑定各类事件
-        $('#process-repair-uploadfile').children('li')
+        $('#repair-add-uploadfile').children('li')
             .click(function(){ //单击打开上传窗口
                 var columnName = $(this).find('input').attr('name');
-                $('#easyui-dialog-process-repair-uploadimage')
+                $('#easyui-dialog-repair-add-uploadimage')
                     .dialog('open')
-                    .dialog('refresh',"<?= yii::$app->urlManager->createUrl(['process/repair/upload-window']); ?>&columnName="+columnName);
+                    .dialog('refresh',"<?= yii::$app->urlManager->createUrl(['repair/repair-info/upload-window']); ?>&columnName="+columnName);
             })
             .mouseover(function(){
                 var imgSrc = $(this).find('img.repairImg').attr('src');
@@ -532,10 +486,10 @@
             });
        
     }
-    ProcessRepairUpload.uploadComplete = function(rData){
+    RepairAddUpload.uploadComplete = function(rData){
         if(rData.status){
-            $('#easyui-dialog-process-repair-uploadimage').dialog('close');
-            var inputControl = $('#process-repair-uploadfile').find('input[name='+rData.columnName+']');
+            $('#easyui-dialog-repair-add-uploadimage').dialog('close');
+            var inputControl = $('#repair-add-uploadfile').find('input[name='+rData.columnName+']');
             inputControl.val(rData.storePath);
             inputControl.siblings('img').attr('src',rData.storePath);
             // 放大显示上传图片
@@ -549,7 +503,7 @@
     }
 
 
-    ProcessRepairUpload.init();
+    RepairAddUpload.init();
 </script>
 <script type="text/javascript">
     //二级联动
@@ -575,11 +529,33 @@
                     $('#order_no').combobox('setValues','');
                 }
             });
+            $.ajax({
+                async: false,
+                url:'<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/get-info']); ?>',
+                type:'post',
+                data:{'car_no':car_no},
+                dataType:'json',
+                success:function(data){
+//                    $('#parts_kind').combobox('clear');   
+                    //alert(data.vehicle_dentification_number)
+                    $("#car_model").val(data.car_type);
+                    $("#car_jia_no").val(data.vehicle_dentification_number);
+                    $("#car_user").val(data.name);
+                    if(data.a){
+                        $("#before_repair_time").val(data.a);
+                        $("#before_repair_li").val(data.b);
+                    }
+
+                    console.log(data);
+                   
+                }
+            });
         }
     });
 </script>
         <script type="text/javascript">
             var editIndex = undefined;
+            var is_save_task=0;
             function endEditing(){
                 if (editIndex == undefined){return true}
                 if ($('#dg').datagrid('validateRow', editIndex)){
@@ -594,6 +570,8 @@
                 }
             }
             function onClickRow(index){
+                is_save_task=0;
+                $("#is_save_task").val(is_save_task);
                 if (editIndex != index){
                     if (endEditing()){
                         $('#dg').datagrid('selectRow', index)
@@ -605,6 +583,8 @@
                 }
             }
             function append_task(){
+                is_save_task=0;
+                $("#is_save_task").val(is_save_task);
                 if (endEditing()){
                     $('#dg').datagrid('appendRow',{status:'P'});
                     editIndex = $('#dg').datagrid('getRows').length-1;
@@ -613,11 +593,39 @@
                 }
             }
             function accept(){
+                is_save_task=1;
+                $("#is_save_task").val(is_save_task);
+                $("#task_money_all").text(0);
+                //alert($("task_money_all").text())
                     if (endEditing()){
+                        var rows = $("#dg").datagrid("getRows");
+                        var task_info=new Array(); 
+                        for(var i=0;i<rows.length;i++)
+                        {
+                            task_info[i]=new Array();
+                            task_info[i][0]=rows[i].task_type;
+                            task_info[i][1]=rows[i].task_name;
+                            task_info[i][2]=rows[i].task_fee;
+                            task_info[i][3]=rows[i].task_note;
+                            task_money_all=parseFloat($("#task_money_all").text())+parseFloat(rows[i].task_fee);
+                            task_money_all = task_money_all.toFixed(2);
+                            $("#task_money_all").text(task_money_all);
+                            part_money_all=$("#part_money_all").text();
+                            money_all=parseFloat(task_money_all)+parseFloat(part_money_all);
+                            money_all = money_all.toFixed(2);
+                            $("#money_all").text(money_all) ;
+                            $("#repair_price").val(money_all);  
+
+
+                        }
                         $('#dg').datagrid('acceptChanges');
+                        $("#task_info").val(arrayToJson(task_info));
                     }
+
             }
             function removeit_task(){
+                is_save_task=0;
+                $("#is_save_task").val(is_save_task);
                 if (editIndex == undefined){return}
                 $('#dg').datagrid('cancelEdit', editIndex)
                         .datagrid('deleteRow', editIndex);
@@ -627,15 +635,15 @@
                 var rows = $('#dg').datagrid('getChanges');
                 alert(rows.length+' rows are changed!');
             }
+
+
         </script>
         <script type="text/javascript">
-            var editIndex_1 = undefined;
+           var editIndex_1 = undefined;
+           var is_save_part=0;
             function endEditing_1(){
                 if (editIndex_1 == undefined){return true}
                 if ($('#bg').datagrid('validateRow', editIndex_1)){
-                   // var ed = $('#bg').datagrid('getEditor', {index:editIndex,field:'productid'});
-                   // var productname = $(ed.target).combobox('getText');
-                    //$('#dg').datagrid('getRows')[editIndex]['productname'] = productname;
                     $('#bg').datagrid('endEdit', editIndex_1);
                     editIndex_1 = undefined;
                     return true;
@@ -644,91 +652,151 @@
                 }
             }
             function onClickRow_1(index){
-                //alert(11111)
-                //alert(index);
-                //var obj=$('#bg').datagrid('getSelected')
-                /*if (editIndex_1 != index){
+                is_save_part=0;
+                $("#is_save_part").val(is_save_part);
+                if (editIndex_1 != index){
                     if (endEditing_1()){
                         $('#bg').datagrid('selectRow', index)
                                 .datagrid('beginEdit', index);
-                                //console.log(obj);
                         editIndex_1 = index;
                     } else {
-                       $('#bg').datagrid('selectRow', index)
-                            .datagrid('endEdit', editIndex_1);
-                            //console.log(obj);
+                        $('#bg').datagrid('selectRow', editIndex_1);
                     }
-                }else{
-                        $('#bg').datagrid('selectRow', index)
-                                .datagrid('beginEdit', index);
-                                //console.log(obj);
-                }*/
-                if(editIndex_1!=index){
-                    $('#bg').datagrid('selectRow', index)
-                                .datagrid('beginEdit', index)
-                                .datagrid('endEdit', editIndex_1);
-                                //得到当前选择的对象的值
-                       var rows = $('#bg').datagrid('getRows');
-                       alert(index)
-                       alert(editIndex_1);
-                       if(editIndex_1==undefined){
-                        editIndex_1=index;
-                       }
-                       
-                        var row  = rows[editIndex_1];
-                    
-                       alert(editIndex_1);
-                       editIndex_1=index;
-                       var car_no=$('#car_no_same').val();
-                       var part_no=row.part_no;
-                       var part_number=row.part_number;
-                       var part_fee=row.part_fee;
-                        $.ajax( {  
-                                 "url":"<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/part-info']);?>",// 跳转到 action  
-                                 data:{  
-                                      part_no : part_no,    
-                                      car_no:car_no   
-                                 },  
-                                     type:'post',  
-                                     cache:false,  
-                                     dataType:'json',  
-                                     success:function(data) {
-                                        //alert(111);
-                                        console.log(data)
-                                     row.before_repair_time=data.into_time;
-                                     row.before_repair_li=data.into_mile;
-                                     row.part_total=part_number*part_fee;
-                                         
-                                     }
-                                 });
-                                
-                }else{
-
                 }
-            }
-            function accept_1(){
-                alert(editIndex_1)
-                    if (endEditing_1()){
-                        $('#bg').datagrid('acceptChanges');
-                    }
             }
             function append_part(){
+                is_save_part=0;
+                $("#is_save_part").val(is_save_part);
                 if (endEditing_1()){
-                    $('#bg').datagrid('appendRow',{status:'P',part_no:'',part_number:'',part_fee:'',part_unit:'',part_name:''});
-                    //editIndex_1 = $('#bg').datagrid('getRows').length-1;
-                    //$('#bg').datagrid('selectRow', editIndex_1);
-                            //.datagrid('beginEdit', editIndex_1);
+                    $('#bg').datagrid('appendRow',{status:'P',part_no:'',part_number:'',part_fee:'',part_unit:'',part_name:'',part_total:'',before_repair_time:'',before_repair_li:''});
+                    editIndex_1 = $('#bg').datagrid('getRows').length-1;
+                    $('#bg').datagrid('selectRow', editIndex_1)
+                            .datagrid('beginEdit', editIndex_1);
                 }
-
             }
             function removeit_part(){
+                is_save_part=0;
+                $("#is_save_part").val(is_save_part);
                 if (editIndex_1 == undefined){return}
                 $('#bg').datagrid('cancelEdit', editIndex_1)
                         .datagrid('deleteRow', editIndex_1);
                 editIndex_1 = undefined;
             }
-            function getChanges_1(){
-                var rows = $('#bg').datagrid('getChanges');
-                alert(rows.length+' rows are changed!');
+            function accept_1(){
+                
+                
+                $("#part_money_all").text(0);
+                var car_no=$("#car_no_same").val();
+                if (endEditing_1()){
+                    var rows = $("#bg").datagrid("getRows");
+                    var part_number=new Array();
+                    var part_fee=new Array();
+                    var part_info=new Array();
+                    for(var i=0;i<rows.length;i++)
+                        {
+                            //获取每一行的数据
+                            //console.log(i)
+                            var part_no=rows[i].part_no;
+                            part_number[i]=rows[i].part_number;
+                            part_fee[i]=rows[i].part_fee;
+                            part_info[i]=new Array();
+                           
+                            //alert(rows[i].id);//假设有id这个字段
+                            $.ajax( {  
+                                         "url":"<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/part-info']);?>",// 跳转到 action  
+                                         data:{  
+                                              part_no : part_no,    
+                                              car_no:car_no
+
+                                         },  
+                                             type:'post',  
+                                             cache:false,
+                                             async: false,  
+                                             dataType:'json',  
+                                             success:function(data) {
+                                                //alert(111);
+                                                if(data.error==1){
+                                                    alert(data.msg);
+                                                    return false;
+                                                }
+                                                //console.log(data)
+                                             row = $("#bg").datagrid("getRows")[i];
+                                             row.part_total=part_number[i]*part_fee[i];
+                                             row.before_repair_time=data.into_time;
+                                             row.before_repair_li=data.into_mile;
+                                              part_info[i][0]=rows[i].part_no;
+                                                part_info[i][1]=part_number[i];
+                                                part_info[i][2]=part_fee[i];
+                                                part_info[i][3]=rows[i].part_unit;
+                                                part_info[i][4]=rows[i].part_name;
+                                                part_info[i][5]=rows[i].before_repair_time?rows[i].before_repair_time:0;
+                                                part_info[i][6]=rows[i].before_repair_li?rows[i].before_repair_li:0;
+                                             part_money_all=parseFloat($("#part_money_all").text())+parseFloat(part_number[i]*part_fee[i]);
+                                             part_money_all = part_money_all.toFixed(2);
+                                             $("#part_money_all").text(part_money_all);
+                                             onClickRow_1(i);
+                                             task_money_all=$("#task_money_all").text();
+                                             money_all=parseFloat(task_money_all)+parseFloat(part_money_all);
+                                             money_all = money_all.toFixed(2);
+                                              $("#money_all").text(money_all) ;
+                                              $("#repair_price").val(money_all);  
+                                             }
+                                         });
+                                //setTimeout("onClickRow_1("+i+")",100);
+                                $('#bg').datagrid('acceptChanges');
+                        } 
+                       console.log(arrayToJson(part_info))
+                         // part_info=part_info.join("-");
+                        $("#part_info").val(arrayToJson(part_info));
+                        is_save_part=1; 
+                        $("#is_save_part").val(is_save_part);               
+                                         
+                     
+                    
+                }
             }
+                //数组转json
+                function arrayToJson(o) {
+
+                    　　var r = [];
+
+                    　　if (typeof o == "string") return "\"" + o.replace(/([\'\"\\])/g, "\\$1").replace(/(\n)/g, "\\n").replace(/(\r)/g, "\\r").replace(/(\t)/g, "\\t") + "\"";
+
+                    　　if (typeof o == "object") {
+
+                    　　if (!o.sort) {
+
+                    　　for (var i in o)
+
+                    　　r.push(i + ":" + arrayToJson(o[i]));
+
+                    　　if (!!document.all && !/^\n?function\s*toString\(\)\s*\{\n?\s*\[native code\]\n?\s*\}\n?\s*$/.test(o.toString)) {
+
+                    　　r.push("toString:" + o.toString.toString());
+
+                    　　}
+
+                    　　r = "{" + r.join() + "}";
+
+                    　　} else {
+
+                    　　for (var i = 0; i < o.length; i++) {
+
+                    　　r.push(arrayToJson(o[i]));
+
+                    　　}
+
+                    　　r = "[" + r.join() + "]";
+
+                    　　}
+
+                    　　return r;
+
+                    　　}
+
+                    　　return o.toString();
+
+                    }
+      
         </script>
+

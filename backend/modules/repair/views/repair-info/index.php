@@ -19,7 +19,7 @@
                             >
                                 <option value=" ">请选择</option>
                                 <?php foreach($formoption['car_id'] as $val){?>
-                                    <option value="<?php echo $val['id']; ?>"><?php echo $val['plate_number']; ?></option>
+                                    <option value="<?php echo $val['plate_number']; ?>"><?php echo $val['plate_number']; ?></option>
                                 <?php }?>
                             </select>
                         </div>
@@ -36,7 +36,7 @@
                             <select class="easyui-combobox" name="order_type" style="width:150px;">
                                 <option value=" ">请选择</option>
                                 <option value="1">我方报修</option>
-                                <option value="0">客户报修</option>
+                                <option value="2">客户报修</option>
                             </select>
                         </div>
                     </li>
@@ -102,7 +102,13 @@
 </div>
 <!-- 窗口 -->
 <div id="easyui-dialog-repair-info-index-add"></div>
-<div id="easyui-dialog-parts-parts-info-index-edit"></div>
+<div id="easyui-dialog-repair-info-index-check"></div>
+<div id="easyui-dialog-repair-info-index-bohui"></div>
+<div id="easyui-dialog-repair-info-index-checkmoney"></div>
+<div id="easyui-dialog-repair-info-index-finish"></div>
+<div id="easyui-dialog-repair-info-index-edit"></div>
+<div id="easyui-dialog-repair-repair-info-index-money"></div>
+<div id="easyui-dialog-repair-repair-info-index-see"></div>
 <script>
     var RepairInfoIndex = new Object();
     RepairInfoIndex.init = function(){
@@ -121,11 +127,39 @@
             singleSelect: true,
             columns:[[
                 {field: 'ck',checkbox: true},
-                {field: 'plate_number',title: '车牌号',width: 100},
+                {field: 'id',hidden:true},
+                {field: 'car_id',title: '车牌号',width: 100},
                 {field: 'order_no',title: '工单号',width: 100},
-                {field: 'order_type',title: '工单类型',width: 100},
+                {field: 'order_type',title: '工单类型',width: 100,
+                    formatter: function(value,row,index){
+                        var new_string =row.order_number.substr(0,2);
+                        if(new_string == 'WX'){
+                            return '我方报修';
+                        }else{
+                            return '客户报修';
+                        }
+                    }
+                },
                 {field: 'site_name',title: '售后修理厂',width: 100},
-                {field: 'check_status',title: '审核状态',width: 100},
+                {field: 'check_status',title: '审核状态',width: 100,
+                    formatter: function(value,row,index){
+                        if(row.check_status == 7){
+                            return '<span style="background:lawngreen;">付款完结</span>';
+                        }else if(row.check_status == 2){
+                            return '<span style="background:red;">维修方案未通过</span>';
+                        }else if(row.check_status == 3){
+                            return '<span style="background:lawngreen;">维修方案已通过</span>';
+                        }else if(row.check_status == 4){
+                            return '<span background-color="red">完工结算未通过</span>';
+                        }else if(row.check_status == 5){
+                            return '<span style="background:lawngreen;">完工结算已通过</span>';
+                        }else if(row.check_status == 6){
+                            return '<span style="background:red;">付款驳回</span>';
+                        }else {
+                            return '<span style="background:yellow;">维修方案待审核</span>';
+                        }
+                    }
+                },
                 {field: 'repair_price',title: '维修报价',width: 100},
                 {field: 'account_price',title: '结算金额',width: 100},
                 {field: 'project_human',title: '维修方案审核人',width: 100},
@@ -134,14 +168,309 @@
                 {field: 'service_human',title: '服务顾问',width: 100},
                 {field: 'create_time',title: '创建时间',width: 100},
                 {field: 'finish_time',title: '完结时间',width: 100},
-                {field: 'bill_status',title: '单据状态',width: 100}
+                {field: 'bill_status',title: '单据状态',width: 100,
+                    formatter: function(value,row,index){
+                        if(row.bill_status == 1){
+                            return '正常';
+                        }else if(row.bill_status == 2){
+                            return 'null';
+                        }else{
+                            return '作废';
+                        }
+                    }
+                }
             ]]
+        });
+        //初始化修改窗口`
+        $('#easyui-dialog-repair-info-index-bohui').dialog({
+            title: '驳回',
+            width: 400,
+            height: 150,
+            cache: true,
+            modal: true,
+            closed: true,
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',
+                handler:function(){
+                    //回调添加页面submitForm方法
+                    var addForm = $('#easyui-form-repair-info-bohui');
+                    var checkForm = $('#easyui-form-repair-info-check');
+                    var checkForm_1=$('#easyui-form-repair-info-check-money');
+                    var newForm = addForm.serialize();
+                    var checkForm=checkForm.serialize();
+                    var checkForm_1=checkForm_1.serialize();
+                    var data={
+                        a:newForm,
+                        b:checkForm,
+                        c:checkForm_1
+                    }
+//                    console.log(newForm);return false;
+                    $.ajax({
+                        type: 'post',
+                        url: '<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/bohui']); ?>',
+                        data: data,
+                        dataType: 'json',
+                        success: function(data){
+                            if(data.status ){
+                                $.messager.alert('驳回成功',data.info,'info');
+                                $('#easyui-dialog-repair-info-index-bohui').dialog('close');
+                                $('#easyui-dialog-repair-info-index-check').dialog('close');
+                                $('#easyui-dialog-repair-info-index-checkmoney').dialog('close');
+                                $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                            }else{
+                                $.messager.alert('修改失败',data.info,'error');
+                            }
+                        }
+                    });
+                    $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-repair-info-index-bohui').dialog('close');
+                }
+            }],  
+            onClose: function(){
+                $(this).dialog('clear');
+            }
+        });
+
+        $('#easyui-dialog-repair-info-index-edit').dialog({
+            title: '修改维修单',
+            width: 1000,
+            height: 400,
+            cache: true,
+            modal: true,
+            closed: true,
+            resizable:true,
+            maximizable: true,
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',
+                handler:function(){
+                    //回调添加页面submitForm方法
+                    var addForm = $('#easyui-form-repair-info-edit');
+                    var newForm = addForm.serialize();
+//                    console.log(newForm);return false;
+                    $.ajax({
+                        type: 'post',
+                        url: '<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/edit']); ?>',
+                        data: newForm,
+                        dataType: 'json',
+                        success: function(data){
+                            if(data.status ){
+                                $.messager.alert('修改成功',data.info,'info');
+                                $('#easyui-dialog-repair-info-index-edit').dialog('close');
+                                $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                            }else{
+                                $.messager.alert('修改失败',data.info,'error');
+                            }
+                        }
+                    });
+                    $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-repair-info-index-edit').dialog('close');
+                }
+            }],  
+            onClose: function(){
+                $(this).dialog('clear');
+            }
+        });
+        //初始化完工结算窗口`
+        $('#easyui-dialog-repair-info-index-finish').dialog({
+            title: '完工结算',
+            width: 1000,
+            height: 400,
+            cache: true,
+            modal: true,
+            closed: true,
+            resizable:true,
+            maximizable: true,
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',
+                handler:function(){
+                    //回调添加页面submitForm方法
+                    var addForm = $('#easyui-form-repair-info-finish');
+                    var newForm = addForm.serialize();
+//                    console.log(newForm);return false;
+                    $.ajax({
+                        type: 'post',
+                        url: '<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/finish']); ?>',
+                        data: newForm,
+                        dataType: 'json',
+                        success: function(data){
+                            if(data.status ){
+                                $.messager.alert('修改成功',data.info,'info');
+                                $('#easyui-dialog-repair-info-index-finish').dialog('close');
+                                $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                            }else{
+                                $.messager.alert('修改失败',data.info,'error');
+                            }
+                        }
+                    });
+                    $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-repair-info-index-finish').dialog('close');
+                }
+            }],  
+            onClose: function(){
+                $(this).dialog('clear');
+            }
+        });
+         //初始化审核维修单窗口`
+        $('#easyui-dialog-repair-info-index-check').dialog({
+            title: '审核维修单',
+            width: 1000,
+            height: 400,
+            cache: true,
+            modal: true,
+            closed: true,
+            resizable:true,
+            maximizable: true,
+            buttons: [{
+                text:'同意',
+                iconCls:'icon-ok',
+                handler:function(){
+                    var addForm = $('#easyui-form-repair-info-check');
+                    var newForm = addForm.serialize();
+                    newForm.status=1;
+                    $.ajax({
+                        type: 'post',
+                        url: '<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/check']); ?>&status=1',
+                        data: newForm,
+                        dataType: 'json',
+                        success: function(data){
+                            if(data.status ){
+                                $.messager.alert('已通过',data.info,'info');
+                                $('#easyui-dialog-repair-info-index-check').dialog('close');
+                                $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                            }else{
+                                $.messager.alert('异常',data.info,'error');
+                            }
+                        }
+                    });
+                    $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                }
+            },{
+                text:'驳回',
+                iconCls:'icon-cancel',
+                handler:function(){
+                     $('#easyui-dialog-repair-info-index-bohui').dialog('open');
+                    $('#easyui-dialog-repair-info-index-bohui').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/bohui']); ?>');
+                }
+            }],  
+            onClose: function(){
+                $(this).dialog('clear');
+            }
+        });
+         //初始化审核完工结算窗口`
+        $('#easyui-dialog-repair-info-index-checkmoney').dialog({
+            title: '审核完工结算',
+            width: 1000,
+            height: 400,
+            cache: true,
+            modal: true,
+            closed: true,
+            resizable:true,
+            maximizable: true,
+            buttons: [{
+                text:'同意',
+                iconCls:'icon-ok',
+                handler:function(){
+                    var addForm = $('#easyui-form-repair-info-check-money');
+                    var newForm = addForm.serialize();
+                    newForm.status=1;
+                    $.ajax({
+                        type: 'post',
+                        url: '<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/check-money']); ?>&status=1',
+                        data: newForm,
+                        dataType: 'json',
+                        success: function(data){
+                            if(data.status ){
+                                $.messager.alert('已通过',data.info,'info');
+                                $('#easyui-dialog-repair-info-index-checkmoney').dialog('close');
+                                $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                            }else{
+                                $.messager.alert('异常',data.info,'error');
+                            }
+                        }
+                    });
+                    $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                }
+            },{
+                text:'驳回',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-repair-info-index-bohui').dialog('open');
+                    $('#easyui-dialog-repair-info-index-bohui').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/bohui']); ?>');
+                }
+            }],  
+            onClose: function(){
+                $(this).dialog('clear');
+            }
         });
         //初始化添加窗口`
         $('#easyui-dialog-repair-info-index-add').dialog({
-            title: '维修方案',
-             width: '1100px',   
-            height: '400px', 
+            title: '添加维修单',
+            width: 1000,
+            height: 400,
+            cache: true,
+            modal: true,
+            closed: true,
+            resizable:true,
+            maximizable: true,
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',
+                handler:function(){
+                    //回调添加页面submitForm方法
+                    var addForm = $('#easyui-form-repair-info-add');
+                    var newForm = addForm.serialize();
+//                    console.log(newForm);return false;
+                    $.ajax({
+                        type: 'post',
+                        url: '<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/add']); ?>',
+                        data: newForm,
+                        dataType: 'json',
+                        success: function(data){
+                            if(data.status ){
+                                $.messager.alert('新建成功',data.info,'info');
+                                $('#easyui-dialog-repair-info-index-add').dialog('close');
+                                $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                            }else{
+                                $.messager.alert('新建失败',data.info,'error');
+                            }
+                        }
+                    });
+                    $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-repair-info-index-add').dialog('close');
+                }
+            }],  
+            onClose: function(){
+                $(this).dialog('clear');
+            }
+        });
+        //初始化付款窗口`
+        $('#easyui-dialog-repair-repair-info-index-money').dialog({
+            title: '付款操作',
+             width: '800px',
+            height: '400px',
             cache: true,
             modal: true,
             resizable:true,
@@ -152,115 +481,174 @@
                 text:'确定',
                 iconCls:'icon-ok',
                 handler:function(){
-                    var form = $('#easyui-form-repair-info-add');
+                    var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+                    var repairData = datagrid.datagrid('getSelected');
+                    var id = repairData.id;
+                    var form = $('#repair-money-feng');
                     if(!form.form('validate')){
                         return false;
                     }
                     var data = form.serialize();
+                    data = data+'&order_id='+id;
                     var button = $(this);
                     button.linkbutton('disable');
                     $.ajax({
                         type: 'post',
-                        url: "<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/add']); ?>",
+                        url: "<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/pay-money']); ?>",
                         data: data,
                         dataType: 'json',
                         success: function(data){
                             if(data.status == 1){
-                                $.messager.alert('新建成功',data.info,'info');
+                                $.messager.alert('付款成功',data.info,'info');
                                 $('#easyui-dialog-repair-info-index-add').dialog('close');
                                 $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
                                 button.linkbutton('enable');
                             }else if(data.status == 2){
-                                $.messager.alert('新建失败',data.info,'error');
+                                $.messager.alert('付款失败',data.info,'error');
                                 button.linkbutton('enable');
                             }else{
-                                $.messager.alert('新建失败',data.info,'error');
+                                $.messager.alert('付款失败',data.info,'error');
                                 button.linkbutton('enable');
                             }
                         }
                     });
                     $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
-                    $('#easyui-dialog-repair-info-index-add').dialog('close');
+                    $('#easyui-dialog-repair-repair-info-index-money').dialog('close');
                 }
             },{
-                text:'取消',
+                text:'驳回',
                 iconCls:'icon-cancel',
                 handler:function(){
-                    $('#easyui-dialog-repair-info-index-add').dialog('close');
-                }
-            }]
-        });
-        //初始化修改窗口
-        $('#easyui-dialog-parts-parts-info-index-edit').dialog({
-            title: '修改配置信息',
-            width: 1000,
-            height: 250,
-            closed: true,
-            cache: true,
-            modal: true,
-            buttons: [{
-                text:'确定',
-                iconCls:'icon-ok',
-                handler:function(){
-                    var data = $('#info-edit-feng').serialize();
-                    var button = $(this);
-                    button.linkbutton('disable');
+                    var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+                    var repairData = datagrid.datagrid('getSelected');
+                    var id = repairData.id;
                     $.ajax({
                         type: 'post',
-                        url: '<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/edit']); ?>',
-                        data: data,
+                        url: "<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/pay-money']); ?>",
+                        data: {go_back:id},
                         dataType: 'json',
                         success: function(data){
                             if(data.status == 1){
-                                $.messager.alert('修改成功',data.info,'info');
-                                $('#easyui-dialog-parts-parts-info-index-edit').dialog('close');
+                                $.messager.alert('付款成功',data.info,'info');
+                                $('#easyui-dialog-repair-info-index-add').dialog('close');
                                 $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
                                 button.linkbutton('enable');
                             }else if(data.status == 2){
-                                $.messager.alert('修改失败',data.info,'error');
+                                $.messager.alert('付款失败',data.info,'error');
                                 button.linkbutton('enable');
                             }else{
-                                $.messager.alert('修改失败',data.info,'error');
+                                $.messager.alert('付款失败',data.info,'error');
                                 button.linkbutton('enable');
                             }
                         }
                     });
-                }
-            },{
-                text:'取消',
-                iconCls:'icon-cancel',
-                handler:function(){
-                    $('#easyui-dialog-parts-parts-info-index-edit').dialog('close');
+                    $('#easyui-dialog-repair-repair-info-index-money').dialog('close');
                 }
             }]
         });
-        //绑定记录双击事件
-        $('#easyui-datagrid-repair-repair-info-index').datagrid({
-            onDblClickRow: function(rowIndex,rowData){
-                RepairInfoIndex.edit(rowData.id);
-            }
+        //初始化查看详情窗口
+        $('#easyui-dialog-repair-repair-info-index-see').dialog({
+            title: '维修方案',
+            width: '900px',
+            height: '400px',
+            cache: true,
+            modal: true,
+            resizable:true,
+            maximizable: true,
+            closed: true,
+            scroll:true,
+            buttons: [{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-repair-repair-info-index-see').dialog('close');
+                }
+            }]
         });
     }
     RepairInfoIndex.init();
     //添加方法
+    //添加方法
     RepairInfoIndex.add = function(){
-        $('#easyui-dialog-repair-info-index-add').dialog('open');
-        $('#easyui-dialog-repair-info-index-add').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/add']); ?>');
+         var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+        var repairData = datagrid.datagrid('getSelected');
+        if(repairData == null){
+            $('#easyui-dialog-repair-info-index-add').dialog('open');
+            $('#easyui-dialog-repair-info-index-add').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/add']); ?>');
+        }else{
+            var id = repairData.id;
+            var check_status=repairData.check_status;
+            if(check_status!=1 && check_status!=2){
+                 $.messager.alert('编辑失败','该选项卡不可编辑','error');
+                    return false;
+            }
+            $('#easyui-dialog-repair-info-index-edit').dialog('open');
+            $('#easyui-dialog-repair-info-index-edit').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/edit']); ?>&id='+id);
+        }
     }
-    //删除配件信息
+    //完工结算
+    RepairInfoIndex.finish = function(){
+         var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+        var repairData = datagrid.datagrid('getSelected');
+        if(repairData == null){
+            $.messager.alert('编辑失败','请选择编辑项','error');
+                    return false;
+        }else{
+            var id = repairData.id;
+            var check_status=repairData.check_status;
+            if(check_status!=3 && check_status!=4){
+                 $.messager.alert('编辑失败','该选项卡不可编辑','error');
+                    return false;
+            }
+            $('#easyui-dialog-repair-info-index-finish').dialog('open');
+            $('#easyui-dialog-repair-info-index-finish').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/finish']); ?>&id='+id);
+        }
+    }
+
+    //驳回方法
+    RepairInfoIndex.chechk = function(){
+         var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+        var repairData = datagrid.datagrid('getSelected');
+        if(repairData == null){
+           $.messager.alert('审核失败','请选择删除项','error');
+            return false;
+        }else{
+            var id = repairData.id;
+            var check_status=repairData.check_status;
+            if(check_status==1 || check_status==2){
+                 
+                $('#easyui-dialog-repair-info-index-check').dialog('open');
+                $('#easyui-dialog-repair-info-index-check').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/check']); ?>&id='+id);
+            }else if(check_status==3 || check_status==4){
+                $('#easyui-dialog-repair-info-index-checkmoney').dialog('open');
+                $('#easyui-dialog-repair-info-index-checkmoney').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/check-money']); ?>&id='+id);
+            }else{
+                $.messager.alert('审核失败','该选项卡不可审核','error');
+                    return false;
+            }
+            
+        }
+    }
+
+
+    //删除维修方案
     RepairInfoIndex.del = function(){
         var datagrid = $('#easyui-datagrid-repair-repair-info-index');
-        var partsData = datagrid.datagrid('getSelected');
-        if(partsData == null){
+        var repairData = datagrid.datagrid('getSelected');
+        if(repairData == null){
             $.messager.alert('删除失败','请选择删除项','error');
             return false;
         }
-        var id = partsData.parts_id;
-        $.messager.confirm('确认对话框', '确定删除配件信息？', function(r){
+        if(repairData.check_status != 2){
+            $.messager.alert('删除失败','只能删除未审核过的单','error');
+            return false;
+        }
+        var id = repairData.id;
+        $.messager.confirm('确认对话框', '确定删除维修方案？', function(r){
             if (r){
                 $.ajax({
                     type: 'post',
-                    url: "<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/del']); ?>",
+                    url: "<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/del']); ?>",
                     data: {'id':id},
                     dataType: 'json',
                     success: function(data){
@@ -277,16 +665,99 @@
             }
         });
     }
-    RepairInfoIndex.edit = function(){
+    RepairInfoIndex.print = function(){
         var datagrid = $('#easyui-datagrid-repair-repair-info-index');
-        var partsData = datagrid.datagrid('getSelected');
-        if(partsData == null){
-            $.messager.alert('修改失败','请选择修改项','error');
+        var repairData = datagrid.datagrid('getSelected');
+        if(repairData == null){
+            $.messager.alert('打印失败','请选择打印项','error');
             return false;
         }
-        var id = partsData.parts_id;
-        $('#easyui-dialog-parts-parts-info-index-edit').dialog('open');
-        $('#easyui-dialog-parts-parts-info-index-edit').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/edit']); ?>&parts='+id);
+        repairData.check_status = parseInt(repairData.check_status);
+        if(repairData.check_status != 7){
+            $.messager.alert('打印失败','付款完结才能打印结算单','error');
+            return false;
+        }
+        var id = repairData.id;
+        window.open('<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/print']); ?>&print='+id,'完工结算单');
+    }
+    //作废维修方案
+    RepairInfoIndex.abandon = function(){
+        var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+        var repairData = datagrid.datagrid('getSelected');
+        if(repairData == null){
+            $.messager.alert('作废失败','请选择作废项','error');
+            return false;
+        }
+        if(repairData.check_status < 5){
+            $.messager.alert('作废失败','结算单审核完后才可作废','error');
+            return false;
+        }
+        if(repairData.bill_status = 0){
+            $.messager.alert('作废失败','选项已作废，请不要重复操作','error');
+            return false;
+        }
+        var id = repairData.id;
+        var msg = "维修记录：车牌号["+repairData.car_id+"]，工单号["+repairData.order_number+"]将作废！";
+        $.messager.confirm('确认对话框', msg, function(r){
+            if (r){
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/abandon']); ?>",
+                    data: {id:id},
+                    dataType: 'json',
+                    success: function(data){
+                        if(data.status == 1){
+                            $.messager.alert('作废成功',data.info,'info');
+                            $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
+                            button.linkbutton('enable');
+                        }else if(data.status == 2){
+                            $.messager.alert('作废失败',data.info,'error');
+                            button.linkbutton('enable');
+                        }else{
+                            $.messager.alert('作废失败',data.info,'error');
+                            button.linkbutton('enable');
+                        }
+                    }
+                });
+            }
+        });
+    }
+    //查看详情
+    RepairInfoIndex.see = function(){
+        var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+        var repairData = datagrid.datagrid('getSelected');
+        if(repairData == null){
+            $.messager.alert('查看失败','请选择查看项','error');
+            return false;
+        }
+        var id = repairData.id;
+        $('#easyui-dialog-repair-repair-info-index-see').dialog('open');
+        $('#easyui-dialog-repair-repair-info-index-see').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/see']); ?>&id='+id);
+    }
+    //付款
+    RepairInfoIndex.money = function(){
+        var datagrid = $('#easyui-datagrid-repair-repair-info-index');
+        var repairData = datagrid.datagrid('getSelected');
+        if(repairData == null){
+            $.messager.alert('付款失败','请选择付款项','error');
+            return false;
+        }
+        if(repairData.check_status < 5){
+            $.messager.alert('付款失败','完工结算已通过后才可以付款操作','error');
+            return false;
+        }
+        repairData.check_status = parseInt(repairData.check_status);
+        if(repairData.check_status == 7){
+            $.messager.alert('付款失败','已经付款完结的方案不能重复付款操作,有问题请联系管理员','error');
+            return false;
+        }
+        if(repairData.check_status == 6){
+            $.messager.alert('付款失败','已经驳回的方案不能重复付款操作,有问题请联系管理员','error');
+            return false;
+        }
+        var order = repairData.id;
+        $('#easyui-dialog-repair-repair-info-index-money').dialog('open');
+        $('#easyui-dialog-repair-repair-info-index-money').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/pay-money']); ?>&id='+order);
     }
     //构建查询表单
     var searchForm = $('#search-form-repair-info-index');
@@ -301,13 +772,6 @@
         return false;
     });
 
-    //汽车品牌下拉
-    searchForm.find('input[name=car_brand]').combotree({
-        url: "<?php echo yii::$app->urlManager->createUrl(['car/combotree/get-car-brands']); ?>",
-        editable: false,
-        panelHeight:'auto',
-        lines:false,
-    });
     //重置查询表单
     RepairInfoIndex.resetForm = function(){
         var easyuiForm = $('#search-form-repair-info-index');
