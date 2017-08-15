@@ -1,3 +1,8 @@
+<style>
+    img:hover{
+        transform: scale(3.0);
+    }
+</style>
 <div class="easyui-panel" title="维修方案详情" style="padding:8px 4px;" data-options="
         iconCls: 'icon-tip',
         border: false
@@ -17,7 +22,7 @@
                 <?php }elseif($detail_data['check_status'] == 3){?>
                     <div style="background:lawngreen;">维修方案已通过</div>
                 <?php }elseif($detail_data['check_status'] == 4){?>
-                    <div background-color="red">完工结算未通过</div>
+                    <div style="background:red;">完工结算未通过</div>
                 <?php }elseif($detail_data['check_status'] == 5){?>
                     <div style="background:lawngreen;">完工结算已通过</div>
                 <?php }elseif($detail_data['check_status'] == 6){?>
@@ -38,10 +43,30 @@
                 <?php echo empty($detail_data['money_human']) ? '未审核' : $detail_data['money_human'];?>
             </li>
         </ul>
+    <ul style="display:inline-block;">
+        <li>审核状态：<li>
+        <li>审核意见：</li>
+        <li>审核意见：</li>
+        <li>审核意见：</li>
+    </ul>
+    <ul style="display:inline-block;">
+        <li>
+            <?php echo $detail_data['bill_status'] == 1 ? '正常' : '作废';?>
+        <li>
+        <li>
+            <?php echo empty($detail_data['repair_note']) ? '-' : $detail_data['repair_note'];?>
+        </li>
+        <li>
+            <?php echo empty($detail_data['finish_note']) ? '-' : $detail_data['finish_note'];?>
+        </li>
+        <li>
+            <?php echo empty($detail_data['money_note']) ? '-' : $detail_data['money_note'];?>
+        </li>
+    </ul>
     <div style="clear:both;"></div>
-    <div style="padding-left: 40px;">
-        凭证备注：<input class="easyui-textbox" disabled="disabled" value="<?php echo $detail_data['money_note'];?>" data-options="multiline:true" name="money_note" style="width:600px;height:50px">
-    </div>
+<!--    <div style="padding-left: 40px;">-->
+<!--        凭证备注：<input class="easyui-textbox" disabled="disabled" value="--><?php //echo $detail_data['money_note'];?><!--" data-options="multiline:true" name="money_note" style="width:600px;height:50px">-->
+<!--    </div>-->
     <div>
         <h3>基本信息</h3>
         <table cellpadding="8" cellspacing="0">
@@ -368,14 +393,14 @@
             </table>
         <h3>车辆照片</h3>
             <span style="padding-left: 50px;">
-                <img src="<?php echo $detail_data['repair_img_o'];?>" alt="未上传照片">
+                <img width="200" height="200" src="<?php echo $detail_data['repair_img_o'];?>" alt="未上传照片">
             </span>
             <span style="padding-left: 50px;">
-                <img src="<?php echo $detail_data['repair_img_t'];?>" alt="未上传照片">
+                <img width="200" height="200" src="<?php echo $detail_data['repair_img_t'];?>" alt="未上传照片">
             </span>
         <h3>凭证照片</h3>
             <div style="padding-left: 50px;">
-                <img src="<?php echo $detail_data['money_img'];?>" alt="未上传照片">
+                <img width="200" height="200" src="<?php echo $detail_data['money_img'];?>" alt="未上传照片">
             </div>
     </div>
 </div>

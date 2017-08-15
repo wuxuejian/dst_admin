@@ -1,5 +1,5 @@
 <form
-    id="easyui-form-repair-repai-infor-upload-window"
+    id="easyui-form-repair-repai-infor-upload-window-feng"
     target="iframe-process-repair-uploadimage"
     action="<?= yii::$app->urlManager->createUrl(['repair/repair-info/upload-thumb-feng']); ?>"
     method="post"

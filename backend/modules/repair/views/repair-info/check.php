@@ -37,11 +37,11 @@
                 <td>
                     <input
                         required="true"
-                        id="car_model"
+                        id="car_model_name"
                         style="width:160px;"
-                        name="car_model"
+                        name="car_model_name"
                         disabled="disabled"
-                        value="<?php echo $data['car_type'];?>"
+                        value="<?php echo $data['car_model_name'];?>"
                     />
                 </td>
                <td align="right"><div style="width:70px;">车架号</div></td>

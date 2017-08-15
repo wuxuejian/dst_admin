@@ -41,7 +41,7 @@
                         style="width:160px;"
                         name="car_model"
                         disabled="disabled"
-                        value="<?php echo $data['car_type'];?>"
+                        value="<?php echo $data['car_model_name'];?>"
                     />
                 </td>
                <td align="right"><div style="width:70px;">车架号</div></td>

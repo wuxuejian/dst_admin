@@ -48,6 +48,7 @@
                         name="sale_factory" 
                         id="sale_factory" 
                         disabled="disabled"
+                        value="<?php echo $type['repair_company'];?>"
                     >
                 </td>
             </tr>
@@ -56,9 +57,9 @@
                 <td>
                     <input
                         required="true"
-                        id="car_model"
+                        id="car_model_name"
                         style="width:160px;"
-                        name="car_model"
+                        name="car_model_name"
                         disabled="disabled"
                     />
                 </td>
@@ -519,14 +520,22 @@
                 dataType:'json',
                 success:function(data){
 //                    $('#parts_kind').combobox('clear');
-                    $('#order_no').combobox({
+                    //alert(111);
+                    if(data.status){
+                       // alert(222);
+                        $('#order_no').combobox({
                         valueField:'value',
                         textField:'text',
                         editable: false,
                         panelHeight:'auto',
-                        data: data
-                    });
+                        data: data.info
+                        });
                     $('#order_no').combobox('setValues','');
+                    }else{
+                        //alert(333);
+                         $.messager.alert('异常',data.info,'info');
+                    }
+                    
                 }
             });
             $.ajax({
@@ -538,7 +547,7 @@
                 success:function(data){
 //                    $('#parts_kind').combobox('clear');   
                     //alert(data.vehicle_dentification_number)
-                    $("#car_model").val(data.car_type);
+                    $("#car_model_name").val(data.car_model_name);
                     $("#car_jia_no").val(data.vehicle_dentification_number);
                     $("#car_user").val(data.name);
                     if(data.a){
