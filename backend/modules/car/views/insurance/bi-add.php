@@ -11,7 +11,7 @@
                         style="width:170px;"
                         name="number"
                         required="true"
-                        validType="length[100]"
+                        validType="match[/^[a-zA-Z0-9_]{0,}$/]"
                     />
                 </td>
                 <td><div style="width:85px;text-align:right;">保险公司</div></td>
@@ -44,6 +44,20 @@
                 </td>
             </tr>
             <tr>
+                <td><div style="width:85px;text-align:right;">使用性质</div></td>
+                <td>
+                <select class="easyui-combobox"  style="width:160px;"  name="use_nature" required="true" editable=true>
+                            <option value=""></option>
+                            <option value="1">企业营运货车</option>
+                            <option value="2">企业非营运货车</option>
+                            <option value="3">企业非营运客车</option>
+                            <option value="4">企业营运客车</option>
+                            <option value="5">个人家庭自用车</option>
+                            <option value="6">特种车</option>
+                </select>
+                </td>
+            </tr>
+            <tr>
                 <td><div style="width:85px;text-align:right;">备注</div></td>
                 <td colspan="3">
                     <input
@@ -56,7 +70,26 @@
                 </td>
             </tr>
             <?php 
-            	$types = array('车损险','三者险','司乘险(司机)','司乘险(乘客)','不计免赔险','玻璃险','涉水险','盗抢险','无法找到第三方特约险');
+            	//$types = array('车损险','三者险','司乘险(司机)','司乘险(乘客)','不计免赔险','玻璃险','涉水险','盗抢险','无法找到第三方特约险');
+                $types = array(
+                        '车损险'=>'机动车损失保险',
+                        '三者险'=>'机动车第三者责任保险',
+                        '司乘险(司机)'=>'机动车车上人员责任保险(司机)',
+                        '司乘险(乘客)'=>'机动车车上人员责任保险(乘客)',
+                        '盗抢险'=>'全车盗抢保险',
+                        '玻璃险'=>'玻璃单独破碎险',
+                        '自然损失险'=>'自然损失险',//新增
+                        '新增加设备损失险'=>'新增加设备损失险',//新增
+                        '车身划痕损失险'=>'车身划痕损失险',//新增
+                        '涉水险'=>'发动机涉水损失险',
+                        '修理期间费用补偿险'=>'修理期间费用补偿险',//新增
+                        '车上货物责任险'=>'车上货物责任险',//新增
+                        '精神损害抚慰金责任险'=>'精神损害抚慰金责任险',//新增
+                        '不计免赔险'=>'不计免赔率险',
+                        '无法找到第三方特约险'=>'机动车损失保险无法找到第三方特约险',
+                        '指定修理厂险'=>'指定修理厂险',//新增
+
+                        );
             ?>
             <tr>
             	<td><div style="width:85px;text-align:right;">险种</div></td>
@@ -68,12 +101,14 @@
                 }
             	foreach ($insurance_texts as $index=>$row){
             ?>
-            	<tr>
+            	
+                <tr>
             		<td></td>
 	                <td colspan="3">
 	                	<select id="type<?=$index?>"   name="type[]" required="true">
-	                    	<?php foreach ($types as $value):?>
-	                  		    <option value="<?=$value?>"<?=$value==$row[0]?' selected':''?>><?=$value?></option>
+	                    	<?php foreach ($types as $value=>$text):?>
+
+	                  		    <option value="<?=$value?>"<?=$value==$row[0]?' selected':''?>><?=$text?></option>
 	                  		<?php endforeach;?>
 	                    </select>
 	                    <input class="easyui-textbox" name="money[]" value="<?=$row[1]?>"/>
@@ -89,7 +124,7 @@
                <td colspan="2">保费合计：<span id='money_amount'></span></td>
             </tr>
             <tr>
-            	<td><div style="width:85px;text-align:right;">保单附件</div></td>
+            	<td><div style="width:85px;text-align:right;">商业险保单附件</div></td>
                 <td colspan="3">
                 	<input type="file" name="append[]" id="append1">
                 </td>
@@ -116,9 +151,9 @@
     		var data = $("#add_text").attr('data-value');
     		var html ='<tr><td></td><td colspan="3"><select id="type'+data+'" name="type[]">';
     			<?php
-    				foreach($types as $value){
+    				foreach($types as  $value=>$text){
     			?>
-    				html += '<option value="<?=$value?>"'+(selValue=='<?=$value?>'?' selected':'')+'><?=$value?></option>';
+    				html += '<option value="<?=$value?>"'+(selValue=='<?=$value?>'?' selected':'')+'><?=$text?></option>';
     			<?php 
     				}
     			?>

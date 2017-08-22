@@ -1,7 +1,7 @@
 <script src="js/jquery.ajaxSubmit.js"></script>
 <div style="padding:15px"> 
     <form action="<?php echo yii::$app->urlManager->createUrl(['car/insurance/bi-edit']); ?>" id="easyui-form-car-insurance-bi-edit" class="easyui-form" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" />
+        <input type="hidden" name="id" value="<?php echo $biInfo['id']?>"/>
         <table cellpadding="8" cellspacing="0">
         	<tr>
                 <td><div style="width:85px;text-align:right;">保单号</div></td>
@@ -11,7 +11,7 @@
                         style="width:170px;"
                         name="number"
                         required="true"
-                        validType="length[100]"
+                        validType="match[/^[a-zA-Z0-9_]{0,}$/]"
                     />
                 </td>
                 <td><div style="width:85px;text-align:right;">保险公司</div></td>
@@ -53,6 +53,20 @@
                 </td>
             </tr>
             <tr>
+                 <td><div style="width:85px;text-align:right;">使用性质</div></td>
+                 <td>
+                <select class="easyui-combobox"  style="width:160px;"  name="use_nature" required="true" editable=true>
+                            <option value=""></option>
+                            <option value="1">企业营运货车</option>
+                            <option value="2">企业非营运货车</option>
+                            <option value="3">企业非营运客车</option>
+                            <option value="4">企业营运客车</option>
+                            <option value="5">个人家庭自用车</option>
+                            <option value="6">特种车</option>
+                </select>
+                </td>
+            </tr>
+            <tr>
                 <td><div style="width:85px;text-align:right;">备注</div></td>
                 <td colspan="3">
                     <input
@@ -65,7 +79,26 @@
                 </td>
             </tr>
             <?php 
-            	$types = array('车损险','三者险','司乘险(司机)','司乘险(乘客)','不计免赔险','玻璃险','涉水险','盗抢险','无法找到第三方特约险');
+            	//$types = array('车损险','三者险','司乘险(司机)','司乘险(乘客)','不计免赔险','玻璃险','涉水险','盗抢险','无法找到第三方特约险');
+                $types = array(
+                        '车损险'=>'机动车损失保险',
+                        '三者险'=>'机动车第三者责任保险',
+                        '司乘险(司机)'=>'机动车车上人员责任保险(司机)',
+                        '司乘险(乘客)'=>'机动车车上人员责任保险(乘客)',
+                        '盗抢险'=>'全车盗抢保险',
+                        '玻璃险'=>'玻璃单独破碎险',
+                        '自然损失险'=>'自然损失险',//新增
+                        '新增加设备损失险'=>'新增加设备损失险',//新增
+                        '车身划痕损失险'=>'车身划痕损失险',//新增
+                        '涉水险'=>'发动机涉水损失险',
+                        '修理期间费用补偿险'=>'修理期间费用补偿险',//新增
+                        '车上货物责任险'=>'车上货物责任险',//新增
+                        '精神损害抚慰金责任险'=>'精神损害抚慰金责任险',//新增
+                        '不计免赔险'=>'不计免赔率险',
+                        '无法找到第三方特约险'=>'机动车损失保险无法找到第三方特约险',
+                        '指定修理厂险'=>'指定修理厂险',//新增
+
+                        );
             ?>
             <tr>
             	<td><div style="width:85px;text-align:right;">险种</div></td>
@@ -81,8 +114,8 @@
             		<td></td>
 	                <td colspan="3">
 	                	<select id="type<?=$index?>"   name="type[]" required="true">
-	                    	<?php foreach ($types as $value):?>
-	                  		    <option value="<?=$value?>"<?=$value==$row[0]?' selected':''?>><?=$value?></option>
+	                    	<?php foreach ($types as $value=>$text):?>
+	                  		    <option value="<?=$value?>"<?=$value==$row[0]?' selected':''?>><?=$text?></option>
 	                  		<?php endforeach;?>
 	                    </select>
 	                    <input class="easyui-textbox" name="money[]" value="<?=$row[1]?>"/>
@@ -98,7 +131,7 @@
                <td colspan="2">保费合计：<span id='money_amount'></span></td>
             </tr>
             <tr>
-            	<td><div style="width:85px;text-align:right;">保单附件</div></td>
+            	<td><div style="width:85px;text-align:right;">商业险保单附件</div></td>
             </tr>
             <?php 
             	$append_urls = json_decode($biInfo['append_urls']);
@@ -122,9 +155,32 @@
             	<td></td>
                <td> <input id="add_append" type="button" value="增加保单附件" onclick="CarInsuranceBiEdit.addAppend()" data-value="<?=count($append_urls)+1?>" /></td>
             </tr>
+
+             <?php
+                foreach ($pdbuinfo as $index=>$row){
+            ?>
+                <tr>
+                    
+                    <td colspan="4">
+                        <input style="width:320px;text-align:right;" type="button" value="已添加批单：<?=$row['number']?>" onclick="CarInsuranceBiEdit.pdDuEdit(<?=$row['id'];?>)">
+                        <input type="hidden" name="del_ids[]" id="append2_url<?=$index?>" value="<?=$row['id']?>">
+                        <input type="button" value="删除" onclick="CarInsuranceBiEdit.del3(<?=$index?>,<?=$row['id']?>)">
+                    </td>
+                </tr>
+            <?php 
+                }
+            ?>  
+
+            <tr>
+                <td></td>
+               <td> <input id="add_append" type="button" onclick="CarInsuranceBiEdit.addpd2()" value="添加批单"  data-value="" /></td>
+            </tr>
+
         </table>
     </form>
 </div>
+<div id="easyui-dialog-insurance-company-index-addpd2"></div>
+<div id="easyui-dialog-insurance-company-index-pdduedit"></div>
 <script>
     var oldData = <?php echo json_encode($biInfo); ?>;
     oldData.start_date = parseInt(oldData.start_date) > 0 ? formatDateToString(oldData.start_date) : '';
@@ -147,6 +203,83 @@
     CarInsuranceBiEdit.delAppend = function(data){
 		$("#append"+data).parent().parent().remove();
 	}
+    //批单删除
+   
+    CarInsuranceBiEdit.del3 = function(index,id){
+        $("#append2_url"+index).parent().parent().remove();
+    
+    }
+    //添加商业险险批单
+        $('#easyui-dialog-insurance-company-index-addpd2').dialog({
+            title: '&nbsp;添加商业险批单',
+            iconCls:'icon-add', 
+            width: '850',   
+            height: '550',   
+            closed: true,   
+            cache: true,   
+            modal: true,
+            maximizable: true,
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',
+                handler:function(){
+                    
+                    CarInsuranceBiAddPd.submitForm(); 
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-insurance-company-index-addpd2').dialog('close');
+                }
+            }],
+            onClose: function(){
+                $(this).dialog('clear');
+            }
+        });
+//添加商业险批单
+    CarInsuranceBiEdit.addpd2 = function(){
+        $('#easyui-dialog-insurance-company-index-addpd2').dialog('open');
+        $('#easyui-dialog-insurance-company-index-addpd2').dialog('refresh',"<?php echo yii::$app->urlManager->createUrl(['car/insurance/pd-bu-add','id'=>$biInfo['id']]); ?>");
+    }
+
+    //修改商业险批单
+    $('#easyui-dialog-insurance-company-index-pdduedit').dialog({
+            title: '&nbsp;修改商业险批单',
+            iconCls:'icon-edit', 
+            width: '800',   
+            height: '550',   
+            closed: true,   
+            cache: true,   
+            modal: true,
+            maximizable: true,
+            buttons: [{
+                text:'确定',
+                iconCls:'icon-ok',
+                handler:function(){
+                    
+                    CarInsuranceBiAddPdEdit.submitForm(); 
+                }
+            },{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-insurance-company-index-pdduedit').dialog('close');
+                }
+            }],
+            onClose: function(){
+                $(this).dialog('clear');
+            }
+        });
+    //修改商业险批单
+    CarInsuranceBiEdit.pdDuEdit = function(id){
+        //alert(id);
+        $('#easyui-dialog-insurance-company-index-pdduedit').dialog('open');
+        $('#easyui-dialog-insurance-company-index-pdduedit').dialog('refresh',"<?php echo yii::$app->urlManager->createUrl(['car/insurance/pd-bu-edit']); ?>&id="+id);
+    }
+
+
+
     CarInsuranceBiEdit.submitForm = function(){
 	    var form = $('#easyui-form-car-insurance-bi-edit');
 	    if(!form.form('validate')){

@@ -135,9 +135,18 @@
                     <!-- <td colspan="3"> -->
                     <td>
                         <select id="car_brand1"   name="car_brand[]" required="true" onchange="loadCarType(1)">
-                            <?php foreach ($data1 as $key=>$dat):?>
-                                <option value="<?php echo $dat['id'];?>"><?php echo $dat['text'];?></option>
-                            <?php endforeach;?>
+                            <?php 
+								foreach ($data1 as $key=>$dat){
+									$id = $dat['id'];
+									$text = $dat['text'];
+									echo "<option value='{$id}'>{$text}</option>";
+									foreach($dat['children'] as $sub_brand){
+										$sub_id = $sub_brand['id'];
+										$sub_text = $sub_brand['text'];
+										echo "<option value='{$sub_id}'>&nbsp;&nbsp;&nbsp;{$sub_text}</option>";
+									}
+								}
+                            ?>
                         </select>
                      <!--   <input id="car_brand1" class="easyui-combotree" name="car_brand[]" required="true" onchange ="select_type(1)"
                            data-options="

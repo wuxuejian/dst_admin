@@ -11,7 +11,7 @@
                         style="width:170px;"
                         name="number"
                         required="true"
-                        validType="length[100]"
+                        validType="match[/^[a-zA-Z0-9_]{0,}$/]" 
                     />
                 </td>
                 <td><div style="width:85px;text-align:right;">保险公司</div></td>

@@ -475,8 +475,8 @@ class CarTypeController extends BaseController
             $brand_id = yii::$app->request->get('brand_id');
             $query->andFilterWhere([
                 'or',
-                ['a.`brand_id`'=>$brand_id],
-               /* ['{{%car_brand}}.`pid`'=>$brand_id]*/
+                ['b.`id`'=>$brand_id],
+                ['b.`pid`'=>$brand_id]
             ]);
         }
 		$total = $query->count();

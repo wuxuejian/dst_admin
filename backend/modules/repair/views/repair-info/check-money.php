@@ -153,8 +153,8 @@
                         required="true"      
                         >
                             <option value="-1">请选择</option>
-                            <option value="1" selected="<?php if($data['into_factory']==1){echo 'selected'; } ?>">是</option>
-                            <option value="0" selected="<?php if($data['into_factory']==0){echo 'selected'; } ?>">否</option>
+                            <option value="1" <?php if($data['into_factory']==1){echo "selected";}?>>是</option>
+                            <option value="0" <?php if($data['into_factory']==0){echo "selected";}?>>否</option>
                     </select>
                 </td>
                <td align="right"><div style="width:70px;">进厂时间</div></td>
@@ -304,7 +304,7 @@
             maximizable="false"
             border="false"
         >
-        <span style="font-size:20px">总金额:<span style="font-size:15px" id="money_all"><?php echo $data['repair_price']?></span></span>
+        <span style="font-size:20px">总金额:<span style="font-size:15px" id="money_all"><?php if($data['account_price']>0){echo $data['account_price'];}else{echo $data['repair_price'];}?></span></span>
     </div>
 
     <div

@@ -7,8 +7,13 @@
                 <td>
                     <input class="easyui-textbox" name="username" disabled="true" />
                 </td>
-                <td></td>
-                <td></td>
+                <td>账号类型：</td>
+                <td>
+                    <select class="easyui-combobox" name="repair_company" style="width:173px;" editable="false" panelHeight="auto">
+                        <option value="1">外部账号</option>  
+                        <option value="0">内部账号</option>  
+                    </select> 
+                </td>
             </tr>
             <tr>
                 <td>姓名：</td>

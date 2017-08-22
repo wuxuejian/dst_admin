@@ -88,6 +88,11 @@ class Admin extends ActiveRecord
                 'operating_company_id','filter','filter'=>'intval',
                 'on'=>['add','edit']//添加-修改
             ],
+            [
+                'repair_company','required','message'=>'用户类型不能为空！',
+                'on'=>['add','edit']//登陆-添加
+            ],
+           
         ];
     }
 
@@ -110,8 +115,8 @@ class Admin extends ActiveRecord
         return [
             'default'=>['*'],
             'login'=>['username','password','verifyCode'],
-            'add'=>['mac_pass','username','password','name','sex','email','telephone','qq','department_id','operating_company_id','operating_company_ids'],
-            'edit'=>['mac_pass','name','sex','email','telephone','qq','department_id','operating_company_id','operating_company_ids'],
+            'add'=>['mac_pass','username','password','name','sex','email','telephone','qq','department_id','operating_company_id','operating_company_ids','repair_company'],
+            'edit'=>['mac_pass','name','sex','email','telephone','qq','department_id','operating_company_id','operating_company_ids','repair_company'],
             'reset-password'=>['password']
         ];
     }

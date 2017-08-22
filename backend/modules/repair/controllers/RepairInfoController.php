@@ -50,15 +50,25 @@ class RepairInfoController extends BaseController
         $add_time = strtotime(date('Y-m-d H:i:s'));
         //var_dump($add_time);exit;
         $add_aid  = $_SESSION['backend']['adminInfo']['id'];
-        $repair_company=0;
+        $repair_company= $_SESSION['backend']['adminInfo']['repair_company'];
         if(yii::$app->request->isPost){
             $car_no = yii::$app->request->post('car_no');//车牌号
-            //校验是否存在维修中的记录
+            //校验是否存在该车牌号
+            $is_car=(new \yii\db\Query())
+                ->select('id')
+                ->from('cs_car')
+                ->where(['plate_number'=>$car_no])
+                ->one();
+                if(!$is_car){
+                    $returnArr['status'] = false;
+                    $returnArr['info'] = '该车牌号不存在!';
+                    return json_encode($returnArr);
+                }
             //校验是否存在维修中的记录
             $check_status=(new \yii\db\Query())
                 ->select('check_status')
                 ->from('cs_repair')
-                ->where(['car_id'=>$car_no])
+                ->where(['car_id'=>$car_no,'is_del'=>'0','bill_status'=>'1'])
                 ->orderBy('create_time DESC')
                 ->one();
                 if($check_status){
@@ -107,6 +117,13 @@ class RepairInfoController extends BaseController
                 $returnArr['info'] = '电量未填!';
                 return json_encode($returnArr);
             }
+            if(!preg_match('/^([1-9]{1}[0-9]{0,1}|0|100)(.d{1,2}){0,1}%$/',$soc)){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '电量只能为不超过100%的百分数!';
+                return json_encode($returnArr);
+            }
+            /*echo $soc;
+            die;*/
             $error_note = yii::$app->request->post('error_note');//故障描述
             if(!trim($error_note)){
                 $returnArr['status'] = false;
@@ -147,32 +164,44 @@ class RepairInfoController extends BaseController
             //$part_info =  preg_replace('/[\x00-\x1F\x80-\x9F]/u', '', trim($part_info));
             $part_info=json_decode($part_info);
             $task_info = yii::$app->request->post('task_info');//工时信息
+          /*  echo "<pre>";
+            var_dump($task_info);
+            die;*/
             if(!$task_info){
                 $returnArr['status'] = false;
                 $returnArr['info'] = '工时信息有误!';
                 return json_encode($returnArr);
             }
             $repair_price = yii::$app->request->post('repair_price');//维修报价
+            if($repair_price<=0){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '维修报价只能为正数!';
+                return json_encode($returnArr);
+            }
             $sale_factory = yii::$app->request->post('sale_factory');//维修厂类型
-            if($sale_factory=='外部维修厂'){
+            /*if($sale_factory=='外部维修厂'){
                 $sale_factory=1;
             }else{
                 $sale_factory=0;
-            }
+            }*/
             $into_factory = yii::$app->request->post('into_factory');//是否拖车进厂
             if($into_factory==-1){
                 $returnArr['status'] = false;
                 $returnArr['info'] = '未选择是否拖车进厂!';
                 return json_encode($returnArr);
             }
+            $is_auto=0;
             $db = \Yii::$app->db;
             $transaction = $db->beginTransaction(); //开启事物
-                if(!$order_no && !$repair_company){
+                if(!$order_no ){
                     //登记编号，格式：GZ+日期+3位数（即该登记是系统当天登记的第几个，第一个是001，第二个是002…）
                    $todayNo = (new \yii\db\Query())->select('order_no')->from('oa_car_maintain')
                 ->where('time >=:start_time AND time <=:end_time and order_no like "%WX%"',[':start_time'=>strtotime(date('Y-m-d')),':end_time'=>strtotime(date('Y-m-d'))+86400])
-                ->orderBy('time DESC')->one();
-                    
+                ->orderBy('order_no DESC')->one();
+                    $is_auto=1;
+                    /*echo "<pre>";
+                    var_dump($todayNo);
+                    die;*/
                     if($todayNo){
                         if(preg_match('/^WX(\d+)/i',$todayNo['order_no'],$data))
                         {
@@ -197,7 +226,7 @@ class RepairInfoController extends BaseController
                     //插入到oa_car_maintain
                         $ocs = !empty($_SESSION['backend']['adminInfo']['operating_company_ids']) ? $_SESSION['backend']['adminInfo']['operating_company_ids']: $_SESSION['backend']['adminInfo']['operating_company_id'];
                     $result_1= $connection->createCommand()->insert('oa_car_maintain', [
-                                    'type'=>1,
+                                    'type'=>3,
                                     'car_no'=>$car_no,
                                     'order_no'=>$order_no,
                                     'status'=>5,
@@ -207,10 +236,6 @@ class RepairInfoController extends BaseController
                                     'into_factory_time'=>strtotime($in_time),
                                     'time'=>time()
                                 ])->execute();
-                }elseif(!$order_no && $repair_company){
-                    $returnArr['status'] = false;
-                    $returnArr['info'] = '无法找到对应的客服工单号，无法登记，请与维修专员联系确定客服工单号!';
-                    return json_encode($returnArr);
                 }
             //插入到cs_repair表
             $reg_record = $connection->createCommand()->insert('cs_repair', [
@@ -226,7 +251,7 @@ class RepairInfoController extends BaseController
                         'service_human' => $fuwu_person,
                         'service_phone' => $fuwu_person_tel,
                         'into_factory' => $into_factory,
-
+                        'add_id'   =>   $_SESSION['backend']['adminInfo']['id'],
                         'into_time' => $in_time,
                         'expect_time' => $expect_time,
                         'into_mile' => $into_mile,
@@ -237,7 +262,7 @@ class RepairInfoController extends BaseController
                         //'wheel_amount' => $wheel_amount,
                         'repair_img_t' => $photoc,
                         'task_info' => $task_info,
-
+                        'is_auto'   =>$is_auto,
                         'last_time' => date('Y-m-d H:i:s',time())
                         ])->execute();
                     $repair_id=$connection->getLastInsertID();
@@ -252,6 +277,16 @@ class RepairInfoController extends BaseController
                             var_dump($part_info);
                             die;*/
             foreach($part_info as $key=>$val){
+                if($val[1]<0){
+                    $returnArr['status'] = false;
+                    $returnArr['info'] = '配件数量不能为负数!';
+                    return json_encode($returnArr);
+                }
+                if($val[2]<0){
+                    $returnArr['status'] = false;
+                    $returnArr['info'] = '配件价格不能为负数!';
+                    return json_encode($returnArr);
+                }
                  $reg_record_2 = $connection->createCommand()->insert('cs_repair_part', [
                         'part_number' => $val[1],
                         'part_fee' => $val[2],
@@ -288,13 +323,13 @@ class RepairInfoController extends BaseController
     public function actionGetOrder()
     {
         //维修厂类型0内部1外部
-        $repair_company=0;
+        $repair_company=$_SESSION['backend']['adminInfo']['repair_company'];
         $car_no = isset($_REQUEST['car_no']) ? trim($_REQUEST['car_no']) : '';
         //校验是否存在维修中的记录
         $check_status=(new \yii\db\Query())
             ->select('check_status')
             ->from('cs_repair')
-            ->where(['car_id'=>$car_no])
+            ->where(['car_id'=>$car_no,'is_del'=>'0','bill_status'=>'1'])
             ->orderBy('create_time DESC')
             ->one();
             if($check_status){
@@ -304,19 +339,23 @@ class RepairInfoController extends BaseController
                     return  json_encode($returnArr);
                 }
             }
-                
+         //拿到车牌号插叙车辆ID
+         $car_id=(new \yii\db\Query())
+            ->select('id')
+            ->from('cs_car')
+            ->where(['plate_number'=>$car_no])
+            ->one();       
 
         $query = (new \yii\db\Query())
             ->select('order_no')
             ->from('oa_car_maintain')
-            ->where(['status'=>'5','car_no'=>$car_no]);
+            ->where(['status'=>'5','car_id'=>$car_id['id']]);
             //->orderBy('order_no DESC');
-        if($repair_company){
-            $query->andFilterWhere(['like','order_no','BX']);
-        }else{
-            $query->andFilterWhere(['like','order_no','WX']);
-        }
         $dat=$query->all();
+       /* echo "<pre>";
+        var_dump($dat);
+        die;*/
+        
         if($dat){
                 foreach($dat as $key=>$val){
                     $query = (new \yii\db\Query())
@@ -335,8 +374,13 @@ class RepairInfoController extends BaseController
                 }        
             
         }else{
-            $data[] = ['value'=>'','text'=>'系统自动生成'];
+                        $data[] = ['value'=>'','text'=>'系统自动生成'];
 
+        }
+        if(count($dat)>1){
+            $returnArr['msg'] = '存在多条工单号,无法确定客服工单号，无法登记，请与维修专员联系确定客服工单号';
+        }else{
+            $returnArr['msg']='';
         }
             $returnArr['status'] = true;
             $returnArr['info'] = $data;
@@ -481,6 +525,13 @@ class RepairInfoController extends BaseController
                 $returnArr['info'] = '电量未填!';
                 return json_encode($returnArr);
             }
+            if(!preg_match('/^([1-9]{1}[0-9]{0,1}|0|100)(.d{1,2}){0,1}%$/',$soc)){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '电量只能为百分数!';
+                return json_encode($returnArr);
+            }
+            /*echo $soc;
+            die;*/
             $error_note = yii::$app->request->post('error_note');//故障描述
             if(!trim($error_note)){
                 $returnArr['status'] = false;
@@ -525,6 +576,11 @@ class RepairInfoController extends BaseController
                 return json_encode($returnArr);
             }
             $repair_price = yii::$app->request->post('repair_price');//维修报价
+            if($repair_price<=0){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '维修报价只能为正数!';
+                return json_encode($returnArr);
+            }
             $sale_factory = yii::$app->request->post('sale_factory');//维修厂类型
             if($sale_factory=='外部维修厂'){
                 $sale_factory=1;
@@ -549,7 +605,7 @@ class RepairInfoController extends BaseController
                                     'service_human' => $fuwu_person,
                                     'service_phone' => $fuwu_person_tel,
                                     'into_factory' => $into_factory,
-
+                                    'check_status'   =>1,
                                     'into_time' => $in_time,
                                     'expect_time' => $expect_time,
                                     'into_mile' => $into_mile,
@@ -593,6 +649,16 @@ class RepairInfoController extends BaseController
                         foreach($part_info as $key=>$value){
                             foreach($part_info_before as $k=>$v){
                                 //新数据和老数据的配件编码相同，update，unsert()老数据
+                                if($value[1]<0){
+                                    $returnArr['status'] = false;
+                                    $returnArr['info'] = '配件数量不能为负数!';
+                                    return json_encode($returnArr);
+                                }
+                                if($value[2]<0){
+                                    $returnArr['status'] = false;
+                                    $returnArr['info'] = '配件价格不能为负数!';
+                                    return json_encode($returnArr);
+                                }
                                 if($part_info[$key][0]==$part_info_before[$k]['part_no']){
                                  $reg_record_3=   $connection->createCommand()->update('cs_repair_part', [
                                     //'use_nature' => $use_nature,
@@ -742,7 +808,11 @@ class RepairInfoController extends BaseController
             foreach($task_info as $key=>$val){
                 $data['task_fee']+=$val[2];
             }
-            $data['part_fee']=$data['repair_price']-$data['task_fee'];
+            if($data['account_price']>0){
+              $data['part_fee']=$data['account_price']-$data['task_fee'];
+            }else{
+              $data['part_fee']=$data['repair_price']-$data['task_fee'];  
+            }
             if($data['sale_factory']==1){
                 $data['sale_factory']='外部维修厂';
             }else{
@@ -783,7 +853,7 @@ class RepairInfoController extends BaseController
                                             //'use_nature' => $use_nature,
                                             'project_human'=> $_SESSION['backend']['adminInfo']['username'],
                                             'check_status' => 2,
-                                            'repair_note'  => $note[1],
+                                            'repair_note'  => urldecode($note[1]),
                                             'last_time'    =>date('Y-m-d H:i:s',time())
                                             ],
                                                 'id=:id',
@@ -795,7 +865,7 @@ class RepairInfoController extends BaseController
                                             //'use_nature' => $use_nature,
                                             'account_human'=> $_SESSION['backend']['adminInfo']['username'],
                                             'check_status' => 4,
-                                            'finish_note'  => $note[1],
+                                            'finish_note'  => urldecode($note[1]),
                                             'last_time'    =>date('Y-m-d H:i:s',time())
                                             ],
                                                 'id=:id',
@@ -826,7 +896,12 @@ class RepairInfoController extends BaseController
             foreach($task_info as $key=>$val){
                 $data['task_fee']+=$val[2];
             }
-            $data['part_fee']=$data['repair_price']-$data['task_fee'];
+            if($data['account_price']>0){
+              $data['part_fee']=$data['account_price']-$data['task_fee'];
+            }else{
+              $data['part_fee']=$data['repair_price']-$data['task_fee'];  
+            }
+            
             if($data['sale_factory']==1){
                 $data['sale_factory']='外部维修厂';
             }else{
@@ -865,15 +940,25 @@ class RepairInfoController extends BaseController
             try {
                         $reg_record = $connection->createCommand()->update('cs_repair', [
                                     //'use_nature' => $use_nature,
-                                    'repair_price' => $repair_price,
+                                    'check_status' =>3,
                                     'task_info' => $task_info,
+                                    'account_price'=>$repair_price,
                                     'last_time' => date('Y-m-d H:i:s',time())
                                     ],
                                         'id=:id',
                                         array(':id'=>$repair_id))->execute();
                         foreach($part_info as $key=>$value){
-                            
-                                //新数据和老数据的配件编码相同，update，unsert()老数据
+                                if($value[1]<0){
+                                    $returnArr['status'] = false;
+                                    $returnArr['info'] = '配件数量不能为负数!';
+                                    return json_encode($returnArr);
+                                }
+                                if($value[2]<0){
+                                    $returnArr['status'] = false;
+                                    $returnArr['info'] = '配件价格不能为负数!';
+                                    return json_encode($returnArr);
+                                }
+                                
                                  $reg_record_3=   $connection->createCommand()->update('cs_repair_part', [
                                     //'use_nature' => $use_nature,
                                     'part_number' => $value[1],
@@ -904,7 +989,7 @@ class RepairInfoController extends BaseController
     {
         $print = isset($_REQUEST['print']) ? trim($_REQUEST['print']) : '';
         $query = (new \yii\db\Query())
-            ->select('a.*,a.expect_time as expect_time_feng,b.*,b.id as match_type_id,c.*,d.id,d.car_type_id,d.vehicle_dentification_number,d.owner_id,d.plate_number,e.id,e.car_model_name,f.*,g.name as company_name,h.driving_mileage,h.add_time,i.*,j.*')
+            ->select('a.*,a.expect_time as expect_time_feng,b.*,b.id as match_type_id,c.*,d.id,d.car_type_id,d.vehicle_dentification_number,d.owner_id,d.plate_number,e.id,e.car_model_name,f.*,g.name as company_name,h.driving_mileage,h.add_time,j.*')
             ->from('cs_repair as a')
             ->leftjoin('oa_car_maintain as b','a.order_number = b.order_no')
             ->leftjoin('oa_repair as c','a.order_number = c.order_no')
@@ -913,12 +998,37 @@ class RepairInfoController extends BaseController
             ->leftjoin('oa_field_record as f','c.id = f.repair_id')
             ->leftjoin('cs_owner as g','d.owner_id = g.id')
             ->leftjoin('cs_maintain_record as h','d.id = h.car_id')
-            ->leftjoin('cs_maintain_type as i','h.type = i.id')
             ->leftjoin('oa_car_maintain_fault as j','b.id = j.maintain_id')
             ->where(['a.is_del'=>0,'a.id'=>$print])
             ->orderBy('add_time DESC');
         $detail_data = $query->one();
         $detail_data['task_info'] = json_decode($detail_data['task_info']);
+        //查询保养标准
+        $query = (new \yii\db\Query())
+                    ->select('a.car_id,h.type,i.*')
+                    ->from('cs_repair as a')
+                    ->leftjoin('cs_car as d','a.car_id = d.plate_number')
+                    ->leftjoin('cs_maintain_record as h','d.id = h.car_id')
+                    ->leftjoin('cs_maintain_type as i','h.type = i.id')
+                    ->where(['a.is_del'=>0,'a.id'=>$print]);
+        $baoyang_data = $query->all();
+//        echo '<pre>';
+//        var_dump($baoyang_data);die;
+        if($baoyang_data){
+            foreach ($baoyang_data as $k=>$v){
+                $msg4 .= '<tr>
+            <td width="93" valign="center" colspan="2"  style="width:93px;">
+                <font size="2">'.$v[car_model_name].'</font>
+            </td>
+            <td width="93" valign="center" colspan="2"  style="width:93px;">
+                <font size="2">'.$v[maintain_type].'</font>
+            </td>
+            <td width="93" valign="center" colspan="9"  style="width:93px;">
+                <font size="2">'.$v[maintain_des].'</font>
+            </td>
+        </tr>';
+            }
+        }
         $query = (new \yii\db\Query())
             ->select('id,tier_pid')
             ->from('oa_car_maintain_fault')
@@ -949,7 +1059,6 @@ class RepairInfoController extends BaseController
         }else{
             $detail_data[source] = '未知来源';
         }
-        $detail_data['tel_time'] = date('Y-m-d H:i:s',$detail_data['tel_time']);
         //紧急程度
         if($detail_data['urgency'] == 1){
             $detail_data['urgency'] = '一般紧急';
@@ -1106,7 +1215,7 @@ class RepairInfoController extends BaseController
                 <font size="2">故障发生时间：'.$detail_data[fault_start_time].'</font>
             </td>
             <td width="93" valign="center" colspan="7"  style="width:93px;">
-                <font size="2">故障地点：'.$detail_data[address].'</font>
+                <font size="2">故障地点：'.$detail_data[fault_address].'</font>
             </td>
         </tr>
         <tr>
@@ -1189,7 +1298,7 @@ class RepairInfoController extends BaseController
                 <font size="2">替换开始时间：'.$detail_data[replace_start_time].'</font>
             </td>
             <td width="93" valign="center" colspan="5"  style="width:93px;">
-                <font size="2">预计归还时间：'.$detail_data[replace_end_time].'</font>
+                <font size="2">预计归还时间：'.$detail_data[expect_time].'</font>
             </td>    
             <td width="93" valign="center" colspan="5"  style="width:93px;">
                 <strong><font size="2">外勤服务：'.$detail_data[accept_name].'</font></strong>
@@ -1205,7 +1314,7 @@ class RepairInfoController extends BaseController
                 <font size="2">维修厂：'.$detail_data[sale_factory].'</font>
             </td>
             <td width="93" valign="center" colspan="5"  style="width:93px;">
-                <font size="2">车牌号：'.$detail_data[car_id].'</font>
+                <font size="2">车牌号：'.$detail_data[plate_number].'</font>
             </td>    
             <td width="93" valign="center" colspan="5"  style="width:93px;">
                 <font size="2">车架号：'.$detail_data[vehicle_dentification_number].'</font>
@@ -1275,19 +1384,9 @@ class RepairInfoController extends BaseController
             <td width="93" valign="center" colspan="9"  style="width:93px;">
                 <font size="2">描述</font>
             </td>
-        </tr>
-        <tr>
-            <td width="93" valign="center" colspan="2"  style="width:93px;">
-                <font size="2">'.$detail_data[car_model_name].'</font>
-            </td>
-            <td width="93" valign="center" colspan="2"  style="width:93px;">
-                <font size="2">'.$detail_data[maintain_type].'</font>
-            </td>    
-            <td width="93" valign="center" colspan="9"  style="width:93px;">
-                <font size="2">'.$detail_data[maintain_des].'</font>
-            </td>
-        </tr>
-        <tr>
+        </tr>';
+        $msg .= $msg4;
+        $msg .= '<tr>
             <td width="93" valign="center" colspan="2"  style="width:93px;">
                 <strong><font size="2">故障分类</font></strong>
             </td>
@@ -1388,7 +1487,7 @@ class RepairInfoController extends BaseController
     {
         $repair_id = isset($_REQUEST['id']) ? trim($_REQUEST['id']) : '';
         $now_time = date('Y-m-d H:i:s',time());
-        $result = Yii::$app->db->createCommand()->update('cs_parts_info', [
+        $result = Yii::$app->db->createCommand()->update('cs_repair', [
             'bill_status' => 0,
             'last_time' => $now_time,
         ],"id=$repair_id")->execute();
@@ -1407,10 +1506,30 @@ class RepairInfoController extends BaseController
     {
         $repair_id = isset($_REQUEST['id']) ? trim($_REQUEST['id']) : '';
         $now_time = date('Y-m-d H:i:s',time());
-        $result = Yii::$app->db->createCommand()->update('cs_parts_info', [
+        $query = (new \yii\db\Query())
+            ->select('id,check_status,is_auto,order_number')
+            ->from('cs_repair')
+            ->where(['is_del'=>0,'id'=>$repair_id]);
+        $status_data = $query->one();
+        if($status_data['check_status'] >2){
+            $msg['status'] = 0;
+            $msg['info'] = '页面数据已经发生改变，请更新页面!';
+            echo json_encode($msg);die;
+        }
+        $result = Yii::$app->db->createCommand()->update('cs_repair', [
             'is_del' => 1,
             'last_time' => $now_time,
         ],"id=$repair_id")->execute();
+        if($status_data['is_auto'] == 1){
+            $db = \Yii::$app->db;
+            $transaction = $db->beginTransaction();
+            try {
+                $result2 = Yii::$app->db->createCommand('DELETE FROM oa_car_maintain WHERE order_no= "'.$status_data[order_number].'"')->execute();
+            } catch (Exception $e) {
+                $transaction->rollback();
+            }
+                $transaction->commit();
+        }
         if($result){
             $msg['status'] = 1;
             $msg['info'] = '删除成功!';
@@ -1425,32 +1544,34 @@ class RepairInfoController extends BaseController
     //付款凭证
     public function actionPayMoney()
     {
-//        if(yii::$app->request->isGet){
-//            $id = isset($_REQUEST['id']) ? trim($_REQUEST['id']) : '';
-//            if(!$id){
-//                $msg['status'] = 0;
-//                $msg['info'] = '维修方案不存在!';
-//                echo json_encode($msg);die;
-//            }
-//            $query = (new \yii\db\Query())
-//                ->select('id,money_note,money_img')
-//                ->from('cs_repair')
-//                ->where(['is_del'=>0,'id'=>$id]);
-//            $data = $query->one();
-//        }
         if(yii::$app->request->isPost){
+            $money_note = trim(yii::$app->request->post('money_note'));
             $go_back = yii::$app->request->post('go_back');
             $go_back = isset($go_back) ? trim($go_back) : '';
             //驳回操作
             if($go_back){
                 $go_back = ltrim($go_back,',');
                 $go_back = explode(',',$go_back);
+                foreach ($go_back as $k=>$v){
+                    $query = (new \yii\db\Query())
+                        ->select('id,check_status')
+                        ->from('cs_repair')
+                        ->where(['is_del'=>0,'id'=>$v]);
+                    $status_data = $query->one();
+                    if($status_data['check_status'] !=5 ){
+                        $msg['status'] = 0;
+                        $msg['info'] = '页面数据已经发生改变，请更新页面!';
+                        echo json_encode($msg);die;
+                    }
+                }
                 $db = \Yii::$app->db;
                 foreach ($go_back as $k=>$v){
                     $transaction = $db->beginTransaction();
                     try {
                         $result = Yii::$app->db->createCommand()->update('cs_repair', [
                             'check_status' => 6,
+                            'money_note' => $money_note,
+                            'money_human' => $_SESSION['backend']['adminInfo']['username'],
                             'last_time' => date('Y-m-d H:i:s',time()),
                         ],"id=$v")->execute();
                         $transaction->commit();
@@ -1472,24 +1593,56 @@ class RepairInfoController extends BaseController
             $money_note = trim(yii::$app->request->post('money_note'));
             $money_img = trim(yii::$app->request->post('money_img'));
             $order_id = trim(yii::$app->request->post('order_id'));
+            $order_no = trim(yii::$app->request->post('order_no'));
             if($money_note !=' ' && $money_img && $order_id){
                 $order_id = ltrim($order_id,',');
                 $order_id = explode(',',$order_id);
-                $db = \Yii::$app->db;
-                foreach ($order_id as $k=>$v){
-                    $transaction = $db->beginTransaction();
-                    try {
-                    $result = Yii::$app->db->createCommand()->update('cs_repair', [
-                        'check_status' => 7,
-                        'money_note' => $money_note,
-                        'money_img' => $money_img,
-                        'money_human' => $_SESSION['backend']['adminInfo']['username'],
-                        'last_time' => date('Y-m-d H:i:s',time()),
-                        'finish_time' => date('Y-m-d H:i:s',time()),
-                    ],"id=$v")->execute();
+                $order_no = ltrim($order_no,',');
+                $order_no = explode(',',$order_no);
+                if($order_id){
+                    foreach ($order_id as $k=>$v){
+                        $query = (new \yii\db\Query())
+                            ->select('id,check_status')
+                            ->from('cs_repair')
+                            ->where(['is_del'=>0,'id'=>$v]);
+                        $status_data = $query->one();
+                        if($status_data['check_status'] !=5 ){
+                            $msg['status'] = 0;
+                            $msg['info'] = '页面数据已经发生改变，请更新页面!';
+                            echo json_encode($msg);die;
+                        }
+                    }
+                    $db = \Yii::$app->db;
+                    foreach ($order_id as $k=>$v){
+                        $transaction = $db->beginTransaction();
+                        try {
+                            $time_now = date('Y-m-d H:i:s',time());
+                            $result = Yii::$app->db->createCommand()->update('cs_repair', [
+                                'check_status' => 7,
+                                'money_note' => $money_note,
+                                'money_img' => $money_img,
+                                'money_human' => $_SESSION['backend']['adminInfo']['username'],
+                                'last_time' => $time_now,
+                                'finish_time' => $time_now,
+                            ],"id=$v")->execute();
+                        } catch (Exception $e) {
+                            $transaction->rollback();
+                        }
                         $transaction->commit();
-                    } catch (Exception $e) {
-                        $transaction->rollback();
+                    }
+                }
+                if($order_no){
+                    $db = \Yii::$app->db;
+                    foreach ($order_no as $k=>$v){
+                        $transaction = $db->beginTransaction();
+                        try {
+                            $result1 = Yii::$app->db->createCommand()->update('oa_car_maintain', [
+                                'status' => 6,
+                            ],"order_no='$v'")->execute();
+                        } catch (Exception $e) {
+                            $transaction->rollback();
+                        }
+                        $transaction->commit();
                     }
                 }
                 if($result){
@@ -1540,12 +1693,14 @@ class RepairInfoController extends BaseController
     public function actionGetList()
     {
         $pageSize = isset($_GET['rows']) && $_GET['rows'] <= 50 ? intval($_GET['rows']) : 10;
+        $user_id = $_SESSION['backend']['adminInfo']['id'];
         $query = (new \yii\db\Query())
             ->select('a.*,b.maintain_scene,c.site_name')
             ->from('cs_repair as a')
             ->leftJoin('oa_car_maintain as b','a.order_number = b.order_no')
             ->leftJoin('oa_service_site as c','a.sale_factory = c.id')
-            ->where(['a.is_del'=>'0']);
+            ->where(['a.is_del'=>'0'])
+            ->orderBy('a.create_time DESC');
         if (yii::$app->request->isGet){
             $dat = $_GET;
             if($dat['car_id'] != ''){
@@ -1571,9 +1726,16 @@ class RepairInfoController extends BaseController
             if($dat['check_status'] != ''){
                 $query->andFilterWhere(['=','a.check_status',addslashes(trim($dat['check_status']))]);
             }
-            if($dat['bill_status'] != ''){
-                $query->andFilterWhere(['=','bill_status',addslashes(trim($dat['bill_status']))]);
-            }
+        }
+        $bill_status = isset($_REQUEST['bill_status']) ? trim($_REQUEST['bill_status']) : 1;
+        if($bill_status != 0){
+            $bill_status = 1;
+        }else{
+            $bill_status = 0;
+        }
+        $query->andFilterWhere(['=','bill_status',addslashes(trim($bill_status))]);
+        if($_SESSION['backend']['adminInfo']['repair_company'] == 1){
+            $query->andFilterWhere(['=','a.add_id',addslashes(trim($user_id))]);
         }
         $total = $query->count();
 //        var_dump($total);exit;
@@ -1594,14 +1756,18 @@ class RepairInfoController extends BaseController
         $part_no=yii::$app->request->post('part_no');
         $car_id=yii::$app->request->post('car_no');
         //$i=yii::$app->request->post('i');
-        if(!$part_no or !$car_id){
-            $data=array('error'=>1,'msg'=>'缺少参数');
+        if(!$part_no){
+            $data=array('error'=>1,'msg'=>'请填写配件编号');
+            return json_encode($data);
+        }
+        if(!$car_id){
+            $data=array('error'=>1,'msg'=>'请填写车牌号');
             return json_encode($data);
         }
         $repair_ids=(new \yii\db\Query())
                 ->select('repair_id')
                 ->from('cs_repair_part')
-                ->where("part_no=$part_no")
+                ->where("part_no='".$part_no."'")
                 ->all();
                 if(!$repair_ids){
                     $data=array('into_time'=>'','into_mile'=>'');

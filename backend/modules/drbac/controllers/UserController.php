@@ -424,6 +424,9 @@ class UserController extends BaseController
             $model = new Admin;
             $model->setScenario('add');
             $model->load(yii::$app->request->post(),'');
+            
+           // var_dump($model);
+            //die;
             $returnArr = [];
             if($model->validate()){
             	if(yii::$app->request->post('operating_company_ids')){
@@ -521,7 +524,7 @@ class UserController extends BaseController
         $adminInfo = Admin::find()
                      ->select([
                         'id','username','name','sex','mac_pass',
-                        'department_id','operating_company_id','email','telephone','qq','operating_company_ids'
+                        'department_id','operating_company_id','email','telephone','qq','operating_company_ids','repair_company'
                      ])
                      ->where(['id'=>$id])->asArray()->one();
         $adminInfo or die('record not found');

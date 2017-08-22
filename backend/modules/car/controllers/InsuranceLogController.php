@@ -13,9 +13,9 @@ use backend\models\CarDrivingLicense;
 
 use backend\models\CarInsuranceCompulsory;
 use backend\models\Admin;
-
+use backend\models\OperatingCompany;
 use backend\models\ConfigItem;
-
+use backend\models\Owner;
 use backend\controllers\BaseController;
 use backend\models\Car;
 use backend\models\CarInsuranceBusiness;
@@ -29,7 +29,7 @@ class InsuranceLogController extends BaseController
     public function actionIndex()
     {
     	$buttons = $this->getCurrentActionBtn();
-    	$config = (new ConfigCategory)->getCategoryConfig(['INSURANCE_COMPANY','car_model_name'],'value');
+    	$config = (new ConfigCategory)->getCategoryConfig(['INSURANCE_COMPANY','car_model_name','car_status'],'value');
     	$insurerCompany = [
     	['value'=>'','text'=>'不限']
     	];
@@ -93,11 +93,23 @@ class InsuranceLogController extends BaseController
         		b.plate_number,
         		b.vehicle_dentification_number,
         		b.car_model,
-        		c.username'
+        		c.username,
+                b.car_status,
+                b.operating_company_id,
+                b.owner_id,
+                d.number numberp,
+                a.use_nature use_nature_a,
+                d.use_nature use_nature_d,
+                d.money_amount money_amount_p,
+                e.car_model_name,
+
+                '
         )
         ->from('cs_car_insurance_compulsory a')
 		->leftJoin('{{%car}} b', 'a.car_id = b.id')
 		->leftJoin('{{%admin}} c', 'a.add_aid = c.id')
+        ->leftJoin('{{%car_type}} e', 'b.car_type_id = e.id')
+        ->leftJoin('(select * from (select * from cs_car_insurance_compulsory_form where is_del=0 order by add_datetime desc limit 1) temp3) as d','d.insurance_id = a.id')
 		->where('a.is_del=0');
         $query1 = (new \yii\db\Query())->select(
         		'a.id,
@@ -105,7 +117,7 @@ class InsuranceLogController extends BaseController
                 a.type _type,
         		a.car_id,
         		a.start_date,
-        		a.end_date,
+                a.end_date,
         		a.end_date _end_date,
         		a.insurance_text,
         		a.insurer_company,
@@ -117,19 +129,32 @@ class InsuranceLogController extends BaseController
         		b.plate_number,
         		b.vehicle_dentification_number,
         		b.car_model,
-        		c.username'
+        		c.username,
+                b.car_status,
+                b.operating_company_id,
+                b.owner_id,
+                d.number numberp,
+                a.use_nature use_nature_a,
+                d.use_nature use_nature_d,
+                d.money_amount money_amount_p,
+                e.car_model_name,
+                '
+                //
+
         )
         ->from('cs_car_insurance_business a')
         ->leftJoin('{{%car}} b', 'a.car_id = b.id')
 		->leftJoin('{{%admin}} c', 'a.add_aid = c.id')
+        ->leftJoin('{{%car_type}} e', 'b.car_type_id = e.id')
+        ->leftJoin('(select * from (select * from cs_car_insurance_business_form where is_del=0 order by add_datetime desc limit 1) temp3) as d','d.insurance_id = a.id')
         ->where('a.is_del=0');
         $query2 = (new \yii\db\Query())->select(
         		'a.id,
-        		a.type,
+        		a.insurance_text type,
                 a.type _type,
         		a.car_id,
         		a.start_date,
-        		a.end_date,
+                a.end_date,
         		a.end_date _end_date,
         		a.insurance_text,
         		a.insurer_company,
@@ -141,11 +166,23 @@ class InsuranceLogController extends BaseController
         		b.plate_number,
         		b.vehicle_dentification_number,
         		b.car_model,
-        		c.username'
+        		c.username,
+                b.car_status,
+                b.operating_company_id,
+                b.owner_id,
+                d.number numberp,
+                a.use_nature use_nature_a,
+                d.use_nature use_nature_d,
+                d.money_amount money_amount_p,
+                e.car_model_name,
+                '
+                //
         )
         ->from('cs_car_insurance_other a')
         ->leftJoin('{{%car}} b', 'a.car_id = b.id')
 		->leftJoin('{{%admin}} c', 'a.add_aid = c.id')
+        ->leftJoin('{{%car_type}} e', 'b.car_type_id = e.id')
+        ->leftJoin('(select * from (select * from cs_car_insurance_business_form where is_del=0 order by add_datetime desc limit 1) temp3) as d','d.insurance_id = a.id')
         ->where('a.is_del=0');
         //搜索条件
         $car_no = yii::$app->request->get('plate_number');	//车牌号
@@ -268,7 +305,51 @@ class InsuranceLogController extends BaseController
         $query3 = $query3->offset($pages->offset)->limit($pages->limit)->orderBy($orderBy);
 //         echo $query3->createCommand()->getRawSql();exit;
         $data = $query3->all();
+
+
+
+        //车辆运营公司
+        $oCompany = OperatingCompany::getOperatingCompany();  
         
+        //加载归属客户    
+        $connection = yii::$app->db;
+        $configItems = ['car_status'];
+        $config = (new ConfigCategory)->getCategoryConfig($configItems,'value');
+        foreach ($data as $index=>$row){
+            
+            if(isset($oCompany[$row['operating_company_id']]) && $oCompany[$row['operating_company_id']]){
+                $data[$index]['operating_company_id'] = $oCompany[$row['operating_company_id']]['name'];
+            } 
+            
+            if (isset($row['owner_id'])) {
+                $query_owner = Owner::find()->select(['owner_name'=>'name']);
+                $query_owner->andFilterWhere(['`id`'=>$row['owner_id']]);
+                $owner = $query_owner->asArray()->one();
+                if($owner){
+                    $data[$index]['owner_name'] = $owner['owner_name'];
+                }
+            }           
+            //var_dump($row);
+            $query = $connection->createCommand(
+                "select cCustomer_id,pCustomer_id,cs_customer_company.company_name,cs_customer_personal.id_name
+                 from cs_car_let_record
+                left join cs_customer_company on cs_car_let_record.cCustomer_id=cs_customer_company.id 
+                left join cs_customer_personal on cs_car_let_record.pCustomer_id=cs_customer_personal.id
+                 where (back_time>".time()." or back_time=0) and car_id=".$row['id']
+            );
+            $customer = $query->queryOne();
+            if($customer){
+                if($customer['company_name']){
+                    $data[$index]['customer_name'] = $customer['company_name'];
+                }else if($customer['id_name']){
+                    $data[$index]['customer_name'] = $customer['id_name'];
+                }
+            }else {
+                $data[$index]['customer_name'] = @$config['car_status'][$row['car_status']]['text'];
+            }
+        }
+        //echo '<pre>';
+        //var_dump($data);exit;
         $returnArr = [];
         $returnArr['rows'] = $data; 
         $returnArr['total'] = $total;
@@ -277,15 +358,203 @@ class InsuranceLogController extends BaseController
     
     //详情
     public function actionScan(){
+        $connection = yii::$app->db;
     	$id = yii::$app->request->get('id') or die('param id is required');
     	$type = yii::$app->request->get('type') or die('param type is required');
+        //var_dump($id);var_dump($type);//exit;
     	if($type==1){	//交强险
-    		$data = CarInsuranceCompulsory::find()->where(['id'=>$id])->asArray()->one();
+    		$data = CarInsuranceCompulsory::find()
+                    ->select([
+                        'cs_car_insurance_compulsory.*',
+                        'cs_car.car_status',
+                        'cs_owner.name as owner_name',
+                        'cs_operating_company.name as oper_name',
+                        'cs_car_type.car_model_name as car_model_name2',
+                    ])
+                    ->where(['cs_car_insurance_compulsory.id'=>$id])
+                    ->leftJoin('cs_car','cs_car.id = cs_car_insurance_compulsory.car_id')
+                    ->leftJoin('cs_owner','cs_owner.id = cs_car.owner_id')
+                    ->leftJoin('cs_operating_company','cs_operating_company.id = cs_car.operating_company_id')
+                    ->leftJoin('cs_car_type', 'cs_car.car_type_id = cs_car_type.id')
+                    ->asArray()
+                    ->one();
+            //var_dump($data);exit;
+            //加载归属客户
+                $configItems = ['car_status','INSURANCE_COMPANY'];
+                $config = (new ConfigCategory)->getCategoryConfig($configItems,'value');
+                $query = $connection->createCommand(
+                        "select cCustomer_id,pCustomer_id,cs_customer_company.company_name,cs_customer_personal.id_name
+                        from cs_car_let_record
+                        left join cs_customer_company on cs_car_let_record.cCustomer_id=cs_customer_company.id
+                        left join cs_customer_personal on cs_car_let_record.pCustomer_id=cs_customer_personal.id
+                        where (back_time>".time()." or back_time=0) and car_id=".$data['car_id']
+                );
+                $customer = $query->queryOne();
+                //var_dump($customer);exit;
+                if($customer){
+                    if($customer['company_name']){
+                        $data['customer_name'] = $customer['company_name'];
+                    }else if($customer['id_name']){
+                        $data['customer_name'] = $customer['id_name'];
+                    }
+                }else {
+                    $data['customer_name'] = $config['car_status'][$data['car_status']]['text'];
+                }
+
+            $insurance_compulsory = $connection->createCommand(
+                'select id,money_amount,insurer_company,start_date,end_date,note 
+                from cs_car_insurance_compulsory 
+                where car_id='.$data['car_id'].' order by end_date desc limit 1'
+                )->queryOne();
+            if($insurance_compulsory){
+                $data['insurance_compulsory'] = $insurance_compulsory;
+                $data['insurance_compulsory']['insurer_company_name'] = @$config['INSURANCE_COMPANY'][$insurance_compulsory['insurer_company']]['text'];
+            }else {
+                $data['insurance_compulsory'] = '';
+                $data['insurance_compulsory']['insurer_company_name'] = '';
+            }
+
+            //$car_m = $car_mod['car_model'];
+            //$data[$key]['car_model'] = $config['car_model_name'][$car_m]['text'];
+           $data['car_status_name'] =  $config['car_status'][$data['car_status']]['text'];
+            //echo '<pre>';
+            //var_dump($aa);exit;
+            $data2 = CarInsuranceCompulsory::find()//关联批单数据
+                ->select([
+                    'cs_car_insurance_compulsory_form.*',
+                    //'cs_car_insurance_compulsory.id as id_'
+
+                    ])
+                ->where(['cs_car_insurance_compulsory.id'=>$id,'cs_car_insurance_compulsory_form.is_del'=>0])
+                ->leftJoin('cs_car_insurance_compulsory_form','cs_car_insurance_compulsory_form.insurance_id = cs_car_insurance_compulsory.id')
+                ->asArray()->all();
     	}else if($type==2){	//商业险
-    		$data = CarInsuranceBusiness::find()->where(['id'=>$id])->asArray()->one();
+    		$data = CarInsuranceBusiness::find()
+                ->select([
+                        'cs_car_insurance_business.*',
+                        'cs_car.car_status',
+                        'cs_owner.name as owner_name',
+                        'cs_operating_company.name as oper_name',
+                        'cs_car_type.car_model_name as car_model_name2',
+                    ])
+                ->where(['cs_car_insurance_business.id'=>$id])
+                ->leftJoin('cs_car','cs_car.id = cs_car_insurance_business.car_id')
+                ->leftJoin('cs_owner','cs_owner.id = cs_car.owner_id')
+                ->leftJoin('cs_operating_company','cs_operating_company.id = cs_car.operating_company_id')
+                ->leftJoin('cs_car_type', 'cs_car.car_type_id = cs_car_type.id')
+                ->asArray()
+                ->one();
+
+             //加载归属客户
+                $configItems = ['car_status','INSURANCE_COMPANY'];
+                $config = (new ConfigCategory)->getCategoryConfig($configItems,'value');
+                $query = $connection->createCommand(
+                        "select cCustomer_id,pCustomer_id,cs_customer_company.company_name,cs_customer_personal.id_name
+                        from cs_car_let_record
+                        left join cs_customer_company on cs_car_let_record.cCustomer_id=cs_customer_company.id
+                        left join cs_customer_personal on cs_car_let_record.pCustomer_id=cs_customer_personal.id
+                        where (back_time>".time()." or back_time=0) and car_id=".$data['car_id']
+                );
+                $customer = $query->queryOne();
+                //var_dump($customer);exit;
+                if($customer){
+                    if($customer['company_name']){
+                        $data['customer_name'] = $customer['company_name'];
+                    }else if($customer['id_name']){
+                        $data['customer_name'] = $customer['id_name'];
+                    }
+                }else {
+                    $data['customer_name'] = $config['car_status'][$data['car_status']]['text'];
+                }
+        $insurance_business = $connection->createCommand(
+        'select id,money_amount,insurer_company,start_date,end_date,note,insurance_text 
+        from cs_car_insurance_business 
+        where car_id='.$data['car_id'].' order by end_date desc limit 1'
+        )->queryOne();
+        if($insurance_business){
+            $data['insurance_business'] = $insurance_business;
+            $data['insurance_business']['insurer_company_name'] = $config['INSURANCE_COMPANY'][$insurance_business['insurer_company']]['text'];
+        }else {
+            $data['insurance_business'] = '';
+            $data['insurance_business']['insurer_company_name'] = '';
+        }
+          
+
+            //$car_m = $car_mod['car_model'];
+            //$data[$key]['car_model'] = $config['car_model_name'][$car_m]['text'];
+           $data['car_status_name'] =  $config['car_status'][$data['car_status']]['text'];
+
+
+            //(new \yii\db\query())->from('cs_car_insurance_business_form')
+            $data2 = CarInsuranceBusiness::find()//关联批单数据
+                ->select([
+                    'cs_car_insurance_business_form.*',
+                    //'cs_car_insurance_compulsory.id as id_'
+                    ])
+                ->where(['cs_car_insurance_business.id'=>$id,'cs_car_insurance_business_form.is_del'=>0])
+                ->leftJoin('cs_car_insurance_business_form','cs_car_insurance_business_form.insurance_id = cs_car_insurance_business.id')
+                ->asArray()->all();
     	}else if($type==3){	//其它险
-    		$data = CarInsuranceOther::find()->where(['id'=>$id])->asArray()->one();
+    		$data = CarInsuranceOther::find()
+                 ->select([
+                        'cs_car_insurance_other.*',
+                        'cs_car.car_status',
+                        'cs_owner.name as owner_name',
+                        'cs_operating_company.name as oper_name',
+                        'cs_car_type.car_model_name as car_model_name2',
+                    ])
+                 //->where(['cs_car_insurance_compulsory.id'=>$id])
+                    ->leftJoin('cs_car','cs_car.id = cs_car_insurance_other.car_id')
+                    ->leftJoin('cs_owner','cs_owner.id = cs_car.owner_id')
+                    ->leftJoin('cs_operating_company','cs_operating_company.id = cs_car.operating_company_id')
+                    ->leftJoin('cs_car_type', 'cs_car.car_type_id = cs_car_type.id')
+                ->where(['cs_car_insurance_other.id'=>$id])
+                ->asArray()
+                ->one();
+
+            $configItems = ['car_status','INSURANCE_COMPANY'];
+                $config = (new ConfigCategory)->getCategoryConfig($configItems,'value');
+                $query = $connection->createCommand(
+                        "select cCustomer_id,pCustomer_id,cs_customer_company.company_name,cs_customer_personal.id_name
+                        from cs_car_let_record
+                        left join cs_customer_company on cs_car_let_record.cCustomer_id=cs_customer_company.id
+                        left join cs_customer_personal on cs_car_let_record.pCustomer_id=cs_customer_personal.id
+                        where (back_time>".time()." or back_time=0) and car_id=".$data['car_id']
+                );
+                $customer = $query->queryOne();
+                //var_dump($customer);exit;
+                if($customer){
+                    if($customer['company_name']){
+                        $data['customer_name'] = $customer['company_name'];
+                    }else if($customer['id_name']){
+                        $data['customer_name'] = $customer['id_name'];
+                    }
+                }else {
+                    $data['customer_name'] = $config['car_status'][$data['car_status']]['text'];
+                }
+
+            $insurance_other = $connection->createCommand(
+                'select id,money_amount,insurer_company,start_date,end_date,note 
+                from cs_car_insurance_other 
+                where car_id='.$data['car_id'].' order by end_date desc limit 1'
+                )->queryOne();
+            if($insurance_other){
+                $data['insurance_other'] = $insurance_other;
+                $data['insurance_other']['insurer_company_name'] = @$config['INSURANCE_COMPANY'][$insurance_other['insurer_company']]['text'];
+            }else {
+                $data['insurance_other'] = '';
+                $data['insurance_other']['insurer_company_name'] = '';
+            }
+
+            //$car_m = $car_mod['car_model'];
+            //$data[$key]['car_model'] = $config['car_model_name'][$car_m]['text'];
+           $data['car_status_name'] =  $config['car_status'][$data['car_status']]['text'];
+
+
     	}
+        //echo '<pre>';
+        //var_dump($data);
+        //var_dump($data2);exit;
     	$car = Car::findOne($data['car_id']);
     	$data['plate_number'] = $car['plate_number'];
     	//查询车辆品牌
@@ -326,13 +595,20 @@ class InsuranceLogController extends BaseController
     	}else{
     		$data['_end_date'] = '';
     	}
+        //echo '<pre>';
+        //var_dump($data);
+        //var_dump($data2);
+        //exit;
     	return $this->render('scan',[
     			'data'=>$data,
+                'data2'=>$data2,
     			]);
     }
     public function actionTest(){
         $url = yii::$app->request->get('url') or die('param id is requried');
-        $filename = dirname(getcwd()).'/web/'.iconv("UTF-8","gb2312", $url);
+        //echo '123';exit;
+       // $filename = dirname(getcwd()).'/web/'.iconv("UTF-8","gb2312", $url);
+        $filename = dirname(getcwd()).'/web/'.$url;
         $image = file_get_contents($filename,true);
         header('Content-type: image/jpg');
         echo $image;
@@ -343,10 +619,15 @@ class InsuranceLogController extends BaseController
      */
     public function actionDownload()
     {
-    	//echo yii::$app->request->baseUrl;exit;
+    	
+        //echo yii::$app->request->baseUrl;exit;
     	$id = yii::$app->request->get('id') or die('param id is requried');
+        $insurance_id = yii::$app->request->get('insurance_id');
+        
     	$type = yii::$app->request->get('type') or die('param type is required');
-    	if($type==1){	//交强险
+       
+    	if($type==1){	
+        //交强险
     		$model = CarInsuranceCompulsory::findOne(['id'=>$id]);
     	}else if($type==2){	//商业险
     		$model = CarInsuranceBusiness::findOne(['id'=>$id]);
@@ -357,11 +638,12 @@ class InsuranceLogController extends BaseController
     	if(@$model->append_urls && @json_decode($model->append_urls)){
     		$append_urls = json_decode($model->append_urls);
     		foreach ($append_urls as $append_url){
-    			//     			$file[] = file(yii::$app->request->hostInfo.yii::$app->request->baseUrl.'/'.$append_url);
-    			$file[] = dirname(getcwd()).'/web/'.iconv("UTF-8","gb2312", $append_url);
+    			//$file[] = dirname(getcwd()).'/web/'.iconv("UTF-8","gb2312", $append_url);
+                $file[] = dirname(getcwd()).'/web/'.$append_url;
     		}
     		header("Content-type: text/html; charset=gbk");
     		$zipFile = dirname(getcwd()).'/runtime/'.time().'.zip';
+            //var_dump($zipFile);exit;
     		File::filesToZip($file,$zipFile);
     		File::fileDownload($zipFile);
     		//     		foreach($file as $val){
@@ -371,6 +653,54 @@ class InsuranceLogController extends BaseController
     	}else {
     		echo '无';
     	}
+    }
+
+    public function actionDownload2()
+    {
+        $type = yii::$app->request->get('type');
+        $id = yii::$app->request->get('id');//通过insurance_id关联到保险的id
+        $ii = yii::$app->request->get('ii');
+        
+        if($type==1){//交强险  
+            $data = (new \yii\db\query())->from('cs_car_insurance_compulsory_form')->where(['insurance_id'=>$id])->all();
+        }else if($type==2){ //商业险
+            $data = (new \yii\db\query())->from('cs_car_insurance_business_form')->where(['insurance_id'=>$id])->all();   
+        }else if($type==3){ //其它险
+            $model = CarInsuranceOther::findOne(['id'=>$id]);
+        }
+        
+//var_dump($data);exit;
+        foreach(@$data as $k => $v) {
+ 
+            if($k == $ii) {
+            if(@$v['append_urls'] && @json_decode($v['append_urls'])){
+            $append_urls = json_decode($v['append_urls']);
+            foreach ($append_urls as $append_url){
+                $file[] = dirname(getcwd()).'/web/'.$append_url;
+                $arr = explode('/',$file[0]);
+                $arr[3] = 'tci';
+                foreach ($arr as $k1 => $v1) {
+                    $file1[0] .= '/'.$v1;
+                }
+            }
+            header("Content-type: text/html; charset=gbk");
+            $zipFile = dirname(getcwd()).'/runtime/'.time().'.zip';
+            //var_dump($zipFile);exit;
+            File::filesToZip($file,$zipFile);
+            File::fileDownload($zipFile);
+    //var_dump(File::fileDownload($zipFile));exit;
+            //          foreach($file as $val){
+            //              @unlink($val);
+            //          }
+            @unlink($zipFile);
+            }else {
+                //echo '11111';exit;
+                echo '无';
+            }
+
+        }
+        }
+
     }
     
     /**

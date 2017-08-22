@@ -27,6 +27,7 @@ use common\models\File;
 use yii;
 use yii\data\Pagination;
 use backend\classes\wz;
+
 use backend\classes\Mail;
 use backend\models\CarLetRecord;
 use backend\models\CarLetContract;
@@ -308,6 +309,7 @@ class CarBackController extends BaseController
     //根据合同获取车辆列表MARK
     public function actionGetContractCars(){
     	$number = isset($_REQUEST['number']) ? trim($_REQUEST['number']) : ''; // 检索过滤字符串
+    	$is_all = yii::$app->request->get('is_all');
     	$returnArr['status'] = false;
     	$returnArr['info'] = '';
     	if(!$number){
@@ -324,7 +326,10 @@ class CarBackController extends BaseController
     	$contract_id = $data['contract']['id'];
     	$sql = "select b.plate_number,b.car_model,b.car_status 
 			    from cs_car_let_record a left join cs_car b on a.car_id=b.id and b.is_del=0 
-				where a.back_time=0 and contract_id=".$contract_id;
+				where contract_id=".$contract_id;
+    	if(!$is_all){
+    		$sql .= ' and a.back_time=0';
+    	}
     	$data['cars'] = $connection->createCommand($sql)->queryAll();
     	
     	echo json_encode($data);
@@ -427,8 +432,11 @@ class CarBackController extends BaseController
             $returnArr['status'] = true;
         }else{
             //退车编号，格式：TC+日期+3位数（即该故障是系统当天登记的第几个，第一个是001，第二个是002…）
+            /* $sql = 'select count(*) count from cs_car_back
+                where add_time>="'.date('Y-m-d').' 00:00:00" and add_time<="'.date('Y-m-d').' 23:59:59"'; */
             $sql = 'select count(*) count from cs_car_back
-                where add_time>="'.date('Y-m-d').' 00:00:00" and add_time<="'.date('Y-m-d').' 23:59:59"';
+            	where add_time>="'.strtotime(date('Y-m-d')).'" and add_time<="'.strtotime(date('Y-m-d 23:59:59')).'"';
+            
             $data = $connection->createCommand($sql)->queryOne();
             $todayCount = $data['count'];
             $currentNo = str_pad($todayCount+1,3,0,STR_PAD_LEFT);
@@ -472,9 +480,32 @@ class CarBackController extends BaseController
         $data = $connection->createCommand($sql)->queryOne();
         $returnArr['status'] = true;
         $data['wz_text'] = json_decode($data['wz_text']);
-        $data['oper_time1'] = date("Y-m-d H:i:s", $data['oper_time1']);
+        $data['oper_time1'] = $data['oper_time1']?date("Y-m-d H:i:s", $data['oper_time1']):'';
         $returnArr['data'] = $data;
         echo json_encode($returnArr);
+    }
+    
+    //车辆加解锁
+    function car_lock($connection, $car_ids, $car_back_id, $oper){
+    	if(!$car_ids){
+    		return false;
+    	}
+    	if($oper=='lock'){
+    		$connection->createCommand($sql)->execute();
+    		foreach ($car_ids as $car_id){
+    			try {
+    				$r = $connection->createCommand()->insert('cs_car_lock', [
+    						'car_id' =>$car_id,
+    						'car_back_id' =>$car_back_id
+    						])->execute();
+    			} catch (yii\db\Exception $e) {
+    				return false;
+    			}
+    		}
+    	}else {
+    		$connection->createCommand('delete from cs_car_lock where car_id in('.implode(",", $car_ids).')')->execute();
+    	}
+    	return true;
     }
 
     //2.    销售沟通确认
@@ -494,7 +525,21 @@ class CarBackController extends BaseController
         $back_type = yii::$app->request->post('back_type');	//退车类型
         $extract_car_site_id = yii::$app->request->post('extract_car_site_id');	//提车站点ID
         $note2 = yii::$app->request->post('note2');
-        
+        if(!$back_time){
+        	$returnArr['info'] = '请选择预计还车时间';
+        }
+        if(!$back_type){
+        	$returnArr['info'] = '请选择退车类型';
+        }
+        if(!$extract_car_site_id){
+        	$returnArr['info'] = '请选择还车站场';
+        }
+        if(!$back_cause){
+        	$returnArr['info'] = '请选择退车原因';
+        }
+        if($returnArr['info']){
+        	exit(json_encode($returnArr));
+        }
         
         //合同text
         $contracts = array();
@@ -537,6 +582,10 @@ class CarBackController extends BaseController
         	$contract_time = yii::$app->request->post('contract_time'.$i);
         	$contract_end_time = yii::$app->request->post('contract_end_time'.$i);	//合同止租时间
         	$break_contract_money = yii::$app->request->post('break_contract_money'.$i);
+        	if(!$break_contract_type){
+        		$returnArr['info'] = '请选择合同违约情况';
+        		exit(json_encode($returnArr));
+        	}
         				
 			array_push($contracts, array(
                         'contract_number'=>$contract_number,
@@ -562,12 +611,12 @@ class CarBackController extends BaseController
                     array(':id'=>$id)
             )->execute();
 			
-			//所有都勾选掉了的情况,所有旧的变回租赁中
-			if ($t_all_contract_car_ids) {
-				$statusRet = Car::changeCarStatusNew($t_all_contract_car_ids, 'LETING', 'car/car-back/add2', '退车流程销售沟通确认，取消退车',['car_status'=>'BACK','is_del'=>0]);
-			}
+			//所有都勾选掉了的情况,所有旧的变回租赁中（状态变更改到第4步）
+// 			if ($t_all_contract_car_ids) {
+// 				$statusRet = Car::changeCarStatusNew($t_all_contract_car_ids, 'LETING', 'car/car-back/add2', '退车流程销售沟通确认，取消退车',['car_status'=>'BACK','is_del'=>0]);
+// 			}
 			
-			if($result && ($statusRet?$statusRet['status']:true)){
+			if($result){
 				$transaction->commit();  //提交事务
 			}else {
 				$transaction->rollback(); //回滚事务
@@ -576,6 +625,12 @@ class CarBackController extends BaseController
 				exit(json_encode($returnArr));
 			}
         }else { //退车进入下一流程
+        	//验证车辆是否存在其它流程
+	        if($connection->createCommand('select count(*) cnt from cs_car_lock where car_id in ('.implode(",", $ids).')')->queryOne()['cnt'] > 0){
+	        	$returnArr['status'] = false;
+	        	$returnArr['info'] = '操作失败，请确认车辆是否存在其它流程！';
+	        	exit(json_encode($returnArr));
+	        }
         	if(!$contracts){
         		$returnArr['status'] = false;
         		$returnArr['info'] = '请选择合同编号并勾选要退还的车辆！';
@@ -612,7 +667,6 @@ class CarBackController extends BaseController
         		$append_url1 = $file_path.$_FILES['append1']['name'];
         	}
         	
-        	$transaction = $connection->beginTransaction();
 			//这里更新新的退车车辆		
             $result = $connection->createCommand()->update('cs_car_back', [
                     'state' => 2,
@@ -634,20 +688,8 @@ class CarBackController extends BaseController
                     'id=:id',
                     array(':id'=>$id)
             )->execute();
-			if ($t_all_contract_car_ids){
-				//所有都勾选掉了的情况,所有旧的变回租赁中
-				$statusRet1 = Car::changeCarStatusNew($t_all_contract_car_ids, 'LETING', 'car/car-back/add2', '退车流程销售沟通确认',['car_status'=>'BACK','is_del'=>0]);
-			}			   
-			
-            //这里把传递过来的变退车中状态，包括新增的，原有的
-            if($ids){
-            	$statusRet2 = Car::changeCarStatusNew($ids, 'BACK', 'car/car-back/add2', '退车流程销售沟通确认',['car_status'=>'LETING','is_del'=>0]);
-            }
-            
-            if($result && ($statusRet1?$statusRet1['status']:true) && ($statusRet2?$statusRet2['status']:true)){
-            	$transaction->commit();  //提交事务
-            }else {
-            	$transaction->rollback(); //回滚事务
+           
+            if(!$result){
             	$returnArr['status'] = false;
             	$returnArr['info'] = '操作失败，请确认车辆当前状态！';
             	exit(json_encode($returnArr));
@@ -698,8 +740,8 @@ class CarBackController extends BaseController
          	$cars = $connection->createCommand($sql)->queryAll();
          	$data['contract_text'][$index]->plate_numbers = $cars;
          }
-         $data['oper_time2'] = date("Y-m-d H:i:s", $data['oper_time2']);
-         $data['oper_time3'] = date("Y-m-d H:i:s", $data['oper_time3']);
+         $data['oper_time2'] = $data['oper_time2']?date("Y-m-d H:i:s", $data['oper_time2']):'';
+         $data['oper_time3'] = $data['oper_time3']?date("Y-m-d H:i:s", $data['oper_time3']):'';
 
         $returnArr['status'] = true;
         $returnArr['data'] = $data;
@@ -739,6 +781,18 @@ class CarBackController extends BaseController
                     array(':id'=>$id)  
             )->execute();
         }else { //进入下一流程
+        	//1.获取已选中车辆ID
+        	$car_back_data = $connection->createCommand('select contract_text from cs_car_back where id='.$id)->queryOne();
+        	$contracts = json_decode($car_back_data['contract_text']);
+        	$car_ids = [];
+        	foreach ($contracts as $contract) {
+        		if ($contract->car_ids && $contract->car_ids != '') {						
+					$car_ids = array_merge($car_ids,explode(',',$contract->car_ids));
+        		}
+        	}
+        	
+        	$transaction = $connection->beginTransaction();
+        	$lock_r = $this->car_lock($connection, $car_ids, $id, 'lock');
             $r = $connection->createCommand()->update('cs_car_back', [
                     'state' => 3,
                     'is_reject' => 1,
@@ -750,16 +804,25 @@ class CarBackController extends BaseController
                     'id=:id',
                     array(':id'=>$id)
                 )->execute();
-            if($r){
-                $this->wzRefresh($id);
+            //（状态变更改到第4步）
+            if($r && $lock_r){
+            	$transaction->commit();  //提交事务
+            	$this->wzRefresh($id);
+            }else {
+            	$transaction->rollback(); //回滚事务
+            	$returnArr['status'] = false;
+            	if(!$lock_r){
+            		$returnArr['info'] = '操作失败，请确认车辆是否存在其它流程！';
+            	}
+            	exit(json_encode($returnArr));
             }
         }
         $returnArr['status'] = true;
         echo json_encode($returnArr);
     }
     
-    //更新违章信息
-    function wzRefresh($id){
+    //更新违章信息(老版本，废弃)
+    function wzRefresh_1($id){
     	$connection = yii::$app->db;
     	//查询违章
     	$car_back_data = $connection->createCommand('select contract_text from cs_car_back where id='.$id)->queryOne();
@@ -820,6 +883,213 @@ class CarBackController extends BaseController
     	$this->wzRefresh($id);
     	$returnArr['status'] = true;
     	echo json_encode($returnArr);
+    }
+	//违章复核
+	public function actionWzRefreshNew(){
+    	$id = yii::$app->request->get('id');
+    	$returnArr['status'] = false;
+		//var_dump($id);exit;
+    	if(!$id){
+    		$returnArr['info'] = '缺少参数';
+    		exit(json_encode($returnArr));
+    	}
+    	$this->wzRefreshNew($id);
+    	$returnArr['status'] = true;
+    	echo json_encode($returnArr);
+    }
+	//格式化违章信息
+	function formatWz($wz_text) {
+		$result = array();
+		if ($wz_text != '' && $wz_text != '[]') {
+			$wz_text = json_decode($wz_text);
+			foreach ($wz_text as $wz) {
+				if (count($wz->lists) != 0) {
+					foreach ($wz->lists as $one) {
+						$key = $wz->hphm."_".$one->date;
+						$result[$key] = $one->code;
+					}
+				}				
+			}
+			return $result;
+		}
+		return array();
+	}
+	
+	//新版违章更新代码
+	 function wzRefresh($id){		
+    	$connection = yii::$app->db;
+    	//查询退车流程中的合同内容
+    	$car_back_data = $connection->createCommand('select contract_text,wz_text from cs_car_back where id='.$id)->queryOne();
+    	if(!$car_back_data['contract_text']){
+    		return false;
+    	}
+    	$contracts = json_decode($car_back_data['contract_text']); 
+		set_time_limit(0);
+		$wzs = array();		
+		//遍历合同
+		foreach ($contracts as $row){
+			//根据每个合同的number查到合同的有效期			
+			$contracts_time_range = $connection->createCommand("select start_time,end_time from cs_car_let_contract where number='".$row->contract_number."'")->queryOne();
+			//然后拿每个退车合同中要退的车，查到违章查询需要的字段
+			$cars = $connection->createCommand('select plate_number,vehicle_dentification_number,engine_number,car_type from cs_car where id in('.$row->car_ids.')')->queryAll();			
+			//一条一条查询违章
+			foreach ($cars as $car_row){
+				if(strlen($car_row['plate_number'])<5){
+					continue;
+				}
+				$data = $this->wz_query($car_row['plate_number'],$car_row['engine_number'],$car_row['vehicle_dentification_number'],$car_row['car_type']);				
+				// var_dump($data);
+				//成功返回违章记录
+				if($data['resultcode'] == 200){ 				
+					$wz_list = $data['result'];						
+					if ($wz_list && !empty($wz_list['lists'])){
+						// var_dump($wz_list['lists']);
+						//查询车辆的每条违章是否在合同期内
+						foreach ($wz_list['lists'] as $wz_key => $the_one) {
+							$start_time = date("Y-m-d h:i:s",$contracts_time_range['start_time']);
+							$end_time =date("Y-m-d h:i:s",$contracts_time_range['end_time']);
+							$the_time = $the_one->date;							
+							// var_dump($start_time);
+							// var_dump($end_time);
+							// var_dump($the_time);
+							if ( $start_time <= $the_time && $the_time <= $end_time) {																	
+							} else {
+								//var_dump($wz_list['lists'][$wz_key]);
+								unset($wz_list['lists'][$wz_key]);
+							}							
+						}
+						if (!empty($wz_list['lists'])){ 
+							// var_dump($wz_list);
+							$wz_list['lists'] = array_values($wz_list['lists']);
+							array_push($wzs, $wz_list);						
+						}
+					}					
+				}				
+			}			
+		}		
+    	$wz_text = json_encode($wzs);
+		// var_dump($wz_text);
+    	//更新新违章信息
+    	$connection->createCommand()->update('cs_car_back', [
+    			'wz_text' => $wz_text    			
+    			],
+    			'id=:id',
+    			array(':id'=>$id)
+    	)->execute();
+    }
+
+	//更新违章复核信息
+    function wzRefreshNew($id){		
+    	$connection = yii::$app->db;
+    	//查询退车流程中的合同内容
+    	$car_back_data = $connection->createCommand('select contract_text,wz_text from cs_car_back where id='.$id)->queryOne();
+    	if(!$car_back_data['contract_text']){
+    		return false;
+    	}
+    	$contracts = json_decode($car_back_data['contract_text']);    	
+		//格式化违章信息成【车牌号_时间】的格式
+		$wz_text = $this->formatWz($car_back_data['wz_text']);
+		// var_dump(json_decode($car_back_data['wz_text'])[7]);
+		// var_dump(json_decode($car_back_data['wz_text'])[19]);
+		// var_dump($wz_text);
+		// exit;
+		
+		set_time_limit(0);
+		$wzs = array();
+		// var_dump($contracts);exit;
+		//遍历合同
+		foreach ($contracts as $row){
+			//根据每个合同的number查到合同的有效期			
+			$contracts_time_range = $connection->createCommand("select start_time,end_time from cs_car_let_contract where number='".$row->contract_number."'")->queryOne();
+			//然后拿每个退车合同中要退的车，查到违章查询需要的字段
+			$cars = $connection->createCommand('select plate_number,vehicle_dentification_number,engine_number,car_type from cs_car where id in('.$row->car_ids.')')->queryAll();
+			// var_dump($cars);
+			//一条一条查询违章
+			foreach ($cars as $car_row){
+				if(strlen($car_row['plate_number'])<5){
+					continue;
+				}
+				$data = $this->wz_query($car_row['plate_number'],$car_row['engine_number'],$car_row['vehicle_dentification_number'],$car_row['car_type']);
+				// var_dump($data);exit;
+				//成功返回违章记录
+				if($data['resultcode'] == 200){ 
+				// var_dump($data['result']);exit;
+					$wz_list = $data['result'];	
+					// var_dump($wz_list);exit;
+					if ($wz_list && !empty($wz_list['lists'])){
+						//查询车辆的每条违章是否在合同期内
+						// var_dump($wz_list['lists'] );exit;
+						
+						foreach ($wz_list['lists'] as $wz_key => $the_one) {
+							$start_time = date("Y-m-d h:i:s",$contracts_time_range['start_time']);
+							$end_time =date("Y-m-d h:i:s",$contracts_time_range['end_time']);
+							$the_time = $the_one->date;
+							
+							// var_dump($start_time);
+							// var_dump($end_time);
+							// var_dump($the_time);
+							// var_dump($start_time <= $the_time && $the_time <= $end_time);
+							// var_dump("----");
+							
+							if ( $start_time <= $the_time && $the_time <= $end_time) {								
+								if ($wz_text) {
+									// var_dump($wz_list);
+									// var_dump($wz_text);
+									// var_dump($wz_list['hphm'].'_'.$the_one->date);
+									// var_dump(!isset($wz_text[$wz_list['hphm'].'_'.$the_one->date]));
+									// var_dump($wz_list);
+									// var_dump($wz_text[$wz_list->hphm.'_'.$the_one->date]);
+									// 在违章记录中找不到对应记录，则是新增违章
+									if (isset($wz_text[$wz_list['hphm'].'_'.$the_one->date])) {
+										// array_push($wzs, $wz_list);
+										// var_dump($wz_list['lists'][$wz_key]);
+										unset($wz_list['lists'][$wz_key]);
+									}
+								} //else {//之前没有保存违章记录，查出来的都是新增违章
+									//array_push($wzs, $wz_list);
+									
+								//}
+							} else {
+								unset($wz_list['lists'][$wz_key]);
+							}
+							
+						}
+						if (!empty($wz_list['lists'])){ 
+							// var_dump($wz_list);
+							$wz_list['lists'] = array_values($wz_list['lists']);										
+							array_push($wzs, $wz_list);
+						}
+						// var_dump($wzs);
+						// exit;
+					}					
+				}				
+			}			
+		}
+		//判断这条违章是否已经存在于wz_text中，没有存在则是新增违章    	
+		// var_dump($wzs);exit;
+		//$wz_text $wzs
+		
+		// if ($wzs) {
+			//查询出的违章如果存在于之前的违章记录中则不处理。否则算是新增违章
+			// foreach ($wzs as $k =>$wz) {
+				// foreach ($wz_text as $old_wz) {
+					// if ($wz->['hphm'] == $old_wz['hphm']) {						
+						// unset($wzs[$k]);
+					// }
+				// }				
+			// }
+		// }		
+		
+    	$wz_text = json_encode($wzs);
+    	//更新新违章信息
+    	$connection->createCommand()->update('cs_car_back', [
+    			'wz_text_new' => $wz_text,
+    			// 'wz_text_new' => $car_back_data['wz_text'],
+    			'is_wz_review' => 1
+    			],
+    			'id=:id',
+    			array(':id'=>$id)
+    	)->execute();
     }
 
     public function actionGet3(){
@@ -924,7 +1194,77 @@ class CarBackController extends BaseController
         	));
         }
         $damage_text = json_encode($damages);
-        $connection->createCommand()->update('cs_car_back', [
+        
+        $transaction = $connection->beginTransaction();
+        //////状态变更处理start
+        $tmp_car_storage = json_decode($car_back['car_storage_text']);	//上一次入库车辆
+        $tmp_car_storage_ids = [];
+        if($tmp_car_storage){
+        	foreach ($tmp_car_storage as $row){
+        		array_push($tmp_car_storage_ids, $row->car_id);
+        	}
+        }
+        $old_damage = json_decode($car_back['damage_text']);
+        //1.将所有已回收、未入库车辆状态变更为租赁中
+        if($old_damage){
+        	$tmp_car_ids = array(); 
+        	foreach ($old_damage as $row){
+        		if($row->is_back && !in_array($row->car_id, $tmp_car_storage_ids)){
+        			array_push($tmp_car_ids, $row->car_id);
+        		}
+        	}
+        	if($tmp_car_ids){
+        		$statusRet1 = Car::changeCarStatusNew($tmp_car_ids, 'LETING', 'car/car-back/add4', '退车流程售后验车，车辆回收',['car_status'=>'BACK','is_del'=>0]);
+        	}
+        }
+        //2.这里把传递过来的变退车中状态，包括新增的，原有的，不包括已入库车辆
+        $tmp_car_ids = array();
+        foreach ($damages as $row){
+        	if($row['is_back'] && !in_array($row['car_id'], $tmp_car_storage_ids)){
+        		array_push($tmp_car_ids, $row['car_id']);
+        	}else if(!$row['is_back'] && in_array($row['car_id'], $tmp_car_storage_ids)){
+        		$returnArr['info'] = '有已入库车辆，不能取消回收';
+        		exit(json_encode($returnArr));
+        	}
+        }
+        if($tmp_car_ids){
+        	$statusRet2 = Car::changeCarStatusNew($tmp_car_ids, 'BACK', 'car/car-back/add4', '退车流程售后验车，车辆回收',['car_status'=>'LETING','is_del'=>0]);
+        }		
+		
+		//每条违章记录的车牌号+日期=作为违章价格单价的key
+        $fenjia = yii::$app->request->post('fenjia');//每条违章记录的的代办费单价
+		//查询出退车记录的wz_text解析成数组，
+		$sql = 'select wz_text from cs_car_back where id='.$id;
+        $the_car_back = $connection->createCommand($sql)->queryOne();
+        if($the_car_back){
+			$wz_text = json_decode($the_car_back['wz_text']);
+		}
+		
+		//遍历代办费单价数组
+		if ($fenjia) {
+			foreach($fenjia as $key => $value) {
+				$the_key_exp = explode('_',$key);//截取出代办费的车牌号和时间
+				$the_hphm = $the_key_exp[0];
+				$the_date = $the_key_exp[1];
+				
+				$i = 0;
+				foreach ($wz_text as $wz_key =>$wz) {
+						
+					if ($wz->hphm == $the_hphm) {
+						foreach ($wz->lists as $list_key => $the_list) {
+							if ($the_list->date == $the_date) {
+								$wz_text[$wz_key]->lists[$list_key]->fenjia = $value;
+							}
+							
+						}
+					}
+					
+				}				
+			}	
+		}
+		$wz_text = json_encode($wz_text);
+        //////状态变更处理end
+        $result = $connection->createCommand()->update('cs_car_back', [
                 'insurance_confirm_state' => $insurance_confirm_state,
                 'insurance_note' => $insurance_note,
         		'wz_confirm_state' => $wz_confirm_state,
@@ -933,6 +1273,7 @@ class CarBackController extends BaseController
 //                 'state' => ($wz_confirm_state==1 && $insurance_confirm_state==1)?4:3,
         		'state' => $back_num>0?4:3,
                 'damage_text' => $damage_text,
+                'wz_text' => $wz_text,
                 'back_time2' => $back_time2,
                 'oper_user4' => $_SESSION['backend']['adminInfo']['name'],
                 'oper_time4' => time(),
@@ -943,6 +1284,14 @@ class CarBackController extends BaseController
                 array(':id'=>$id)
         )->execute();
         
+        if($result && ($statusRet1?$statusRet1['status']:true) && ($statusRet2?$statusRet2['status']:true)){
+        	$transaction->commit();  //提交事务
+        }else {
+        	$transaction->rollback(); //回滚事务
+        	$returnArr['status'] = false;
+        	$returnArr['info'] = '操作失败，请确认车辆当前状态！';
+        	exit(json_encode($returnArr));
+        }
 //         echo $query->createCommand()->getRawSql();exit;
         
         $returnArr['status'] = true;
@@ -1006,7 +1355,7 @@ class CarBackController extends BaseController
 //         $data['contract_text'] = array();
         $data['insurance_claims'] = $insurance_claims;
         $data['plate_numbers'] = $plate_numbers;
-        $data['oper_time4'] = date("Y-m-d H:i:s", $data['oper_time4']);
+        $data['oper_time4'] = $data['oper_time4']?date("Y-m-d H:i:s", $data['oper_time4']):'';
         
         $returnArr['data'] = $data;
         echo json_encode($returnArr);
@@ -1113,6 +1462,17 @@ class CarBackController extends BaseController
     			'id=:id',
     			array(':id'=>$id)
     	)->execute();
+    	
+    	if($contract_car_num == count($car_nos)){	//进入第6步，解锁车辆
+    		$tmp_contracts = json_decode($car_back_data['contract_text']);
+    		$tmp_car_ids = [];
+    		foreach ($tmp_contracts as $tmp_contract) {
+    			if ($tmp_contract->car_ids && $tmp_contract->car_ids != '') {
+    				$tmp_car_ids = array_merge($tmp_car_ids,explode(',',$tmp_contract->car_ids));
+    			}
+    		}
+    		$this->car_lock($connection, $tmp_car_ids, $id, 'unlock');
+    	}
     	
         #完成退车时间的操作 1.11 
        
@@ -1224,7 +1584,7 @@ class CarBackController extends BaseController
         	$data['damage_text'][$index]->plate_number = $car['plate_number'];
         }
         $data['wz_text'] = json_decode($data['wz_text']);
-        $data['oper_time4_1'] = date("Y-m-d H:i:s", $data['oper_time4_1']);
+        $data['oper_time4_1'] = $data['oper_time4_1']?date("Y-m-d H:i:s", $data['oper_time4_1']):'';
         if(!$data['wz_text']){
         	$data['wz_text'] = array();
         }
@@ -1266,15 +1626,53 @@ class CarBackController extends BaseController
         $sql = 'select * from cs_car_back where id='.$id;
         $data = $connection->createCommand($sql)->queryOne();
         $wzs = json_decode($data['wz_text']);
+        $wzs_new = json_decode($data['wz_text_new']);		
+		
+		//每条违章记录的车牌号+日期=作为违章价格单价的key
+        $fenjia = yii::$app->request->post('fenjia');//每条违章记录的的代办费单价		
+		//遍历代办费单价数组
+		if ($fenjia) {
+			foreach($fenjia as $key => $value) {
+				$the_key_exp = explode('_',$key);//截取出代办费的车牌号和时间
+				$the_hphm = $the_key_exp[0];
+				$the_date = $the_key_exp[1];
+				// var_dump($key);exit;
+				$i = 0;
+				foreach ($wzs_new as $wz_key =>$wz) {
+					// var_dump($wz);exit;			
+					if ($wz->hphm == $the_hphm) {
+						foreach ($wz->lists as $list_key => $the_list) {
+							if ($the_list->date == $the_date) {
+								$wzs_new[$wz_key]->lists[$list_key]->fenjia = $value;
+							}
+							//var_dump($the_list);exit;
+						}
+					}
+					// var_dump($wz_text[$wz_key]);exit;
+				}		
+				// var_dump($value);exit;
+			}	
+		}			
+		$wz_text_new = json_encode($wzs_new);
+		
         if(!$wzs){
         	$wzs = array();
+        }
+		if(!$wzs_new){
+        	$wzs_new = array();
         }
         $wz_money = 0;	//违章总额
        	foreach ($wzs as $wz){
        		foreach ($wz->lists as $wz1){
-       			$wz_money += $wz1->money;
+       			$wz_money += (($wz1->fen * $wz1->fenjia) + $wz1->money);
        		}
        	}
+	foreach ($wzs_new as $wz){
+       		foreach ($wz->lists as $wz1){
+       			$wz_money += (($wz1->fen * $wz1->fenjia) + $wz1->money);
+       		}
+       	}
+				
        	//计算定损金额
        	$data['damage_text'] = json_decode($data['damage_text']);
        	if(!$data['damage_text']){
@@ -1299,6 +1697,7 @@ class CarBackController extends BaseController
         		'payment_money' => $payment_money,
                 'back_money' => $back_money,
                 'back_time3' => $back_time3,
+        		'wz_text_new' => $wz_text_new,
         		'arrear_text' => $arrear_text,
         		'charge_card' => $charge_card,
                 'oper_user5' => $_SESSION['backend']['adminInfo']['name'],
@@ -1333,6 +1732,10 @@ class CarBackController extends BaseController
         $data = $connection->createCommand($sql)->queryOne();
 		
         $data['wz_text'] = json_decode($data['wz_text']);
+	if ($data['wz_text_new'] == null || $data['wz_text_new'] == '') {
+			$data['wz_text_new'] = '[]';
+		}
+        $data['wz_text_new'] = json_decode($data['wz_text_new']);
         $data['damage_text'] = json_decode($data['damage_text']);
         $data['arrear_text'] = json_decode($data['arrear_text']);
         //计算违约金
@@ -1345,7 +1748,7 @@ class CarBackController extends BaseController
         	$break_contract_money += $data['contract_text'][$index]->break_contract_money;
         }
         $data['break_contract_money'] = $break_contract_money;
-        $data['oper_time5'] = date("Y-m-d H:i:s", $data['oper_time5']);
+        $data['oper_time5'] = $data['oper_time5']?date("Y-m-d H:i:s", $data['oper_time5']):'';
         
         $returnArr['status'] = true;
         $returnArr['data'] = $data;
@@ -1420,12 +1823,21 @@ class CarBackController extends BaseController
         $data['arrear_text'] = json_decode($data['arrear_text']);
         //违章金额计算
         $data['wz_text'] = $data['wz_text']?json_decode($data['wz_text']):array();
+        $data['wz_text_new'] = $data['wz_text_new']?json_decode($data['wz_text_new']):array();
         $money = 0;
         foreach ($data['wz_text'] as $row){
         	foreach ($row->lists as $row1){
-        		$money += $row1->money;
+        		// $money += $row1->money;
+				$money += (($row1->fen * $row1->fenjia) + $row1->money);
         	}
         }
+	foreach ($data['wz_text_new'] as $row){
+        	foreach ($row->lists as $row1){        		
+				$money += (($row1->fen * $row1->fenjia) + $row1->money);
+        	}
+			$data['wz_text'][] = $row;
+        }
+		// var_dump($money);exit;
         $data['wz_money'] = $money;
         
         //定损金额计算
@@ -1465,7 +1877,7 @@ class CarBackController extends BaseController
         }
         unset($data['contract_text']);
         $data['insurance_claims'] = $insurance_claims;
-        $data['oper_time6'] = date("Y-m-d H:i:s", $data['oper_time6']);
+        $data['oper_time6'] = $data['oper_time6']?date("Y-m-d H:i:s", $data['oper_time6']):'';
         
         $returnArr['status'] = true;
         $returnArr['data'] = $data;
@@ -1531,13 +1943,20 @@ class CarBackController extends BaseController
         //租金欠款text
         $data['arrear_text'] = json_decode($data['arrear_text']);
         //违章金额计算
-        $data['wz_text'] = $data['wz_text']?json_decode($data['wz_text']):array();
+        $data['wz_text'] = $data['wz_text']?json_decode($data['wz_text']):array();		
+        $data['wz_text_new'] = $data['wz_text_new']?json_decode($data['wz_text_new']):array();
         $money = 0;
         foreach ($data['wz_text'] as $row){
-        	foreach ($row->lists as $row1){
-        		$money += $row1->money;
-        	} 
+        	foreach ($row->lists as $row1){        		
+				$money += (($row1->fen * $row1->fenjia) + $row1->money);
+        	}
         }
+	foreach ($data['wz_text_new'] as $row){
+        	foreach ($row->lists as $row1){        		
+				$money += (($row1->fen * $row1->fenjia) + $row1->money);
+        	}
+			$data['wz_text'][] = $row;
+        }		
         $data['wz_money'] = $money;
         
         //定损金额计算
@@ -1554,7 +1973,7 @@ class CarBackController extends BaseController
         	$data['damage_text'][$index]->plate_number = $car['plate_number'];
         }
         $data['damage_money'] = $damage_money;
-        $data['oper_time7'] = date("Y-m-d H:i:s", $data['oper_time7']);
+        $data['oper_time7'] = $data['oper_time7']?date("Y-m-d H:i:s", $data['oper_time7']):'';
         
         $returnArr['status'] = true;
         $returnArr['data'] = $data;
@@ -1632,7 +2051,7 @@ class CarBackController extends BaseController
         $connection = yii::$app->db;
         $sql = 'select * from cs_car_back where id='.$id;
         $data = $connection->createCommand($sql)->queryOne();
-        $data['oper_time8'] = date("Y-m-d H:i:s", $data['oper_time8']);
+        $data['oper_time8'] = $data['oper_time8']?date("Y-m-d H:i:s", $data['oper_time8']):'';
 
         $returnArr['status'] = true;
         $returnArr['data'] = $data;

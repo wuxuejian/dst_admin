@@ -240,6 +240,7 @@
     CarInsuranceTrafficCompulsoryInsurance.add = function(){
         $('#easyui-dialog-car-insurance-tci-add').dialog('open');
         $('#easyui-dialog-car-insurance-tci-add').dialog('refresh',"<?php echo yii::$app->urlManager->createUrl(['car/insurance/tci-add','carId'=>$carId]); ?>");
+        
     }
     //修改
     CarInsuranceTrafficCompulsoryInsurance.edit = function(id){

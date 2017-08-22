@@ -148,8 +148,8 @@
                         required="true"      
                         >
                             <option value="-1">请选择</option>
-                            <option value="1" selected="<?php if($data['into_factory']==1){echo 'selected'; } ?>">是</option>
-                            <option value="0" selected="<?php if($data['into_factory']==0){echo 'selected'; } ?>">否</option>
+                            <option value="1" <?php if($data['into_factory']==1){echo "selected";}?>>是</option>
+                            <option value="0" <?php if($data['into_factory']==0){echo "selected";}?>>否</option>
                     </select>
                 </td>
                <td align="right"><div style="width:70px;">进厂时间</div></td>
@@ -548,6 +548,14 @@
                             task_info[i]=new Array();
                             task_info[i][0]=rows[i].task_type;
                             task_info[i][1]=rows[i].task_name;
+                            if(!rows[i].task_type || !rows[i].task_name || !rows[i].task_fee){
+                                $.messager.alert('数据错误','维修类型，维修项目名称，工时费都为必填项','error');
+                                                return false;
+                            }
+                            if(rows[i].task_fee<0){
+                                $.messager.alert('数据错误','价格只能为正数','error');
+                                return false;
+                            }
                             task_info[i][2]=rows[i].task_fee;
                             task_info[i][3]=rows[i].task_note;
                             task_money_all=parseFloat($("#task_money_all").text())+parseFloat(rows[i].task_fee);
@@ -644,6 +652,14 @@
                             part_number[i]=rows[i].part_number;
                             part_fee[i]=rows[i].part_fee;
                             part_info[i]=new Array();
+                            if(part_number[i]<0){
+                                     $.messager.alert('数据错误','数量只能为正数','error');
+                                      return false;
+                             }
+                             if(part_fee[i]<0){
+                                     $.messager.alert('数据错误','价格只能为正数','error');
+                                      return false;
+                              }
                             
                             //alert(rows[i].id);//假设有id这个字段
                             $.ajax( {  
@@ -669,6 +685,7 @@
                                              row.before_repair_time=data.into_time;
                                              row.before_repair_li=data.into_mile;
                                              part_info[i][0]=rows[i].part_no;
+
 					                            part_info[i][1]=part_number[i];
 					                            part_info[i][2]=part_fee[i];
 					                            part_info[i][3]=rows[i].part_unit;

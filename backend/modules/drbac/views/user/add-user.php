@@ -13,8 +13,13 @@
     			        invalidMessage="用户名只能是6到20位的数字、字母或下划线"
     			    />
     			</td>
-    			<td></td>
-    			<td></td>
+    			<td>账号类型：</td>
+                <td>
+                    <select class="easyui-combobox" name="repair_company" style="width:173px;" editable="false" panelHeight="auto">
+                        <option value="1">外部账号</option>  
+                        <option value="0" selected="selected">内部账号</option>  
+                    </select> 
+                </td>
     		</tr>
     		<tr>
     			<td>密码：</td>

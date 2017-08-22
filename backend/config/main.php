@@ -67,6 +67,10 @@ return [
         'carmonitor'=>[
             'class' => 'backend\modules\carmonitor\Module',
         ],
+        //车辆实时数据监控模块（新）
+        'carmonitorgb'=>[
+        'class' => 'backend\modules\carmonitorgb\Module',
+        ],
         //电桩监控模块
         'polemonitor'=>[
             'class' => 'backend\modules\polemonitor\Module',
@@ -99,7 +103,7 @@ return [
         'parts'=>[
              'class' => 'backend\modules\parts\Module',
         ],
-        //维修模块
+		 //维修模块
         'repair'=>[
             'class' => 'backend\modules\repair\Module',
         ] 

@@ -28,6 +28,9 @@ class CombotreeController extends BaseController{
 
         //判断是否需要显示顶级根节点
         $isShowRoot = intval(yii::$app->request->get('isShowRoot'));
+        foreach ($nodes as $index=>$row){
+        	$nodes[$index]['state'] = 'closed';
+        }
         if($isShowRoot){
             if(!empty($nodes)){
                 $data = [['id'=>0,'text'=>'作为一级菜单','iconCls'=>'icon-filter','children'=>$nodes]];

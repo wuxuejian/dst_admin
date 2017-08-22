@@ -462,13 +462,24 @@ class CarTypeController extends BaseController{
 	//获得城市列表
 	public function actionGetCityList(){		
 		$datas = [];	
+		$city_type  = yii::$app->request->get('city_type');
 		$connection = yii::$app->db;
-		$sql = "
-				select region_id,region_name 
-				from zc_region 
-				where region_type=2	and region_id in
-				(select city_id from cs_car_type_lease where is_del=0 and is_enable_time=1 group by city_id)		
-				";	
+		if($city_type ==1){	//长租城市
+			$sql = "
+			select region_id,region_name
+			from zc_region
+			where region_type=2	and region_id in
+			(select city_id from cs_car_type_lease where is_del=0 and is_enable_long=1 group by city_id)
+			";
+		}else{        		//分时城市
+			$sql = "
+			select region_id,region_name
+			from zc_region
+			where region_type=2	and region_id in
+			(select city_id from cs_car_type_lease where is_del=0 and is_enable_time=1 group by city_id)
+			";
+		}
+		
 		$site_list = $connection->createCommand($sql)->queryAll();		
 		
 		if ($site_list && count($site_list) != 0) {				

@@ -159,7 +159,9 @@
 						        <th>违章地点</th>
 						        <th>违章说明</th>
 						        <th>扣分</th>
+								<th>代办费单价</th>
 						        <th>罚款</th>
+								 <th>总额</th>
 						        <th>注销状态</th>
 					        </tr>
 					      </thead>
@@ -378,15 +380,21 @@
 	           					datai.data.wz_text[i].lists[0].money = '';
 	           					datai.data.wz_text[i].lists[0].handled = '';
 	           				}
-	           				
+	           				if (datai.data.wz_text[i].lists[0].fenjia == undefined) {
+											datai.data.wz_text[i].lists[0].fenjia = 0;
+											//alert('111');
+							}
 	           				html.push('<tr>');
 	           					html.push('<td rowspan='+leng+'>'+datai.data.wz_text[i].hphm+'</td>');
 	           					html.push('<td>'+datai.data.wz_text[i].lists[0].date+'</td>');
 	           					html.push('<td>'+datai.data.wz_text[i].lists[0].area+'</td>');
 	           					html.push('<td>'+datai.data.wz_text[i].lists[0].act+'</td>');
-	           					html.push('<td>'+datai.data.wz_text[i].lists[0].fen+'</td>');
-	           					html.push('<td>'+datai.data.wz_text[i].lists[0].money+'</td>');
-	           					if(datai.data.wz_text[i].lists[0].handled == '0'){
+	           					html.push('<td class="sum_fen">'+datai.data.wz_text[i].lists[0].fen+'</td>');
+								html.push('<td>'+datai.data.wz_text[i].lists[0].fenjia+'</td>');	           				
+								html.push('<td class="fakuan">'+datai.data.wz_text[i].lists[0].money+'</td>');
+	           					html.push('<td class="result_fenjia">'+((datai.data.wz_text[i].lists[0].fen * datai.data.wz_text[i].lists[0].fenjia)-(-datai.data.wz_text[i].lists[0].money))+'</td>');
+	           					
+								if(datai.data.wz_text[i].lists[0].handled == '0'){
 	           						html.push('<td class="warning">未处理</td>');
 	           					}else if(datai.data.wz_text[i].lists[0].handled == 1){
 	           						html.push('<td>已处理</td>');
@@ -410,9 +418,15 @@
 		           						html.push('<td>'+datai.data.wz_text[i].lists[j].date+'</td>');
 			           					html.push('<td>'+datai.data.wz_text[i].lists[j].area+'</td>');
 			           					html.push('<td>'+datai.data.wz_text[i].lists[j].act+'</td>');
-			           					html.push('<td>'+datai.data.wz_text[i].lists[j].fen+'</td>');
-			           					html.push('<td>'+datai.data.wz_text[i].lists[j].money+'</td>');
-			           					if(datai.data.wz_text[i].lists[j].handled == '0'){
+			           					html.push('<td class="sum_fen">'+datai.data.wz_text[i].lists[j].fen+'</td>');
+										html.push('<td>'+datai.data.wz_text[i].lists[j].fenjia+'</td>');
+			           					html.push('<td class="fakuan">'+datai.data.wz_text[i].lists[j].money+'</td>');
+			           					if (datai.data.wz_text[i].lists[j].fenjia == undefined) {
+											datai.data.wz_text[i].lists[j].fenjia = 0;
+										}
+										html.push('<td class="result_fenjia">'+((datai.data.wz_text[i].lists[j].fen * datai.data.wz_text[i].lists[j].fenjia)-(-datai.data.wz_text[i].lists[j].money))+'</td>');
+			           					
+										if(datai.data.wz_text[i].lists[j].handled == '0'){
 			           						html.push('<td class="warning">未处理</td>');
 			           					}else if(datai.data.wz_text[i].lists[j].handled == 1){
 			           						html.push('<td>已处理</td>');
@@ -425,6 +439,32 @@
 	           				}
 	           				$(html.join('')).appendTo('#wz_table');			
 	           			}
+						//计算单条违章的总额
+						$('.sum_fenjia').click(function(){
+							var lastval;
+							var fen = $(this).siblings('.sum_fen').text();
+							var fenjia = $(this).val();
+							var fakuan = $(this).siblings('.fakuan').text();
+							if(fenjia > 100 && fenjia <500){
+								lastval = fen*fenjia + parseInt(fakuan);
+								$(this).siblings('.result_fenjia').text(lastval);
+							}else if(fenjia <= 100){
+								fenjia=100;
+								$(this).val(100);
+								lastval = fen*fenjia + parseInt(fakuan);
+								$(this).siblings('.result_fenjia').text(lastval);
+							}else{
+								fenjia=500;
+								$(this).val(500);
+								lastval = fen*fenjia + parseInt(fakuan);
+								$(this).siblings('.result_fenjia').text(lastval);
+							}
+							
+						})
+						$(document).ready(function(){ 
+							<!-- alert("hi"); -->
+						　　$('.sum_fenjia').trigger("blur");					
+						}); 
 
 	           			//保险列表
 	           			for(var i = 0; i<datai.data.insurance_claims.length ; i++){

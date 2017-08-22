@@ -1,5 +1,6 @@
 <?php
 namespace backend\classes;
+use backend\classes\Chexingyi;
 // +----------------------------------------------------------------------
 // | JuhePHP [ NO ZUO NO DIE ]
 // +----------------------------------------------------------------------
@@ -58,21 +59,48 @@ class wz{
      * @return  array 返回违章信息
      */
     public function query($city,$carno,$engineno='',$classno='',$car_type=''){
+		
+		//新的查询规则
+		$wz_query = new Chexingyi();
+		$wz_list = $wz_query->query($carno);
+		// var_dump($wz_list);		
+		
+		$data = array('resultcode'=>0,'result'=> array('hphm'=>$carno,'lists'=>array()) );		
+		//对结果进行格式化，兼容旧接口的返回模式。
+		if ($wz_list['ErrorCode']== 0) {
+			$data['resultcode'] = 200;
+			if (!empty($wz_list['Records'])) {
+				foreach ($wz_list['Records'] as $key => $wz) {
+					$obj = new \stdClass;
+					$obj->date = $wz['Time'];
+					$obj->area = $wz['Location'];
+					$obj->act = $wz['Reason'];
+					$obj->code = $wz['Code'];
+					$obj->fen = $wz['Degree'];
+					$obj->money = $wz['count'];
+					$obj->handled = $wz['status'];				
+					$data['result']['lists'][] = $obj;				
+				}	
+			}				
+		}
+		// var_dump($result);
+		// echo "hihi";exit;
     	$hpzl= '02';
     	if($car_type=='HUOCHE' || $car_type=='ZXXSHC'){
     		$hpzl = '01';
     	}
-    	
-        $params = array(
-            'key' => $this->appkey,
-            'city'  => $city,
-            'hphm' => $carno,
-        	'hpzl' => $hpzl,
-            'engineno'=> $engineno,
-            'classno'   => $classno
-        );
-        $content = $this->juhecurl($this->wzUrl,$params,1);
-        return $this->_returnArray($content);
+		$data['result']['hpzl'] = $hpzl;
+    	return $data;
+        // $params = array(
+            // 'key' => $this->appkey,
+            // 'city'  => $city,
+            // 'hphm' => $carno,
+        	// 'hpzl' => $hpzl,
+            // 'engineno'=> $engineno,
+            // 'classno'   => $classno
+        // );
+        // $content = $this->juhecurl($this->wzUrl,$params,1);
+        // return $this->_returnArray($content);
     }
  
     /**

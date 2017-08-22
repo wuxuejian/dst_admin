@@ -298,11 +298,15 @@ class StockController extends BaseController
     	$queryStr = isset($_REQUEST['q']) ? trim($_REQUEST['q']) : ''; // 检索过滤字符串
     	$carId = isset($_REQUEST['car_id']) ? intval($_REQUEST['car_id']) : 0; //修改时赋值用
     	$operating_company_id = isset($_REQUEST['operating_company_id']) ? intval($_REQUEST['operating_company_id']) : 0;
+    	$car_type_id = isset($_REQUEST['car_type_id']) ? intval($_REQUEST['car_type_id']) : 0;
     	$query = Car::find()
     	->select(['id','plate_number','vehicle_dentification_number'])
     	->where(['is_del'=>0,'car_status'=>'STOCK']);
     	if($operating_company_id){
     		$query->andWhere(['operating_company_id'=>$operating_company_id]);
+    	}
+    	if($car_type_id){
+    		$query->andWhere(['car_type_id'=>$car_type_id]);
     	}
     	if($carId){
     		// 修改时查询赋值

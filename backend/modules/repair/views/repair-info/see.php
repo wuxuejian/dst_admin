@@ -44,7 +44,7 @@
             </li>
         </ul>
     <ul style="display:inline-block;">
-        <li>审核状态：<li>
+        <li>单据状态：<li>
         <li>审核意见：</li>
         <li>审核意见：</li>
         <li>审核意见：</li>

@@ -21,7 +21,7 @@ use common\models\Excel;
 use common\models\File;
 use yii;
 use yii\data\Pagination;
-use backend\models\OperatingCompany;;
+use backend\models\OperatingCompany;
 use backend\models\Owner;
 class InsuranceController extends BaseController
 {
@@ -119,19 +119,38 @@ class InsuranceController extends BaseController
                 'transact_ic'=>'{{%car_insurance_compulsory}}.`id`',
             	'compulsory_start_date'=>'{{%car_insurance_compulsory}}.`start_date`',
             	'compulsory_end_date'=>'{{%car_insurance_compulsory}}.`end_date`',
-            	'_compulsory_end_date'=>'{{%car_insurance_compulsory}}.end_date', //“倒计时”占位
+            	//'_compulsory_end_date'=>'{{%car_insurance_compulsory}}.end_date', //“倒计时”占位
                 'transact_ib'=>'{{%car_insurance_business}}.`id`',
             	'business_start_date'=>'{{%car_insurance_business}}.`start_date`',
             	'business_end_date'=>'{{%car_insurance_business}}.`end_date`',
-            	'_business_end_date'=>'{{%car_insurance_business}}.end_date', //“倒计时”占位
+            	//'_business_end_date'=>'{{%car_insurance_business}}.end_date', //“倒计时”占位
                 '{{%car}}.`insurance_last_update_time`',
                 'username'=>'{{%admin}}.`name`',
+                /*
+                */
+                'transact_ic_f'=>'{{%car_insurance_compulsory}}.`append_urls`',//交强险附件
+                'transact_ib_f'=>'{{%car_insurance_business}}.`append_urls`',//商业险附件
+                'transact_ic_pd'=>'{{%car_insurance_compulsory_form}}.`id`',//交强险批单
+                'transact_ib_pd'=>'{{%car_insurance_business_form}}.`id`',//商业险批单
+                'use_nature'=>'{{%car_insurance_compulsory}}.`use_nature`',
+                'use_nature_p'=>'{{%car_insurance_compulsory_form}}.`use_nature`',
+                'car_model_name2'=>'{{%car_type}}.`car_model_name`',
             ])
-            ->leftJoin('(select * from (select * from cs_car_insurance_compulsory where is_del=0 order by end_date desc) temp1 GROUP BY car_id) as {{%car_insurance_compulsory}}','{{%car}}.id = {{%car_insurance_compulsory}}.car_id')
+            //->leftJoin('(select * from (select * from cs_car_insurance_compulsory where is_del=0 order by end_date desc) temp1 GROUP BY car_id) as {{%car_insurance_compulsory}}','{{%car}}.id = {{%car_insurance_compulsory}}.car_id')
+            ->leftJoin('(select * from (select * from cs_car_insurance_compulsory where is_del=0  order by end_date desc) temp1 GROUP BY car_id) as {{%car_insurance_compulsory}}','{{%car}}.id = {{%car_insurance_compulsory}}.car_id')
 //             ->joinWith('carInsuranceCompulsory',false)
 //             ->joinWith('carInsuranceBusiness',false)
-        	->leftJoin('(select * from (select * from cs_car_insurance_business where is_del=0 order by end_date desc) temp2 GROUP BY car_id) as {{%car_insurance_business}}','{{%car}}.id = {{%car_insurance_business}}.car_id')
+        	//->leftJoin('(select * from (select * from cs_car_insurance_business where is_del=0 order by end_date desc) temp2 GROUP BY car_id) as {{%car_insurance_business}}','{{%car}}.id = {{%car_insurance_business}}.car_id')
+            ->leftJoin('(select * from (select * from cs_car_insurance_business where is_del=0 order by end_date desc) temp2 GROUP BY car_id) as {{%car_insurance_business}}','{{%car}}.id = {{%car_insurance_business}}.car_id')
             ->leftJoin('{{%admin}}', '{{%car}}.`insurance_add_aid` = {{%admin}}.`id`')
+            /*
+            */
+            //->leftJoin('{{%car_insurance_compulsory_form}}', '{{%car_insurance_compulsory_form}}.`insurance_id` = {{%car_insurance_compulsory}}.`id`')
+            ->leftJoin('(select * from (select * from cs_car_insurance_compulsory_form where is_del=0 order by add_datetime desc limit 1) temp3) as {{%car_insurance_compulsory_form}}','{{%car_insurance_compulsory_form}}.insurance_id = {{%car_insurance_compulsory}}.id')
+            //->leftJoin('{{%car_insurance_business_form}}', '{{%car_insurance_business_form}}.`insurance_id` = {{%car_insurance_business}}.`id`')
+            ->leftJoin('(select * from (select * from cs_car_insurance_business_form where is_del=0 order by add_datetime desc limit 1) temp4) as {{%car_insurance_business_form}}','{{%car_insurance_business_form}}.insurance_id = {{%car_insurance_business}}.id')
+            ->leftJoin('cs_car_type', 'cs_car.car_type_id = cs_car_type.id')
+
             ->andWhere(['{{%car}}.`is_del`'=>0]);
 
 		////其他查询条件
@@ -230,6 +249,8 @@ class InsuranceController extends BaseController
         $query = $query->offset($pages->offset)->limit($pages->limit)->orderBy($orderBy);
 //         echo $query->createCommand()->getRawSql();exit;
         $data = $query->asArray()->all();
+        //echo '<pre>';
+        //var_dump($data);exit;
 		
 		//车辆运营公司
         $oCompany = OperatingCompany::getOperatingCompany();  
@@ -239,11 +260,17 @@ class InsuranceController extends BaseController
         $configItems = ['car_status'];
         $config = (new ConfigCategory)->getCategoryConfig($configItems,'value');
         foreach ($data as $index=>$row){
-			
+ 
+            $result1 = (new \yii\db\query())->from('cs_car_insurance_compulsory')->where(['car_id'=>$row['id'],'is_del'=>0])->orderBy('add_datetime desc')->limit(1)->one();
+            $data[$index]['start_date_tic']= $result1['start_date'];
+            $data[$index]['end_date_tic']= $result1['end_date'];
+            $result2 = (new \yii\db\query())->from('cs_car_insurance_business')->where(['car_id'=>$row['id'],'is_del'=>0])->orderBy('add_datetime desc')->limit(1)->one();
+            $data[$index]['start_date_bi']= $result2['start_date'];
+            $data[$index]['end_date_bi']= $result2['end_date'];
+
 			if(isset($oCompany[$row['operating_company_id']]) && $oCompany[$row['operating_company_id']]){
 				$data[$index]['operating_company_id'] = $oCompany[$row['operating_company_id']]['name'];
 			} 
-			
 			if (isset($row['owner_id'])) {
 				$query_owner = Owner::find()->select(['owner_name'=>'name']);
 				$query_owner->andFilterWhere(['`id`'=>$row['owner_id']]);
@@ -269,8 +296,12 @@ class InsuranceController extends BaseController
     			}
     		}else {
     			$data[$index]['customer_name'] = @$config['car_status'][$row['car_status']]['text'];
-    		}
+    		}    
+
         }
+//echo '<pre>';
+//var_dump($data);exit;
+
         $returnArr = [];
         $returnArr['rows'] = $data; 
         $returnArr['total'] = $total;
@@ -465,6 +496,7 @@ class InsuranceController extends BaseController
     	$connection = yii::$app->db;
     	$sql = 'select id,plate_number,brand_id,car_model,car_status from cs_car where id='.$id;
     	$data = $connection->createCommand($sql)->queryOne();
+        //var_dump($data);exit;
     	//加载品牌
     	$brand = $connection->createCommand('select name from cs_car_brand where id='.$data['brand_id'])->queryOne();
     	$data['brand_name'] = $brand['name'];
@@ -482,6 +514,7 @@ class InsuranceController extends BaseController
     			where (back_time>".time()." or back_time=0) and car_id=".$data['id']
     	);
     	$customer = $query->queryOne();
+        //var_dump($customer);exit;
     	if($customer){
     		if($customer['company_name']){
     			$data['customer_name'] = $customer['company_name'];
@@ -491,6 +524,7 @@ class InsuranceController extends BaseController
     	}else {
     		$data['customer_name'] = $config['car_status'][$data['car_status']]['text'];
     	}
+        //var_dump($data['customer_name']);exit;
     	//加载保险信息
     	$insurance_compulsory = $connection->createCommand(
     			'select id,money_amount,insurer_company,start_date,end_date,note 
@@ -694,8 +728,10 @@ class InsuranceController extends BaseController
     	//data submit start
     	if(yii::$app->request->isPost){
     		//上传保单附件
+
     		$append_urls_arr = array();
     		if(@$_FILES['append']){
+                
     			$file_path="uploads/tci/";
     			if(!is_dir($file_path)){
     				mkdir($file_path);
@@ -704,20 +740,52 @@ class InsuranceController extends BaseController
     			if(!is_dir($file_path)){
     				mkdir($file_path);
     			}
-    			
 	    		for($i=0;$i<count($_FILES['append']['name']);$i++){
 	    			$_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
 	    		}
 	    		$filename=$_FILES['append']['name'];
-	    		$filet=$_FILES['append']['tmp_name'];
+                //var_dump($filename);exit;
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
+
+	    		$filet=$_FILES['append']['tmp_name']; 
 	    		for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
-	    			move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+	    			//move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
 	    			array_push($append_urls_arr, $file_path.$filename[$i]);
 	    		}
     		}
     		$append_urls = json_encode($append_urls_arr);
-    		//
+    		
     		$formData = yii::$app->request->post();
+           
+            $tci_numbers = (new \yii\db\query())->select(['number'])->from('cs_car_insurance_compulsory')->where(['is_del'=>0])->all();
+            foreach ($tci_numbers as $k => $v) {
+                if($v['number']){
+                    if($formData['number']==$v['number']){
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = '交强险单号已存在!';
+                        return json_encode($returnArr);
+                    }
+                }
+            }
+            //验证开始时间不能大于结束时间
+            if($formData['start_date'] > $formData['end_date']){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
+
+
     		//检查当前登录用户和要操作的车辆的所属运营公司是否匹配-20160325
     		$checkArr = Car::checkOperatingCompanyIsMatch($formData['car_id']);
     		if(is_array($checkArr) && isset($checkArr['status']) && !$checkArr['status']){
@@ -760,7 +828,7 @@ class InsuranceController extends BaseController
     	$config = (new ConfigCategory)->getCategoryConfig(['INSURANCE_COMPANY']);
     	$config['INSURANCE_COMPANY'] = array_values($config['INSURANCE_COMPANY']);
     	$carId = yii::$app->request->get('carId') or die('param carId is required');
-    	
+    	//var_dump($carId);exit;
     	//获取上一次保险记录
     	$tciInfo = CarInsuranceCompulsory::find()->select(['*'])->limit(1)->orderBy('id desc')->asArray()->one();
     	return $this->render('tci-add',[
@@ -774,10 +842,43 @@ class InsuranceController extends BaseController
      */
     public function actionTciEdit(){
     	//data submit start
+
     	if(yii::$app->request->isPost){
+            $connection = yii::$app->db;
     		$id = yii::$app->request->post('id') or die('param id is required');
+
+            //删除批单
+            $del_ids = yii::$app->request->post('del_ids');
+            $id_forms = (new \yii\db\query())->from('cs_car_insurance_compulsory_form')->select(['id','insurance_id'])->where(['insurance_id'=>$id,'is_del'=>0])->all();
+
+            if($del_ids == null && $id_forms != null){//删除修改页面的批单记录。判断有批单且全部删除
+                foreach($id_forms as $k5 => $v5){
+                    $sql = "update cs_car_insurance_compulsory_form set is_del=1 where insurance_id={$v5['insurance_id']}";
+                    $result = $connection->createCommand($sql)->execute();
+                }   
+            } else {
+               foreach(@$id_forms as $k =>$v){
+                    foreach(@$del_ids as $k1 =>$v1){
+                         if(!in_array($v['id'], @$del_ids)){
+                            $sql = "update cs_car_insurance_compulsory_form set is_del=1 where id={$v['id']}";
+                            $result = $connection->createCommand($sql)->execute();
+                         }
+                    }
+                }    
+            }
+                                                    
     		$model = CarInsuranceCompulsory::findOne(['id'=>$id]);
     		$model or die('record not found');
+
+            //验证开始时间不能大于结束时间
+            $start_date = yii::$app->request->post('start_date');
+            $end_date = yii::$app->request->post('end_date');
+            if($start_date > $end_date){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
+
     		//上传保单附件
     		if(yii::$app->request->post('append_url')){
     			$append_urls_arr = yii::$app->request->post('append_url');
@@ -799,15 +900,33 @@ class InsuranceController extends BaseController
     				$_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
     			}
     			$filename=$_FILES['append']['name'];
+
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
+
     			$filet=$_FILES['append']['tmp_name'];
     			for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
-    				move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+    				//move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
     				array_push($append_urls_arr, $file_path.$filename[$i]);
     			}
     		}
     		$append_urls = json_encode($append_urls_arr);
     		//
     		
+           
+          
+
+           //var_dump($del_ids);exit;
     		//检查当前登录用户和要操作的车辆的所属运营公司是否匹配-20160325
     		$checkArr = Car::checkOperatingCompanyIsMatch($model->car_id);
     		if(is_array($checkArr) && isset($checkArr['status']) && !$checkArr['status']){
@@ -842,17 +961,27 @@ class InsuranceController extends BaseController
     				$returnArr['info'] = '未知错误';
     			}
     		}
+             
     		echo json_encode($returnArr);
     		return null;
     	}
     	//data submit end
     	$id = yii::$app->request->get('id') or die('param id is required');
     	$model = CarInsuranceCompulsory::findOne(['id'=>$id]);
+        //echo '<pre>';
+        //var_dump($model->getOldAttributes());exit;
     	$model or die('record not found');
     	$config = (new ConfigCategory)->getCategoryConfig(['INSURANCE_COMPANY']);
+       
+        //查询批单信息
+       // var_dump($id);exit;
+        $pdinfo = (new \yii\db\query())->from('cs_car_insurance_compulsory_form')->select(['id','number'])->where(['insurance_id'=>$id,'is_del'=>0])->all();
+        //echo '<pre>';
+        //var_dump($pdinfo);exit;
     	return $this->render('tci-edit',[
     			'tciInfo'=>$model->getOldAttributes(),
     			'config'=>$config,
+                'pdinfo'=>$pdinfo
     			]);
     }
     
@@ -1055,9 +1184,23 @@ class InsuranceController extends BaseController
     				$_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
     			}
     			$filename=$_FILES['append']['name'];
+
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
+
     			$filet=$_FILES['append']['tmp_name'];
     			for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
-    				move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+    				//move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
     				array_push($append_urls_arr, $file_path.$filename[$i]);
     			}
     		}
@@ -1077,6 +1220,23 @@ class InsuranceController extends BaseController
     		//
     		
     		$formData = yii::$app->request->post();
+            //验证保单唯一性
+            $bi_numbers = (new \yii\db\query())->select(['number'])->from('cs_car_insurance_business')->where(['is_del'=>0])->all();
+            foreach ($bi_numbers as $k => $v) {
+                if($v['number']){
+                    if($formData['number']==$v['number']){
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = '商业险单号已存在!';
+                        return json_encode($returnArr);
+                    }
+                }
+            }
+             //验证开始时间不能大于结束时间
+            if($formData['start_date'] > $formData['end_date']){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
     		//检查当前登录用户和要操作的车辆的所属运营公司是否匹配-20160325
     		$checkArr = Car::checkOperatingCompanyIsMatch($formData['car_id']);
     		if(is_array($checkArr) && isset($checkArr['status']) && !$checkArr['status']){
@@ -1135,10 +1295,41 @@ class InsuranceController extends BaseController
     public function actionBiEdit(){
     	//data submit start
     	if(yii::$app->request->isPost){
+            $connection = yii::$app->db;
     		$id = yii::$app->request->post('id') or die('param id is required');
+
+            //删除批单
+            $del_ids = yii::$app->request->post('del_ids');
+            $id_forms = (new \yii\db\query())->from('cs_car_insurance_business_form')->select(['id','insurance_id'])->where(['insurance_id'=>$id,'is_del'=>0])->all();
+            if($del_ids == null && $id_forms != null){//删除修改页面的批单记录。判断有批单且全部删除
+                foreach($id_forms as $k4 => $v4){
+                    $sql = "update cs_car_insurance_business_form set is_del=1 where insurance_id={$v4['insurance_id']}";
+                    $result = $connection->createCommand($sql)->execute();
+                }   
+            } else {
+               foreach(@$id_forms as $k2 =>$v2){
+                //var_dump($v2);exit;
+                    foreach(@$del_ids as $k3 =>$v3){
+                         if(!in_array($v2['id'], @$del_ids)){
+                            //echo '12';exit;
+                            $sql = "update cs_car_insurance_business_form set is_del=1 where id={$v2['id']}";
+                            $result = $connection->createCommand($sql)->execute();
+                         }
+                    }
+                }      
+            }
+              
     		$model = CarInsuranceBusiness::findOne(['id'=>$id]);
     		$model or die('record not found');
-    		
+    	   
+            //验证开始时间不能大于结束时间
+            $start_date = yii::$app->request->post('start_date');
+            $end_date = yii::$app->request->post('end_date');
+            if($start_date > $end_date){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
     		//上传保单附件
     		if(yii::$app->request->post('append_url')){
     			$append_urls_arr = yii::$app->request->post('append_url');
@@ -1159,9 +1350,23 @@ class InsuranceController extends BaseController
     				$_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
     			}
     			$filename=$_FILES['append']['name'];
+
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
+
     			$filet=$_FILES['append']['tmp_name'];
     			for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
-    				move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+    				//move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
     				array_push($append_urls_arr, $file_path.$filename[$i]);
     			}
     		}
@@ -1217,12 +1422,27 @@ class InsuranceController extends BaseController
     	}
     	//data submit end
     	$id = yii::$app->request->get('id') or die('param id is required');
+
     	$model = CarInsuranceBusiness::findOne(['id'=>$id]);
     	$model or die('record not found');
     	$config = (new ConfigCategory)->getCategoryConfig(['INSURANCE_COMPANY']);
+//var_dump($id);exit;
+        $pdbuinfo = (new \yii\db\query())->from('cs_car_insurance_business_form')->select(['id','number'])->where(['insurance_id'=>$id,'is_del'=>0])->all();
+        //var_dump($pdbuinfo);exit;
+        //echo '<pre>';
+        //var_dump($pdinfo);exit;
+        /*return $this->render('tci-edit',[
+                'tciInfo'=>$model->getOldAttributes(),
+                'config'=>$config,
+                'pdinfo'=>$pdinfo
+                ]);*/
+        
+        //echo '<pre>';
+        //var_dump($model->getOldAttributes());exit;
     	return $this->render('bi-edit',[
     			'biInfo'=>$model->getOldAttributes(),
     			'config'=>$config,
+                'pdbuinfo'=>$pdbuinfo
     			]);
     }
     
@@ -1422,9 +1642,21 @@ class InsuranceController extends BaseController
     				$_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
     			}
     			$filename=$_FILES['append']['name'];
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
     			$filet=$_FILES['append']['tmp_name'];
     			for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
-    				move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+    				//move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
     				array_push($append_urls_arr, $file_path.$filename[$i]);
     			}
     		}
@@ -1444,6 +1676,25 @@ class InsuranceController extends BaseController
     		//
     
     		$formData = yii::$app->request->post();
+            //验证开始时间不能大于结束时间
+            if($formData['start_date'] > $formData['end_date']){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
+
+             //验证保单唯一性
+            $other_numbers = (new \yii\db\query())->select(['number'])->from('cs_car_insurance_other')->where(['is_del'=>0])->all();
+            foreach ($other_numbers as $k => $v) {
+                if($v['number']){
+                    if($formData['number']==$v['number']){
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = '其他险单号已存在!';
+                        return json_encode($returnArr);
+                    }
+                }
+            }
+
     		//检查当前登录用户和要操作的车辆的所属运营公司是否匹配-20160325
     		$checkArr = Car::checkOperatingCompanyIsMatch($formData['car_id']);
     		if(is_array($checkArr) && isset($checkArr['status']) && !$checkArr['status']){
@@ -1504,7 +1755,15 @@ class InsuranceController extends BaseController
     		$id = yii::$app->request->post('id') or die('param id is required');
     		$model = CarInsuranceOther::findOne(['id'=>$id]);
     		$model or die('record not found');
-    
+            
+            //验证开始时间不能大于结束时间
+            $start_date = yii::$app->request->post('start_date');
+            $end_date = yii::$app->request->post('end_date');
+            if($start_date > $end_date){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
     		//上传保单附件
     		if(yii::$app->request->post('append_url')){
     			$append_urls_arr = yii::$app->request->post('append_url');
@@ -1525,9 +1784,21 @@ class InsuranceController extends BaseController
     				$_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
     			}
     			$filename=$_FILES['append']['name'];
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
     			$filet=$_FILES['append']['tmp_name'];
     			for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
-    				move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+    				//move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
     				array_push($append_urls_arr, $file_path.$filename[$i]);
     			}
     		}
@@ -1654,5 +1925,537 @@ class InsuranceController extends BaseController
     	if(!empty($DrivingLicense) && !empty($InsuranceCompulsory)){
     		$statusRet = Car::changeCarStatusNew($carId, 'STOCK', 'car/insurance/checkDrivingLicenseAndTrafficCompulsoryInsurance', '检查行驶证和交强险是否齐全',['car_status'=>'NAKED']);
     	}
+    }
+
+    //交强险批单添加
+    public function actionPdAdd()
+    {
+        $connection = yii::$app->db;
+        if(yii::$app->request->isPost)
+        {
+            $number             = yii::$app->request->post('number_p');//批单号
+            $start_date         = strtotime(yii::$app->request->post('start_date'));//开始时间
+            $end_date           = strtotime(yii::$app->request->post('end_date'));//结束时间
+            $money_amount_add   = yii::$app->request->post('money_amount_add');//批增金额
+            $money_amount_minus = yii::$app->request->post('money_amount_minus');//批减金额
+            $money_amount       = yii::$app->request->post('money_amount');//批改后保险金额
+            $use_nature         = yii::$app->request->post('use_nature');//使用性质
+            $note               = yii::$app->request->post('note');//批改原因
+            $insurance_id             = yii::$app->request->post('id');//保单id
+            if($money_amount_add == null){
+                $money_amount_add = 0;
+            }
+            if($money_amount_minus == null){
+                $money_amount_minus = 0;
+            }
+            if($money_amount == null){
+                $money_amount = 0;
+            }
+
+           
+            $pci_times = (new \yii\db\query())->select(['start_date','end_date'])->from('cs_car_insurance_compulsory')->where(['is_del'=>0,'id'=>$insurance_id])->one();
+            if($start_date < $pci_times['start_date'] || $end_date > $pci_times['end_date']){
+                    $returnArr['status'] = false;
+                    $returnArr['info'] = '批单时间必须在保单时间范围内!';
+                    return json_encode($returnArr);
+            }
+            //echo '<pre>';
+            //var_dump($pci_times);exit;
+
+            //验证批单唯一性
+            $pci_numbers = (new \yii\db\query())->select(['number'])->from('cs_car_insurance_compulsory_form')->where(['is_del'=>0])->all();
+            foreach ($pci_numbers as $k => $v) {
+                if($v['number']){
+                    if($number==$v['number']){
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = '交强险批单已存在!';
+                        return json_encode($returnArr);
+                    }
+                }
+            }
+            //验证开始时间不能大于结束时间
+            if($start_date > $end_date){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
+
+            $append_urls_arr = array();//保单附件上传
+            if(@$_FILES['append']){
+                $file_path="uploads/insurance/";
+                if(!is_dir($file_path)){
+                    mkdir($file_path);
+                }
+                $file_path .= date("Ymd").'/';
+                if(!is_dir($file_path)){
+                    mkdir($file_path);
+                }
+                for($i=0;$i<count($_FILES['append']['name']);$i++){
+                    $_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
+                }
+                $filename=$_FILES['append']['name'];
+               // var_dump($filename);exit;
+               
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
+
+                $filet=$_FILES['append']['tmp_name']; 
+                for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
+                    //move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
+                    array_push($append_urls_arr, $file_path.$filename[$i]);
+                }
+            }
+            $append_urls = json_encode($append_urls_arr);
+
+            $reg_record = $connection->createCommand()->insert('cs_car_insurance_compulsory_form',
+                          [
+                          //'insurance_id'//保险单id
+                          'number'=>$number,
+                          'start_date'=>$start_date,
+                          'end_date'=>$end_date,
+                          'money_amount_add'=>$money_amount_add,
+                          'money_amount_minus'=>$money_amount_minus,
+                          'money_amount'=>$money_amount,
+                          'use_nature'=>$use_nature,
+                          'note'=>$note,
+                          'use_nature'=>$use_nature,
+                          'append_urls'=>$append_urls,
+                          'insurance_id'=>$insurance_id,
+                          'add_datetime'=>time(),//系统添加时间
+                          'add_aid' => $_SESSION['backend']['adminInfo']['id']
+                          ])
+                        ->execute();
+            if($reg_record){
+                $returnArr['status'] = true;
+                $returnArr['info'] = '添加成功';
+            } else {
+                $returnArr['status'] = false;
+                $returnArr['info'] = '添加失败';
+            }
+            return json_encode($returnArr);
+        }
+
+
+        $insurance_id = yii::$app->request->get('id');
+        $result = (new \yii\db\query())->from('cs_car_insurance_compulsory')->where(['id'=>$insurance_id,'is_del'=>0])->one();
+        //var_dump($insurance_id);
+        //var_dump($result);//exit;
+        //var_dump($id);
+        //exit;
+        return $this->render('pd-add',['insurance_id'=>$insurance_id,'result'=>$result]);
+    }
+
+    //交强险批单修改
+    public function actionPdEdit()
+    {
+        $connection = yii::$app->db;
+        if(yii::$app->request->isPost)
+        {
+           $id = yii::$app->request->post('id');//批单号
+            
+            $number             = yii::$app->request->post('number');//批单号
+            $start_date         = strtotime(yii::$app->request->post('start_date'));//开始时间
+            $end_date           = strtotime(yii::$app->request->post('end_date'));//结束时间
+            $money_amount_add   = yii::$app->request->post('money_amount_add');//批增金额
+            $money_amount_minus = yii::$app->request->post('money_amount_minus');//批减金额
+            $money_amount       = yii::$app->request->post('money_amount');//批改后保险金额
+            $use_nature         = yii::$app->request->post('use_nature');//使用性质
+            $note               = yii::$app->request->post('note');//批改原因
+            if($money_amount_add == null){
+                $money_amount_add = 0;
+            }
+            if($money_amount_minus == null){
+                $money_amount_minus = 0;
+            }
+            if($money_amount == null){
+                $money_amount = 0;
+            }
+            
+            //验证批单唯一性
+            //var_dump($id);
+            $pci_number = (new \yii\db\query())->select(['number','insurance_id'])->from('cs_car_insurance_compulsory_form')->where(['is_del'=>0,'id'=>$id])->one();
+            $pci_numbers = (new \yii\db\query())->select(['number'])->from('cs_car_insurance_compulsory_form')->where(['is_del'=>0])->all();
+            //echo '<pre>';
+            //var_dump($pci_number);
+            //var_dump($pci_number['insurance_id']);
+            //var_dump($pci_numbers);
+            //exit;
+            foreach ($pci_numbers as $k => $v) {
+                if($number != $pci_number['number'] &&  $number == $v['number'])
+                {
+                //if($v['number']){
+                    //if($number==$v['number']){
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = '交强险批单已存在!';
+                        return json_encode($returnArr);
+                    //}
+                //}
+                }
+            }
+
+            //验证开始时间不能大于结束时间
+            if($start_date > $end_date){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
+
+            $pci_times = (new \yii\db\query())->select(['start_date','end_date'])->from('cs_car_insurance_compulsory')->where(['is_del'=>0,'id'=>$pci_number['insurance_id']])->one();
+            if($start_date < $pci_times['start_date'] || $end_date > $pci_times['end_date']){
+                    $returnArr['status'] = false;
+                    $returnArr['info'] = '批单时间必须在保单时间范围内!';
+                    return json_encode($returnArr);
+            }
+
+            //$append_urls_arr = array();//保单附件上传
+            //上传保单附件
+            if(yii::$app->request->post('append_url')){
+                $append_urls_arr = yii::$app->request->post('append_url');
+            }else {
+                $append_urls_arr = array();
+            }
+            if(@$_FILES['append']){
+                $file_path="uploads/insurance/";
+                if(!is_dir($file_path)){
+                    mkdir($file_path);
+                }
+                $file_path .= date("Ymd").'/';
+                if(!is_dir($file_path)){
+                    mkdir($file_path);
+                }
+                for($i=0;$i<count($_FILES['append']['name']);$i++){
+                    $_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
+                }
+                $filename=$_FILES['append']['name'];
+
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
+
+                $filet=$_FILES['append']['tmp_name']; 
+                for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
+                    //move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
+                    array_push($append_urls_arr, $file_path.$filename[$i]);
+                }
+            }
+            $append_urls = json_encode($append_urls_arr);
+
+            //echo '<pre>';
+            //var_dump($append_urls);
+            //exit;
+            $reg_record = $connection->createCommand()->update('cs_car_insurance_compulsory_form',
+                          [
+                          //'insurance_id'//保险单id
+                          'number'=>$number,
+                          'start_date'=>$start_date,
+                          'end_date'=>$end_date,
+                          'money_amount_add'=>$money_amount_add,
+                          'money_amount_minus'=>$money_amount_minus,
+                          'money_amount'=>$money_amount,
+                          'use_nature'=>$use_nature,
+                          'note'=>$note,
+                          'use_nature'=>$use_nature,
+                          'append_urls'=>$append_urls,
+                          'add_datetime'=>time(),//系统修改时间
+                          'add_aid' => $_SESSION['backend']['adminInfo']['id'],
+                          //'insurance_id'=>$insurance_id
+                          ],'id=:id',[':id'=>$id])
+                        ->execute();
+            if($reg_record){
+                $returnArr['status'] = true;
+                $returnArr['info'] = '修改成功';
+            } else {
+                $returnArr['status'] = false;
+                $returnArr['info'] = '修改失败';
+            }
+            return json_encode($returnArr);
+        }
+
+        $id = yii::$app->request->get('id');
+        $pdInfo = (new \yii\db\query())->from('cs_car_insurance_compulsory_form')->where(['id'=>$id])->one();
+        //var_dump($pdInfo);exit;
+        $tci_number = (new \yii\db\query())->from('cs_car_insurance_compulsory')->where(['id'=>$pdInfo['insurance_id']])->one();
+        return $this->render('pd-edit',['pdInfo'=>$pdInfo,'tci_number'=>$tci_number['number']]);
+    }
+
+    //商业险批单添加
+    public function actionPdBuAdd()
+    {
+        $connection = yii::$app->db;
+        if(yii::$app->request->isPost)
+        {
+            $insurance_id = yii::$app->request->post('id');//(商业险id)
+            $number = yii::$app->request->post('number_p');//批单号
+            //验证批单唯一性
+            $pbi_numbers = (new \yii\db\query())->select(['number'])->from('cs_car_insurance_business_form')->where(['is_del'=>0])->all();
+            foreach ($pbi_numbers as $k => $v) {
+                if($v['number']){
+                    if($number==$v['number']){
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = '商业险批单已存在!';
+                        return json_encode($returnArr);
+                    }
+                }
+            }
+            $start_date = strtotime(yii::$app->request->post('start_date'));//开始时间
+            $end_date = strtotime(yii::$app->request->post('end_date'));//结束时间
+            $use_nature = yii::$app->request->post('use_nature');//使用性质
+            $note = yii::$app->request->post('note');//备注
+
+            $types = yii::$app->request->post('type');//险种
+            $moneys = yii::$app->request->post('money');//金额
+            $middles = yii::$app->request->post('middle');//修改的金额
+            $calculates = yii::$app->request->post('calculate');//运算符
+
+
+            $pci_times = (new \yii\db\query())->select(['start_date','end_date'])->from('cs_car_insurance_business')->where(['is_del'=>0,'id'=>$insurance_id])->one();
+            if($start_date < $pci_times['start_date'] || $end_date > $pci_times['end_date']){
+                    $returnArr['status'] = false;
+                    $returnArr['info'] = '批单时间必须在保单时间范围内!';
+                    return json_encode($returnArr);
+            }
+
+            //验证开始时间不能大于结束时间
+            if($start_date > $end_date){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
+
+            //组织险种字段
+            $insurance_text_arr = array();
+            $money_amount=0;
+            if(@$types){
+                foreach ($types as $index=>$value){
+                    $money_amount += $moneys[$index];
+                    array_push($insurance_text_arr, array($value,$calculates[$index],$middles[$index],$moneys[$index]));
+                }
+            }
+            $insurance_text = json_encode($insurance_text_arr);
+            $append_urls_arr = array();//保单附件上传
+            if(@$_FILES['append']){
+                $file_path="uploads/insurance/";
+                if(!is_dir($file_path)){
+                    mkdir($file_path);
+                }
+                $file_path .= date("Ymd").'/';
+                if(!is_dir($file_path)){
+                    mkdir($file_path);
+                }
+                for($i=0;$i<count($_FILES['append']['name']);$i++){
+                    $_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
+                }
+                $filename=$_FILES['append']['name'];
+
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
+
+                $filet=$_FILES['append']['tmp_name']; 
+                for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
+                    //move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
+                    array_push($append_urls_arr, $file_path.$filename[$i]);
+                }
+            }
+            $append_urls = json_encode($append_urls_arr);
+            $reg_record = $connection->createCommand()->insert('cs_car_insurance_business_form',
+                          [
+                          //'insurance_id'//保险单id
+                          'insurance_id'=>$insurance_id,
+                          'number'=>$number,
+                          'start_date'=>$start_date,
+                          'end_date'=>$end_date,
+                          'use_nature'=>$use_nature,
+                          'note'=>$note,
+                          'insurance_text'=>$insurance_text,
+                          'money_amount'=>$money_amount,
+                          'add_datetime'=>time(),//系统修改时间
+                          'add_aid' => $_SESSION['backend']['adminInfo']['id'],
+                          'append_urls'=>$append_urls,
+
+                          ])
+                        ->execute();
+            if($reg_record){
+                $returnArr['status'] = true;
+                $returnArr['info'] = '添加成功';
+            } else {
+                $returnArr['status'] = false;
+                $returnArr['info'] = '添加失败';
+            }
+            return json_encode($returnArr);
+
+        }
+
+
+
+        $id = yii::$app->request->get('id');
+        //var_dump($id);exit;
+        //$biInfo = CarInsuranceBusiness::find()->select(['*'])->limit(1)->orderBy('id desc')->asArray()->one();
+        //$biInfo = CarInsuranceBusiness::find()->select(['*'])->where(['id'=>$id])->asArray()->one();
+        $biInfo = (new \yii\db\query())->from('cs_car_insurance_business')->where(['id'=>$id])->one();
+        //echo '<pre>';
+        //var_dump($biInfo['id']);exit;
+        return $this->render('pd-bu-add',['business_id'=>$id,'biInfo'=>$biInfo]);
+    }
+
+     //修改险批单添加
+    public function actionPdBuEdit()
+    {
+        $connection = yii::$app->db;
+        if(yii::$app->request->isPost)
+        {
+            $id = yii::$app->request->post('id');
+
+            $number = yii::$app->request->post('number');//批单号
+            $start_date = strtotime(yii::$app->request->post('start_date'));//开始时间
+            $end_date = strtotime(yii::$app->request->post('end_date'));//结束时间
+            $use_nature = yii::$app->request->post('use_nature');//使用性质
+            $note = yii::$app->request->post('note');//备注
+
+            $types = yii::$app->request->post('type');//险种
+            $moneys = yii::$app->request->post('money');//金额
+            $middles = yii::$app->request->post('middle');//修改的金额
+            $calculates = yii::$app->request->post('calculate');//运算符
+
+            //验证批单唯一性
+            $pci_number = (new \yii\db\query())->select(['number','insurance_id'])->from('cs_car_insurance_business_form')->where(['is_del'=>0,'id'=>$id])->one();
+            $pci_numbers = (new \yii\db\query())->select(['number'])->from('cs_car_insurance_business_form')->where(['is_del'=>0])->all();
+            foreach ($pci_numbers as $k => $v) {
+                if($number != $pci_number['number'] &&  $number == $v['number'])
+                {
+                    $returnArr['status'] = false;
+                    $returnArr['info'] = '商业险批单已存在!';
+                    return json_encode($returnArr);
+                }
+            }
+
+            //验证开始时间不能大于结束时间
+            if($start_date > $end_date){
+                $returnArr['status'] = false;
+                $returnArr['info'] = '开始时间不能大于结束时间!';
+                return json_encode($returnArr); 
+            }
+
+            $pci_times = (new \yii\db\query())->select(['start_date','end_date'])->from('cs_car_insurance_business')->where(['is_del'=>0,'id'=>$pci_number['insurance_id']])->one();
+            if($start_date < $pci_times['start_date'] || $end_date > $pci_times['end_date']){
+                    $returnArr['status'] = false;
+                    $returnArr['info'] = '批单时间必须在保单时间范围内!';
+                    return json_encode($returnArr);
+            }
+
+            //组织险种字段
+            $insurance_text_arr = array();
+            $money_amount=0;
+            if(@$types){
+                foreach ($types as $index=>$value){
+                    $money_amount += $moneys[$index];
+                    array_push($insurance_text_arr, array($value,$calculates[$index],$middles[$index],$moneys[$index]));
+                }
+            }
+            $insurance_text = json_encode($insurance_text_arr);
+            //$append_urls_arr = array();//保单附件上传
+            if(yii::$app->request->post('append_url')){
+                $append_urls_arr = yii::$app->request->post('append_url');
+            }else {
+                $append_urls_arr = array();
+            }
+            if(@$_FILES['append']){
+                $file_path="uploads/insurance/";
+                if(!is_dir($file_path)){
+                    mkdir($file_path);
+                }
+                $file_path .= date("Ymd").'/';
+                if(!is_dir($file_path)){
+                    mkdir($file_path);
+                }
+                for($i=0;$i<count($_FILES['append']['name']);$i++){
+                    $_FILES['append']['name'][$i] = date("YmdHis").'_'.$_FILES['append']['name'][$i]; //加个时间戳防止重复文件上传后被覆盖
+                }
+                $filename=$_FILES['append']['name'];
+
+                $arr_jpg=array('jpg','png','pdf');//验证上传文件的格式
+                foreach ($filename as $k1 => $v1) {
+                    $file_res = explode('.',$v1);
+                    if(!in_array($file_res[1], $arr_jpg))
+                    {
+                        $returnArr['status'] = false;
+                        $returnArr['info'] = "上传文件仅支持'jpg,png,pdf'格式!";
+                        return json_encode($returnArr); 
+                    }
+                       
+                }
+
+                $filet=$_FILES['append']['tmp_name']; 
+                for($i=0;$i<count($filename);$i++){     //循环上传文件的数组
+                    //move_uploaded_file($filet[$i],$file_path.iconv("UTF-8","gb2312", $filename[$i]));
+                    move_uploaded_file($filet[$i],$file_path.$filename[$i]);
+                    array_push($append_urls_arr, $file_path.$filename[$i]);
+                }
+            }
+            $append_urls = json_encode($append_urls_arr);
+            $reg_record = $connection->createCommand()->update('cs_car_insurance_business_form',
+                          [
+                          //'insurance_id'//保险单id
+                          //'insurance_id'=>$insurance_id,
+                          'number'=>$number,
+                          'start_date'=>$start_date,
+                          'end_date'=>$end_date,
+                          'use_nature'=>$use_nature,
+                          'note'=>$note,
+                          'insurance_text'=>$insurance_text,
+                          'money_amount'=>$money_amount,
+                          'add_datetime'=>time(),//系统修改时间
+                          'add_aid' => $_SESSION['backend']['adminInfo']['id'],
+                          'append_urls'=>$append_urls,
+                          ],'id=:id',[':id'=>$id]
+                          )->execute();
+
+            if($reg_record){
+                $returnArr['status'] = true;
+                $returnArr['info'] = '修改成功';
+            } else {
+                $returnArr['status'] = false;
+                $returnArr['info'] = '修改失败';
+            }
+            return json_encode($returnArr);
+        }
+        $id = yii::$app->request->get('id');
+        $buInfo = (new \yii\db\query())->from('cs_car_insurance_business_form')->where(['id'=>$id])->one();
+        $bu_number = (new \yii\db\query())->from('cs_car_insurance_business')->where(['id'=>$buInfo['insurance_id']])->one();
+        //var_dump($buInfo);exit;
+        //echo '<pre>';
+        //var_dump($buInfo);
+        //var_dump($id);
+        //exit;
+         
+        return $this->render('pd-bu-edit',['buInfo'=>$buInfo,'bu_number'=>$bu_number]);
     }
 }

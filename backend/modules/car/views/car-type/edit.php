@@ -58,7 +58,7 @@
                        
                     />
                 </td>
-                <td align="right"><div style="width:70px;">车型名称</div></td>
+                <!-- <td align="right"><div style="width:70px;">车型名称</div></td>
                 <td>
                     <input
                         id="car_baseinfo_edit_input_car_brand_name"
@@ -67,7 +67,18 @@
                         readonly="true"
                         
                     />
+                </td> -->
+                <td align="right"><div style="width:70px;">车型名称</div></td>
+                <td>
+                    <input
+                        id="car_baseinfo_add_input_car_brand_name2"
+                        required="true"
+                        class="easyui-textbox"
+                        style="width:160px;"
+                        name="car_model_name"  
+                    />
                 </td>
+
             </tr>
             <tr>
                 <td align="right"><div style="width:70px;">车辆制造厂</div></td>
@@ -79,16 +90,7 @@
                         validType="length[100]"
                     />
                 </td>
-                <td align="right"><div style="width:70px;">车型名称</div></td>
-                <td>
-                    <input
-                        id="car_baseinfo_add_input_car_brand_name2"
-                        required="true"
-                        class="easyui-textbox"
-                        style="width:160px;"
-                        name="car_model_name"  
-                    />
-                </td>
+                
             </tr>
             
             

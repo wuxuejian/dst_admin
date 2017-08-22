@@ -391,21 +391,36 @@
 		})
 
 		function add3(reject){
-			$('input[name="is_reject"]').val(reject);
-			modal_close();
-			if($('input[name="is_reject"]').val() == 1){
-				a_modal_show();
-			}if($('input[name="is_reject"]').val() == 2){
-				cancel();
-			}
+			var isSubmit = false;
 			$('#form1').ajaxSubmit({
 				dataType : "json",
-				success : function(data){	
+				success : function(data){
+					isSubmit = true;
+					if(!data.status){
+						alert(data.info);
+					}
 				},
 				error: function(xhr){
 					//alert("提交失败");
 				}
 			});
+
+			setTimeout(
+				function (){
+					if(isSubmit){
+						return false;
+					}
+					$('input[name="is_reject"]').val(reject);
+					modal_close();
+					if($('input[name="is_reject"]').val() == 1){
+						a_modal_show();
+					}if($('input[name="is_reject"]').val() == 2){
+						cancel();
+					}
+				},
+				2000
+			);
 		}
+		
   	</script>
 </html>

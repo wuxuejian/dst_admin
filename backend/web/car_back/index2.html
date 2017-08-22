@@ -513,7 +513,7 @@
 				$.ajax({
 			       	url:'../index.php?r=car/car-back/get-contract-cars',
 			       	type:'get',
-			       	data:{'number':c_n},
+			       	data:{'number':c_n,'is_all':1},
 			       	dataType:'json',
 			       	success:function(data){
 			       		//获取合同时间
@@ -546,25 +546,96 @@
 							$('input[name="contract_time'+th+'"]').val(newDate.format('yyyy-MM-dd'));
 			        	}
 			       		$('#tbody'+th).find('tr').remove();
-			       		
+
+			       		//提前判断已勾选内容并排在前面
+			       		var pick_car = new Array();
+
+			       		//结合contrack_tt已勾选合同确定勾选内容
+				        for(var c_l=0; c_l<contract_tt.length; c_l++){
+				        	if(contract_tt[c_l].contract_number == c_n && contract_tt[c_l].plate_numbers.length > 0){
+				        		for(var p = 0; p < contract_tt[c_l].plate_numbers.length; p++){
+				        			for(var j = 0; j<data.cars.length; j++){
+				        				if(contract_tt[c_l].plate_numbers[p] == data.cars[j].plate_number){
+				        					
+				        					//已勾选的创建数组
+				        					pick_car.push(contract_tt[c_l].plate_numbers[p]);
+
+				        				}    				
+				        			}
+				        		}
+				        	}
+				        }
+
+				        //先判断Array是否有indexOf方法，如果没有就扩展出此方法。
+				        if (!Array.indexOf) {  
+						    Array.prototype.indexOf = function (obj) {  
+						        for (var i = 0; i < this.length; i++) {  
+						            if (this[i] == obj) {  
+						                return i;  
+						            }  
+						        }  
+						        return -1;  
+						    }  
+						}
+
+				        //已勾选内容
 			       		for(var j = 0; j<data.cars.length; j++){
 			       			var html = [];
-				        	html.push('<tr>');
-				          		html.push('<td>');
-				          			html.push('<div class="ui checkbox">');
-					          			html.push('<input type="checkbox" class="check_num" name="car_no'+th+'[]" value="'+data.cars[j].plate_number+'">');
-					          			html.push('<label>'+(parseInt(j)+1)+'</label>');
-					       			html.push('</div>');
-					      		html.push('</td>');
-					      		if(data.cars[j].car_status == 'STOCK'){
-					          		html.push('<td class="c-q-gray">'+data.cars[j].plate_number+'</td>');
-					          		html.push('<td class="c-q-gray">'+data.cars[j].car_model+'</td>');
-				          		}else{
-					          		html.push('<td>'+data.cars[j].plate_number+'</td>');
-					          		html.push('<td>'+data.cars[j].car_model+'</td>');
-				          		}
-				        	html.push('</tr>');
-				        	$('#tbody'+th).append(html.join(''));
+			       			if(pick_car.indexOf(data.cars[j].plate_number) != -1){
+			       				html.push('<tr>');
+					          		
+						      		if(data.cars[j].car_status == 'STOCK'){
+						      			html.push('<td>');
+						          			html.push('<div class="ui checkbox">');
+							          			html.push('<input type="checkbox" class="check_num" name="car_no'+th+'[]" value="'+data.cars[j].plate_number+'" checked="checked" disabled="disabled">');
+							          			html.push('<label>'+(parseInt(j)+1)+'</label>');
+							       			html.push('</div>');
+							      		html.push('</td>');
+						          		html.push('<td class="c-q-gray">'+data.cars[j].plate_number+'</td>');
+						          		html.push('<td class="c-q-gray">'+data.cars[j].car_model+'</td>');
+					          		}else{
+					          			html.push('<td>');
+						          			html.push('<div class="ui checkbox">');
+							          			html.push('<input type="checkbox" class="check_num" name="car_no'+th+'[]" value="'+data.cars[j].plate_number+'" checked="checked">');
+							          			html.push('<label>'+(parseInt(j)+1)+'</label>');
+							       			html.push('</div>');
+							      		html.push('</td>');
+						          		html.push('<td>'+data.cars[j].plate_number+'</td>');
+						          		html.push('<td>'+data.cars[j].car_model+'</td>');
+					          		}
+					        	html.push('</tr>');
+					        	$('#tbody'+th).append(html.join(''));
+			       			}	
+				        }
+
+				        //未勾选内容
+			       		for(var j = 0; j<data.cars.length; j++){
+			       			var html = [];
+			       			if(pick_car.indexOf(data.cars[j].plate_number) == -1){
+			       				html.push('<tr>');
+					          		
+						      		if(data.cars[j].car_status == 'STOCK'){
+						      			html.push('<td>');
+						          			html.push('<div class="ui checkbox">');
+							          			html.push('<input type="checkbox" class="check_num" name="car_no'+th+'[]" value="'+data.cars[j].plate_number+'" disabled="disabled">');
+							          			html.push('<label>'+(parseInt(j)+1)+'</label>');
+							       			html.push('</div>');
+							      		html.push('</td>');
+						          		html.push('<td class="c-q-gray">'+data.cars[j].plate_number+'</td>');
+						          		html.push('<td class="c-q-gray">'+data.cars[j].car_model+'</td>');
+					          		}else{
+					          			html.push('<td>');
+						          			html.push('<div class="ui checkbox">');
+							          			html.push('<input type="checkbox" class="check_num" name="car_no'+th+'[]" value="'+data.cars[j].plate_number+'">');
+							          			html.push('<label>'+(parseInt(j)+1)+'</label>');
+							       			html.push('</div>');
+							      		html.push('</td>');
+						          		html.push('<td>'+data.cars[j].plate_number+'</td>');
+						          		html.push('<td>'+data.cars[j].car_model+'</td>');
+					          		}
+					        	html.push('</tr>');
+					        	$('#tbody'+th).append(html.join(''));
+			       			}	
 				        }
 
 				        //checkbox点击后计数并显示
@@ -579,7 +650,8 @@
 				        })
 				        
 				        //结合contrack_tt已勾选合同确定勾选内容
-				        for(var c_l=0; c_l<contract_tt.length; c_l++){
+				        //此处按顺序勾选已废弃---------------------------------------------------------------------------
+				        /*for(var c_l=0; c_l<contract_tt.length; c_l++){
 				        	if(contract_tt[c_l].contract_number == c_n && contract_tt[c_l].plate_numbers.length > 0){
 				        		for(var p = 0; p < contract_tt[c_l].plate_numbers.length; p++){
 				        			for(var j = 0; j<data.cars.length; j++){
@@ -593,6 +665,7 @@
 				        		}
 				        	}
 				        }
+
 				        //判断车辆是否入库入库不可勾选变灰
 				        for(var c_l=0; c_l<contract_tt.length; c_l++){
 				        	if(contract_tt[c_l].contract_number == c_n && contract_tt[c_l].plate_numbers.length > 0){
@@ -602,7 +675,7 @@
 				        			}
 				        		}
 				        	}
-				        }     
+				        }-------------------------------------------------------------------------------------------------*/     
 			       	},error:function(){
 			       	}
 				})

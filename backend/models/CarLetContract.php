@@ -61,8 +61,8 @@ class CarLetContract extends ActiveRecord
             ['start_time','match','pattern'=>'/^20\d{2}(-\d{2}){2}$/','message'=>'开始时间格式错误！'],
             ['end_time','required','message'=>'结束时间不能为空！'],
             ['end_time','match','pattern'=>'/^20\d{2}(-\d{2}){2}$/','message'=>'结束时间格式错误！'],
-            ['due_time','required','message'=>'合同期限不能为空！'],
-            ['due_time','match','pattern'=>'/^20\d{2}(-\d{2}){2}$/','message'=>'合同期限格式错误！'],
+            //['due_time','required','message'=>'合同期限不能为空！'],
+            //['due_time','match','pattern'=>'/^20\d{2}(-\d{2}){2}$/','message'=>'合同期限格式错误！'],
             ['bail','default','value'=>'0.00'],
             ['bail','match','pattern'=>'/^\d{1,7}(\.\d{1,2})?$/','message'=>'保证金格式错误！'],
             ['note','filter','filter'=>'htmlspecialchars'],
@@ -81,7 +81,7 @@ class CarLetContract extends ActiveRecord
                 'number','cCustomer_id','pCustomer_id','start_time','end_time','due_time','bail','note','sign_date'
             ],
             'edit'=>[
-                'number','cCustomer_id','pCustomer_id','start_time','end_time','due_time','bail','note','sign_date','salesperson'
+                'number','cCustomer_id','pCustomer_id','start_time','end_time','due_time','bail','note','sign_date','salesperson','source','second_contract_type','rent_day'
             ],
         ];
     }

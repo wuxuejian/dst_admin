@@ -142,6 +142,8 @@
   	<script src="js/flow.js"></script>
   	<script>
 
+
+
   		//预处理下拉框
   		$('.selection.dropdown').dropdown();
   		//预处理弹出输入框
@@ -199,12 +201,18 @@
 	           	success:function(data){
 	           		var html1=[];
 	           		var html2=[];
+	           		html1.push('<option value="0">其它</option>');
+	           		html2.push('<div class="item" data-value="0">其它</div>');
 	           		for( i = 0 ; i < data.length ; i++ ){
 	           			html1.push('<option value='+data[i].customer_name+'>'+data[i].customer_name+'</option>');
 	           			html2.push('<div class="item" data-value='+data[i].customer_name+'>'+data[i].customer_name+'</div>');
 	           		}
 	           		$(html1.join('')).appendTo('.customer_name_s');
 	           		$(html2.join('')).appendTo('.customer_name_d');
+	           		//输入下拉不可用重新定义
+	           		$('.customer_name_d').unbind('click');
+	           		setTimeout('dd()',100);
+	           		
 
 	           		//获取页面值
 	           		$.ajax({
@@ -250,6 +258,28 @@
 	            error: function (msg) {}
 		   	});
 		})
+		function dd(){
+   			$('.customer_name_d').find('.item').click(function(){	
+				var text_val = $(this).text();
+				var true_val = $(this).attr('data-value')
+				$('.customer_name_show').text(text_val);
+				$('.customer_name_d').find('.item').removeClass('active selected');
+				$(this).addClass('active selected');
+				$('.customer_name_s').val(true_val);
+				$('.customer_name_d').siblings('input').val(text_val);
+				$('.customer_name_d').removeClass('visible');
+				$('.customer_name_d').addClass('hidden');
+				$('.customer_name_d').parent('div').removeClass('active visible');
+				$('.customer_name_d').css("display","none");
+				if(text_val == '其它'){
+					$('.print_ture').show();
+				}else{
+					$('.print_ture').hide();
+					$('.print_ture').val('');
+				}
+			})
+		}
+		
 
 		$('.print_input').keyup(function(){
 			var p_int = $('.print_input').val();
@@ -262,6 +292,8 @@
 
 	           		var html1=[];
 	           		var html2=[];
+	           		html1.push('<option value="0">其它</option>');
+	           		html2.push('<div class="item" data-value="0">其它</div>');
 	           		for( i = 0 ; i < data.length ; i++ ){
 	           			html1.push('<option value='+data[i].customer_name+'>'+data[i].customer_name+'</option>');
 	           			html2.push('<div class="item" data-value='+data[i].customer_name+'>'+data[i].customer_name+'</div>');
@@ -270,6 +302,10 @@
 	           		$('.customer_name_d > div').remove();
 	           		$(html1.join('')).appendTo('.customer_name_s');
 	           		$(html2.join('')).appendTo('.customer_name_d');
+
+	            	$('.customer_name_d').unbind('click');
+	            	setTimeout('dd()',100);    
+					
 	        	},
 	            error: function (msg) {}
 		   	});

@@ -65,6 +65,25 @@ class PersonalContractController extends BaseController
         ]);
         $query->andFilterWhere([
             'like',
+            '{{%car_let_contract}}.`source`',
+            yii::$app->request->get('source')
+        ]);
+       /* $query->andFilterWhere([
+            'like',
+            '{{%car_let_contract}}.`second_contract_type`',
+            yii::$app->request->get('second_contract_type')
+        ]);*/
+        $second_contract_type = yii::$app->request->get('second_contract_type');
+         if($second_contract_type){
+            //echo '123';exit;
+            $query->andFilterWhere([
+                    'like',
+                    '{{%car_let_contract}}.`second_contract_type`',
+                    $second_contract_type
+                    ]);
+        }
+        $query->andFilterWhere([
+            'like',
             '{{%car_let_contract}}.`contract_type`',
             yii::$app->request->get('contract_type') 
         ]);
@@ -98,6 +117,63 @@ class PersonalContractController extends BaseController
         $data = $query->offset($pages->offset)->limit($pages->limit)
                 ->orderBy($orderBy)
                 ->asArray()->all();
+        foreach( $data as $k => $v){
+            /*if($v['rent_day'] != null && $v['rent_deadline'] != null){
+                $bb = date('Y-m-d',$v['rent_day']);
+                $aa = $v['rent_deadline'];
+                $data[$k]['rel_rent_date'] = date("Y-m-d",strtotime("+$aa day",strtotime($bb)));
+            }*/
+            if($v['rent_deadline'] != 0){
+               //$data[$k]['rent_day'] = $v['rent_deadline'];
+               $data[$k]['rent_day'] = date("d",$v['rent_day']);
+            }
+            //年月日
+            $start_time = date("Y-m-d",$v['start_time']);
+            $end_time = date("Y-m-d",$v['end_time']);
+            //年
+            $start_time_y = date("Y",$v['start_time']);
+            $end_time_y = date("Y",$v['end_time']);
+            //月
+            $start_time_m = date("m",$v['start_time']);
+            $end_time_m = date("m",$v['end_time']);
+            //日
+            $start_time_d = date("d",$v['start_time']);
+            $end_time_d = date("d",$v['end_time']);
+            
+            if($start_time_y == $end_time_y) {//同一年份
+                if($start_time_m == $end_time_m) {//同一月份
+                    $_day = $end_time_d-$start_time_d;
+                    $data[$k]['_due_time'] = $_day.'天';
+                } else if($start_time_m < $end_time_m) {//不同月份
+                    $_month = $end_time_m-($start_time_m+1);
+                    $_day = (30-$start_time_d)+$end_time_d;
+                    if($_day >= 30) {
+                       $_day =  $_day-30;
+                       $_month = $_month + 1;
+                    }
+                    $data[$k]['_due_time'] = $_month.'月'.$_day.'天';
+                    if($_month == 0){//判断月份为0，只显示天数
+                        $data[$k]['_due_time'] = $_day.'天';
+                    }
+                    if($_day == 0){//
+                        $data[$k]['_due_time'] = $_month.'月';
+                    }
+                }
+            } else if($start_time_y < $end_time_y) {//跨年
+                $_month = ((12-($start_time_m+1)) + ($end_time_m))+(($end_time_y-$start_time_y-1)*12);
+                $_day = (30-$start_time_d) + $end_time_d;
+                if($_day >= 30) {
+                   $_day =  $_day-30;
+                   $_month = $_month + 1;
+                }
+                if($_day == 0) {//判断天数为0，只显示月份
+                    $data[$k]['_due_time'] = $_month.'月';
+                } else {
+                    $data[$k]['_due_time'] = $_month.'月'.$_day.'天';
+                } 
+            }
+            
+        }
         $returnArr = [];
         $returnArr['rows'] = $data;
         $returnArr['total'] = $total;
@@ -186,6 +262,22 @@ class PersonalContractController extends BaseController
             $model->salesperson = yii::$app->request->post('salesperson');
             $model->contract_type = yii::$app->request->post('contract_type');
             $model->operating_company_id = $_SESSION['backend']['adminInfo']['operating_company_id'];
+
+            $model->source = yii::$app->request->post('source');//客户来源
+
+            $model->rent_day = yii::$app->request->post('rent_day');//租金缴纳日
+            if(yii::$app->request->post('rent_deadline') == null){
+                $model->rent_deadline = 0;
+            }
+            //$model->rent_day = strtotime(yii::$app->request->post('rent_day'));//租金缴纳日
+            //$model->rent_deadline = yii::$app->request->post('rent_deadline');//账期
+            $model->second_contract_type = yii::$app->request->post('second_contract_type');//合同类型二级分类
+
+            if(yii::$app->request->post('start_time') >= yii::$app->request->post('end_time')) {
+                $returnArr['info'] = '开始时间不能大于结束时间！';
+                return json_encode($returnArr);
+            }
+
             $returnArr = [];
             $returnArr['status'] = true;
             $returnArr['info'] = '';

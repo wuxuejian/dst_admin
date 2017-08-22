@@ -221,9 +221,15 @@
                         dataType: 'json',
                         success: function(data){
                             if(data.status){
-                                $.messager.alert('添加成功',data.info,'info');
+                                //$.messager.alert('添加成功',data.info,'info');
                                 $('#easyui-purchase-order-index-start').dialog('close');
                                 $('#easyui-datagrid-purchase-order-index').datagrid('reload');
+
+								//
+								 $('#easyui-purchase-order-index-arrive')
+									.dialog('open')
+									.dialog('refresh',"<?php echo yii::$app->urlManager->createUrl(['purchase/purchase-express/arrive']); ?>&id="+data.id);
+
                             }else{
                                 $.messager.alert('添加失败',data.info,'error');
                             }
@@ -342,63 +348,33 @@
         $('#easyui-purchase-order-index-info').window('open');
         $('#easyui-purchase-order-index-info').window('refresh',"<?php echo yii::$app->urlManager->createUrl(['purchase/purchase-order/info']); ?>&id="+id);
     }
-    //初始化  发车发车状态查看
-    /*PurchaseOrderIndex.start = function(id){
-        if(!id){
-            var selectRow = this.getSelected();
-            if(!selectRow){
-                return false;
-            }
-            id = selectRow.id;
-        }
-        //alert(id);
-        $('#easyui-purchase-order-index-start2')
-            .dialog('open')
-            .dialog('refresh',"<?php echo yii::$app->urlManager->createUrl(['purchase/purchase-order/start2']); ?>&id="+id);
-        
-    }*/
-	
-	//修改
-	/*PurchaseOrderIndex.arrive = function(id){
-		if(!id){
-			var selectRow = this.getSelected();
-            if(!selectRow){
-                return false;
-            }
-            id = selectRow.id;
-		}
-		alert(id);
-		//$('#easyui-dialog-car-brand-index-edit')
-        //    .dialog('open')
-		//    .dialog('refresh',"<?php echo yii::$app->urlManager->createUrl(['car/brand/edit']); ?>&id="+id);
-	}*/
-     //初始化到车状态等级按钮窗口
+     //到车登记窗口
     $('#easyui-purchase-order-index-arrive').dialog({
-        title: '到车状态登记',
-        width: '650px',
-        height: '400px',
+        title: '到车登记',
+        width: '700px',
+        height: '600px',
         closed: true,
         cache: true,
         modal: true,
         resizable:true,
         maximizable: true,
         buttons: [{
-            text:'提交',
+            text:'保存',
             iconCls:'icon-ok',
             handler:function(){
-                var form = $('#order_detail');
+                var form = $('#purchase-express-arrive-form');
                 if(!form.form('validate')) return false;
                 var data = form.serialize();
                 $.ajax({
                     type: 'post',
-                    url: "<?php echo yii::$app->urlManager->createUrl(['purchase/purchase-order/arrive']); ?>",
+                    url: "<?php echo yii::$app->urlManager->createUrl(['purchase/purchase-express/arrive']); ?>",
                     data: data,
                     dataType: 'json',
                     success: function(data){
                         if(data.status){
                             $.messager.alert('添加成功',data.info,'info');
-                            $('#easyui-purchase-order-index-arrive').dialog('close');
-                            $('#easyui-datagrid-purchase-order-index').datagrid('reload');
+                            $('#easyui-purchase-express-index-arrive').dialog('close');
+                            //$('#easyui-datagrid-purchase-express-index').datagrid('reload');
                         }else{
                             $.messager.alert('添加失败',data.info,'error');
                         }
@@ -416,36 +392,6 @@
             $(this).dialog('clear');
         }
     });
-
-    //初始化到车状态等级按钮窗口
-    PurchaseOrderIndex.arrive = function(id){
-        if(!id){
-            var selectRow = this.getSelected();
-            if(!selectRow){
-                return false;
-            }
-            id = selectRow.id;
-        }
-        //alert(id);
-        var flag = id.indexOf("Ex_");
-        if(flag == 0){
-           // alert(id.split("Ex_")[1]);      
-           id = id.split("Ex_")[1];         
-        }else if(flag == -1){
-          $.messager.alert('错误','请选择物流运单，不要选择主订单进行操作！','error');  
-          return false;     
-        } else {
-          $.messager.alert('错误','请选择物流运单，不要选择主订单进行操作！','error');  
-          return false;     
-        }       
-        
-        $('#easyui-purchase-order-index-arrive')
-            .dialog('open')
-            .dialog('refresh',"<?php echo yii::$app->urlManager->createUrl(['purchase/purchase-order/arrive']); ?>&id="+id);
-                
-        // $('#easyui-purchase-order-index-arrive').dialog('open');
-        // $('#easyui-purchase-order-index-arrive').dialog('refresh',"<?php echo yii::$app->urlManager->createUrl(['purchase/purchase-order/arrive']); ?>");
-    }
 	
 	//重置查询表单
     PurchaseOrderIndex.resetForm = function(){

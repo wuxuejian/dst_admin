@@ -3295,6 +3295,7 @@ class RepairController extends BaseController
 			$fault_start_time = !empty($row['fault_start_time']) ? date('Y-m-d H:i',$row['fault_start_time']):'';
 			$expect_time = !empty($row['expect_time']) ? date('Y-m-d H:i',$row['expect_time']):'';
 			$into_factory_time =  !empty($row['into_factory_time'])? date('Y-m-d H:i',$row['into_factory_time']):'';
+			$leave_factory_time = !empty($row['leave_factory_time']) ? date('Y-m-d H:i:s',$row['leave_factory_time']):'';
 			
 			$car_model_name = @$config['car_model_name'][$val['car_model']]['text'];
 			$customer_name='';
@@ -3307,7 +3308,7 @@ class RepairController extends BaseController
 				$customer_type = '个人';
 			}
 			
-			$str .="{$row['car_no']},{$row['car_vin']},{$row['brand_name']},{$row['car_model']},{$car_model_name},{$customer_name},{$customer_type},{$row['order_no']},{$status_arr[$row['status']]},{$row['record_user']},{$row['desc']},{$row['fault_why']},{$row['maintain_method']},{$row['current_mileage']},{$row['fault_category']},{$row['total_code']},{$fault_start_time},{$expect_time},{$row['leave_factory_time']},{$way},{$into_factory_time},{$row['maintain_scene']},{$row['operating_company_name']},{$time}"."\n";
+			$str .="{$row['car_no']},{$row['car_vin']},{$row['brand_name']},{$row['car_model']},{$car_model_name},{$customer_name},{$customer_type},{$row['order_no']},{$status_arr[$row['status']]},{$row['record_user']},{$row['desc']},{$row['fault_why']},{$row['maintain_method']},{$row['current_mileage']},{$row['fault_category']},{$row['total_code']},{$fault_start_time},{$expect_time},{$leave_factory_time},{$way},{$into_factory_time},{$row['maintain_scene']},{$row['operating_company_name']},{$time}"."\n";
 			
 		}
 		

@@ -375,6 +375,7 @@
             
         </table>
     </div>
+<input type="hidden" id="sale_factory_1" name="sale_factory" value="">
 <input type="hidden" id="car_no_same" name="car_no" value="">
 <input type="hidden" id="part_info" name="part_info" value="">
 <input type="hidden" id="task_info" name="task_info" value="">
@@ -387,8 +388,7 @@
 
 <iframe id="iframe-repair-add-uploadimage" name="iframe-repair-add-uploadimage" style="display:none;"></iframe>
 <div id="easyui-dialog-repair-add-uploadimage"></div>
-<script>
-
+<script> 
     var CarBaseinfoAdd = {
         //获取填写车型的车辆名称
         getCarModelName: function(carBrand){
@@ -523,6 +523,9 @@
                     //alert(111);
                     if(data.status){
                        // alert(222);
+                       if(data.msg){
+                        $.messager.alert('提示',data.msg,'msg');
+                       }
                         $('#order_no').combobox({
                         valueField:'value',
                         textField:'text',
@@ -550,6 +553,13 @@
                     $("#car_model_name").val(data.car_model_name);
                     $("#car_jia_no").val(data.vehicle_dentification_number);
                     $("#car_user").val(data.name);
+                    var sale_factory=$("#sale_factory").val();
+                    if(sale_factory=='外部维修厂'){
+                        sale_factory=1;
+                    }else{
+                        sale_factory=0;
+                    }
+                    $("#sale_factory_1").val(sale_factory) ;
                     if(data.a){
                         $("#before_repair_time").val(data.a);
                         $("#before_repair_li").val(data.b);
@@ -612,8 +622,19 @@
                         for(var i=0;i<rows.length;i++)
                         {
                             task_info[i]=new Array();
+                            console.log(rows[i].task_type)
+                            console.log(rows[i].task_name)
+                            console.log(rows[i].task_fee)
+                            if(!rows[i].task_type || !rows[i].task_name || !rows[i].task_fee){
+                                $.messager.alert('数据错误','维修类型，维修项目名称，工时费都为必填项','error');
+                                                return false;
+                            }
                             task_info[i][0]=rows[i].task_type;
                             task_info[i][1]=rows[i].task_name;
+                            if(rows[i].task_fee<=0){
+                                $.messager.alert('数据错误','价格只能为正数','error');
+                                return false;
+                            }
                             task_info[i][2]=rows[i].task_fee;
                             task_info[i][3]=rows[i].task_note;
                             task_money_all=parseFloat($("#task_money_all").text())+parseFloat(rows[i].task_fee);
@@ -623,7 +644,8 @@
                             money_all=parseFloat(task_money_all)+parseFloat(part_money_all);
                             money_all = money_all.toFixed(2);
                             $("#money_all").text(money_all) ;
-                            $("#repair_price").val(money_all);  
+                            $("#repair_price").val(money_all);
+                            
 
 
                         }
@@ -734,6 +756,14 @@
                                              row.before_repair_time=data.into_time;
                                              row.before_repair_li=data.into_mile;
                                               part_info[i][0]=rows[i].part_no;
+                                              if(part_number[i]<0){
+                                                $.messager.alert('数据错误','数量只能为正数','error');
+                                                return false;
+                                              }
+                                              if(part_fee[i]<=0){
+                                                $.messager.alert('数据错误','价格只能为正数','error');
+                                                return false;
+                                              }
                                                 part_info[i][1]=part_number[i];
                                                 part_info[i][2]=part_fee[i];
                                                 part_info[i][3]=rows[i].part_unit;
@@ -753,7 +783,8 @@
                                          });
                                 //setTimeout("onClickRow_1("+i+")",100);
                                 $('#bg').datagrid('acceptChanges');
-                        } 
+                        }
+                        //console.log(JSON.parse(part_info)) 
                        console.log(arrayToJson(part_info))
                          // part_info=part_info.join("-");
                         $("#part_info").val(arrayToJson(part_info));

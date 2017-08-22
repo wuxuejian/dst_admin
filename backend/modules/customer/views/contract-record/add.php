@@ -27,7 +27,7 @@
                     <div class="ulforform-resizeable-title">合同类型</div>
                     <div class="ulforform-resizeable-input">
                     <select
-                        
+                        id="contract_type_id"
                         class="easyui-combobox"
                         name="contract_type"
                         style="width:160px;"
@@ -45,8 +45,12 @@
                      
                     </select>
                     </div>
-                   <!--  </div> -->
                 </li>
+
+
+                <span id='tip'></span>
+
+
                 <li class="ulforform-resizeable-group">
                     <div class="ulforform-resizeable-title">承租客户</div>
                     <div class="ulforform-resizeable-input">
@@ -94,7 +98,7 @@
                         >
                     </div>
                 </li>
-                <li class="ulforform-resizeable-group">
+               <!--  <li class="ulforform-resizeable-group">
                     <div class="ulforform-resizeable-title">合同期限</div>
                     <div class="ulforform-resizeable-input">
                         <input
@@ -106,7 +110,7 @@
                             validType="date"
                         />
                     </div>
-                </li>
+                </li> -->
                 <li class="ulforform-resizeable-group">
                     <div class="ulforform-resizeable-title">总保证金</div>
                     <div class="ulforform-resizeable-input">
@@ -125,6 +129,98 @@
                             class="easyui-textbox"
                             style="width:160px;"
                             name="salesperson"
+                            required="true"
+                        />
+                    </div>
+                </li>
+                <li class="ulforform-resizeable-group">
+                    <div class="ulforform-resizeable-title">客户来源</div>
+                    <div class="ulforform-resizeable-input">
+                    <select
+                        class="easyui-combobox"
+                        name="source"
+                        style="width:160px;"
+                        required="true"
+                        editable="false"
+                        data-options="panelHeight:'auto'"
+                        align:"center"   
+                    >         
+                        <option value=''></option>
+                        <option value='1'>400呼叫中心</option>
+                        <option value='2'>地推</option>
+                        <option value='3'>大客户导入</option>
+                        <option value='4'>自主开发</option>
+                        <option value='5'>转介绍</option>
+                        <option value='6'>活动促销</option>
+                        <option value='7'>其他</option>
+                    </select>
+                    </div>
+                </li>
+                <li class="ulforform-resizeable-group">
+                    <div class="ulforform-resizeable-title">每月租金缴纳日</div>
+                    <div class="ulforform-resizeable-input">
+                        <!-- <input
+                            class="easyui-datebox"
+                            style="width:160px;"
+                            name="rent_day"
+                            required="true"
+                            missingMessage="请选择租金缴纳日！"
+                            validType="date"
+                        /> -->
+                       <select
+                        class="easyui-combobox"
+                        name="rent_day"
+                        style="width:160px;"
+                        required="true"
+                        editable="false"
+                        align:"center"   
+                        >   
+                            <option value=''></option>
+                            <option value='1'>1</option>
+                            <option value='2'>2</option>
+                            <option value='3'>3</option>
+                            <option value='4'>4</option>
+                            <option value='5'>5</option>
+                            <option value='6'>6</option>
+                            <option value='7'>7</option>
+                            <option value='8'>8</option>
+                            <option value='9'>9</option>
+                            <option value='10'>10</option>
+                            <option value='11'>11</option>
+                            <option value='12'>12</option>
+                            <option value='13'>13</option>
+                            <option value='14'>14</option>
+                            <option value='15'>15</option>
+                            <option value='16'>16</option>
+                            <option value='17'>17</option>
+                            <option value='18'>18</option>
+                            <option value='19'>19</option>
+                            <option value='20'>20</option>
+                            <option value='21'>21</option>
+                            <option value='22'>22</option>
+                            <option value='23'>23</option>
+                            <option value='24'>24</option>
+                            <option value='25'>25</option>
+                            <option value='26'>26</option>
+                            <option value='27'>27</option>
+                            <option value='28'>28</option>
+                            <option value='29'>29</option>
+                            <option value='30'>30</option>
+                            <option value='31'>31</option>
+
+                        </select>
+                    </div>
+                </li>
+                <li class="ulforform-resizeable-group">
+                    <div class="ulforform-resizeable-title">账期</div>
+                    <div class="ulforform-resizeable-input">
+                        <input
+                            class="easyui-textbox"
+                            style="width:160px;"
+                            name="rent_deadline"
+                            prompt="请输入天数"
+                            missingMessage="请填写账期！"
+                            validType="int"
                         />
                     </div>
                 </li>
@@ -261,6 +357,48 @@
         });
 
 		
+        $('#contract_type_id').combobox({
+
+            onChange:function(newValue,oldValue){
+                
+                    var data = 0;
+                    if(newValue == '租赁'){
+                        var html = "<li class='ulforform-resizeable-group'>\
+                        <div class='ulforform-resizeable-title' style='width:85px;text-align:right;'>业务类型</div>\
+                        <div class='ulforform-resizeable-input'><select id='second_contract_type_id' name='second_contract_type' style='width:160px;' class='easyui-combobox' align:'center' ><option>长租</option><option>以租代售</option><option>分时租赁</option><option>短租</option></select>\
+                        </div></li>";
+                    }
+                    if(newValue == '自运营'){
+                        var html = "<li class='ulforform-resizeable-group'>\
+                        <div class='ulforform-resizeable-title' style='width:85px;text-align:right;'>业务类型</div>\
+                        <div class='ulforform-resizeable-input'><select id='second_contract_type_id' name='second_contract_type' style='width:160px;' class='easyui-combobox' align:'center' ><option>店配</option><option>宅配</option><option>调拨转运</option><option>接驳运输</option><option>收派</option></select>\
+                        </div></li>";
+                    }
+                    
+                    $("#tip").html(html);
+                     //$("#contract_type_id").parent().parent().after(html);
+               /* var datax,json;
+                datax = [];
+                datax.push({ "text": "测试", "id": 100 });*/
+                //$("#user_id"+data).combobox("loadData", datax);
+
+                $("#second_contract_type_id").combobox({
+                    //data:<?=json_encode($users)?>,
+                    valueField:'id',
+                    textField:'name',
+                    /*onSelect: function () {
+                        changeValue(data);
+                    } */
+                });
+                
+                //$("#site_tel"+data).textbox();
+
+         }
+    })
+
+
+
+
         //初始化添加窗口
         $('#customer-contract-record-add-customer').dialog({
             title: '添加企业客户',   

@@ -38,6 +38,7 @@ class ContractRecordController extends BaseController
     public function actionGetList()
     {
         //echo 'm2';exit;
+        date_default_timezone_set('PRC');
         $pageSize = isset($_GET['rows']) && $_GET['rows'] <= 50 ? intval($_GET['rows']) : 10;
         $query = CarLetContract::find()
                 ->select([
@@ -69,8 +70,26 @@ class ContractRecordController extends BaseController
             '{{%customer_company}}.`company_name`',
             yii::$app->request->get('customer_name')
         ]);
-
-        //$contract_type = yii::$app->request->get('contract_type');
+        $query->andFilterWhere([
+            'like',
+            '{{%car_let_contract}}.`source`',
+            yii::$app->request->get('source')
+        ]);
+       /* $query->andFilterWhere([
+            'like',
+            '{{%car_let_contract}}.`second_contract_type`',
+            yii::$app->request->get('second_contract_type')
+        ]);*/
+        $second_contract_type = yii::$app->request->get('second_contract_type');
+         if($second_contract_type){
+            //echo '123';exit;
+            $query->andFilterWhere([
+                    'like',
+                    '{{%car_let_contract}}.`second_contract_type`',
+                    $second_contract_type
+                    ]);
+        }
+       // $contract_type = yii::$app->request->get('contract_type');
         //var_dump($contract_type);exit;
         
         $query->andFilterWhere([
@@ -78,6 +97,11 @@ class ContractRecordController extends BaseController
             '{{%car_let_contract}}.`contract_type`',
             yii::$app->request->get('contract_type') 
         ]);
+       /* $query->andFilterWhere([
+            'like',
+            '{{%car_let_contract}}.`second_contract_type`',
+            yii::$app->request->get('second_contract_type') 
+        ]);*/
         //var_dump(yii::$app->request->get('contract_type'));exit;
         //检测是否要根据当前登录人员所属运营公司来显示列表数据-20160326
         $isLimitedArr = CarLetContract::isLimitedToShowByAdminOperatingCompany();
@@ -110,18 +134,66 @@ class ContractRecordController extends BaseController
         $data = $query->offset($pages->offset)->limit($pages->limit)
                 ->orderBy($orderBy)
                 ->asArray()->all();
+ 
+        foreach( $data as $k => $v){
+            /*if($v['rent_day'] != null && $v['rent_deadline'] != null){
+                $bb = date('Y-m-d',$v['rent_day']);
+                $aa = $v['rent_deadline'];
+                $data[$k]['rel_rent_date'] = date("Y-m-d",strtotime("+$aa day",strtotime($bb)));   
+            }*/
+            if($v['rent_deadline'] != 0){
+               $data[$k]['rent_day'] = date("d",$v['rent_day']); 
+            }
+            //年月日
+            $start_time = date("Y-m-d",$v['start_time']);
+            $end_time = date("Y-m-d",$v['end_time']);
+            //年
+            $start_time_y = date("Y",$v['start_time']);
+            $end_time_y = date("Y",$v['end_time']);
+            //月
+            $start_time_m = date("m",$v['start_time']);
+            $end_time_m = date("m",$v['end_time']);
+            //日
+            $start_time_d = date("d",$v['start_time']);
+            $end_time_d = date("d",$v['end_time']);
+            
+            if($start_time_y == $end_time_y) {//同一年份
+                if($start_time_m == $end_time_m) {//同一月份
+                    $_day = $end_time_d-$start_time_d;
+                    $data[$k]['_due_time'] = $_day.'天';
+                } else if($start_time_m < $end_time_m) {//不同月份
+                    $_month = $end_time_m-($start_time_m+1);
+                    $_day = (30-$start_time_d)+$end_time_d;
+                    if($_day >= 30) {
+                       $_day =  $_day-30;
+                       $_month = $_month + 1;
+                    }
+                    $data[$k]['_due_time'] = $_month.'月'.$_day.'天';
+                    if($_month == 0){//判断月份为0，只显示天数
+                        $data[$k]['_due_time'] = $_day.'天';
+                    }
+                    if($_day == 0){//
+                        $data[$k]['_due_time'] = $_month.'月';
+                    }
+                }
+            } else if($start_time_y < $end_time_y) {//跨年
+                $_month = ((12-($start_time_m+1)) + ($end_time_m))+(($end_time_y-$start_time_y-1)*12);
+                $_day = (30-$start_time_d) + $end_time_d;
+                if($_day >= 30) {
+                   $_day =  $_day-30;
+                   $_month = $_month + 1;
+                }
+                if($_day == 0) {//判断天数为0，只显示月份
+                    $data[$k]['_due_time'] = $_month.'月';
+                } else {
+                    $data[$k]['_due_time'] = $_month.'月'.$_day.'天';
+                } 
+            }
+        }
+
         $configItems = ['contract_type'];
         $config = (new ConfigCategory)->getCategoryConfig($configItems,'value');
-        //echo '<pre>';
-        //var_dump($config);exit;
-        //foreach($data as $key =>$value3) {
-            //echo '<pre>';
-            //var_dump($value3);exit;
-            //var_dump($value3['contract_type']);exit;
-            //var_dump($config['contract_type'][$value3['contract_type']]['text']);exit;
-            //$data[$key]['contract_type']=$config['contract_type'][$value3['contract_type']]['text'];
-            //var_dump($data[$key]);exit;
-       // }
+ 
         $returnArr = [];
         $returnArr['rows'] = $data;
         $returnArr['total'] = $total;
@@ -204,13 +276,30 @@ class ContractRecordController extends BaseController
             $model->cCustomer_id = yii::$app->request->post('cCustomer_id'); //保存的是'企业客户ID'
             $model->start_time = yii::$app->request->post('start_time');
             $model->end_time = yii::$app->request->post('end_time');
-            $model->due_time = yii::$app->request->post('due_time');
+            //$model->due_time = yii::$app->request->post('due_time');
             $model->bail = yii::$app->request->post('bail');
             $model->note = yii::$app->request->post('note');
             $model->sign_date = yii::$app->request->post('sign_date');
             $model->salesperson = yii::$app->request->post('salesperson');
             $model->contract_type = yii::$app->request->post('contract_type');
             $model->operating_company_id = $_SESSION['backend']['adminInfo']['operating_company_id'];
+            $model->source = yii::$app->request->post('source');//客户来源
+
+            $model->rent_day = yii::$app->request->post('rent_day');//租金缴纳日
+            if(yii::$app->request->post('rent_deadline') == null){
+                $model->rent_deadline = 0;
+            }
+           // $model->rent_deadline = yii::$app->request->post('rent_deadline');//账期
+            $model->second_contract_type = yii::$app->request->post('second_contract_type');//合同类型二级分类
+            //var_dump(yii::$app->request->post('bail'));
+            //var_dump(yii::$app->request->post('number'));
+            //var_dump(yii::$app->request->post('second_contract_type'));
+            //exit;
+            if(yii::$app->request->post('start_time') >= yii::$app->request->post('end_time')) {
+                $returnArr['info'] = '开始时间不能大于结束时间！';
+                return json_encode($returnArr);
+            }
+
             $returnArr = [];
             $returnArr['status'] = true;
             $returnArr['info'] = '';
@@ -451,6 +540,8 @@ class ContractRecordController extends BaseController
         $stockCars = Car::getAvailableStockCars();
         //获取当前页面按钮
         $buttons = $this->getCurrentActionBtn();
+        //echo '<pre>';
+        //var_dump($model->getAttributes());exit;
         return $this->render('edit',[
             'contractId'=>$id,
             'contractInfo'=>$model->getAttributes(),
@@ -1124,5 +1215,44 @@ class ContractRecordController extends BaseController
 		    	];
     	}
     	return json_encode($data);
+    }
+
+    public function actionCheck(){
+         $contract_type_id3 = yii::$app->request->post('contract_type_id3');
+         //var_dump($contract_type_id3);exit;
+         if($contract_type_id3 == '租赁'){
+             /*$data = array(
+            0=>'长租',
+            1=> '以租代售',
+            2=>'分时租赁',
+            3=>'短租',
+            );*/
+            $data = array(
+                0=>array('text'=>'长租','value'=>'长租'),
+                1=>array('text'=>'以租代售','value'=>'以租代售'),
+                2=>array('text'=>'分时租赁','value'=>'分时租赁'),
+                3=>array('text'=>'短租','value'=>'短租'),
+                );
+          
+         }
+         if($contract_type_id3 == '自运营'){
+            /*$data = array(
+            0=>'店配',
+            1=>'宅配',
+            2=>'调拨转运',
+            3=>'接驳运输',
+            4=>'收派',
+            );
+         }*/
+         $data = array(
+            0=>array('text'=>'店配','value'=>'店配'),
+            1=>array('text'=>'宅配','value'=>'宅配'),
+            2=>array('text'=>'调拨转运','value'=>'调拨转运'),
+            3=>array('text'=>'接驳运输','value'=>'接驳运输'),
+            4=>array('text'=>'收派','value'=>'收派'),
+            );
+         }
+        //if()
+        return json_encode($data);
     }
 }

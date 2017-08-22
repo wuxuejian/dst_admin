@@ -3,6 +3,10 @@
  * 本控制器为各种【combogrid】获取下拉列表数据
  */
 namespace backend\modules\customer\controllers;
+use backend\models\CarType;
+
+use backend\models\CarBrand;
+
 use yii;
 use yii\data\Pagination;
 use backend\controllers\BaseController;
@@ -12,6 +16,46 @@ use backend\models\CarLetContract;
 
 class CombogridController extends BaseController{
 
+	/**
+	 * 获取【品牌车型】列表
+	 */
+	public function actionGetBrandTypeList(){
+		$queryStr = isset($_REQUEST['q']) ? trim($_REQUEST['q']) : ''; // 检索过滤字符串
+		$customerId = isset($_REQUEST['customerId']) ? intval($_REQUEST['customerId']) : 0; //修改时赋值用
+		$query = CarType::find()
+		->select([
+				'{{%car_type}}.id AS car_type_id',
+				'{{%car_type}}.car_model_name',
+				'{{%car_brand}}.name brand_name',
+				])
+		->leftJoin('{{%car_brand}}', '{{%car_type}}.`brand_id` = {{%car_brand}}.`id` and {{%car_brand}}.is_del=0')
+		->where(['{{%car_brand}}.is_del'=>0]);
+		
+		if($queryStr){ // 检索过滤时
+			$total = $query
+				->andWhere([
+					'or',
+					['like', '{{%car_type}}.car_model_name', $queryStr],
+					['like', '{{%car_brand}}.name', $queryStr]
+					])
+					->count();
+		}else{ // 默认查询
+			$total = $query->count();
+		}
+		$orderBy = ' {{%car_brand}}.id';
+		$pageSize = isset($_GET['rows']) && $_GET['rows'] <= 50 ? intval($_GET['rows']) : 10;
+		$pages = new Pagination(['totalCount' => $total, 'pageSize' => $pageSize]);
+		$data = $query->offset($pages->offset)->limit($pages->limit)->orderBy($orderBy)->asArray()->all();
+		//格式化数据
+		foreach ($data as $index=>$row){
+			$data[$index]['brand_type'] = $row['brand_name'].'('.$row['car_model_name'].')';
+		}
+		$returnArr = [];
+		$returnArr['rows'] = $data;
+		$returnArr['total'] = $total;
+		return json_encode($returnArr);
+	}
+	
     /**
      * 获取【企业客户】列表
      */

@@ -1,3 +1,34 @@
+<?php 
+        
+    $arr1 = array(
+            '长租',
+            '以租代售',
+            '分时租赁',
+            '短租',
+            );
+     $arr2 = array(
+            '店配',
+            '宅配',
+            '调拨转运',
+            '接驳运输',
+            '收派',
+            );
+    $dat1 = array(
+                0=>array('长租'),
+                1=>array('以租代售'),
+                2=>array('分时租赁'),
+                3=>array('短租'),
+                );
+    $dat2 = array(
+                0=>array('店配'),
+                1=>array('宅配'),
+                2=>array('调拨转运'),
+                3=>array('接驳运输'),
+                4=>array('收派'),
+                );
+
+?>
+
 <table id="personalContractIndex_editWin_datagrid"></table>
 <!-- toolbar start -->
 <div id="personalContractIndex_editWin_datagridTollbar">
@@ -27,15 +58,9 @@
                 <li class="ulforform-resizeable-group">
                     <div class="ulforform-resizeable-title">合同类型</div>
                     <div class="ulforform-resizeable-input">
-                       <!--  <input
-                            class="easyui-textbox"
-                            style="width:160px;"
-                            name="contract_type"
-                            required="true"
-                            missingMessage="请输入合同编号！"
-                            /> -->
-                         <select
-                        
+                      
+                        <select
+                        id='contract_type_id3'  
                         class="easyui-combobox"
                         name="contract_type"
                         style="width:160px;"
@@ -52,6 +77,46 @@
                            <?php } ?>               
                      
                     </select>
+                    </div>
+                </li>
+                <li class="ulforform-resizeable-group">
+                    <div class="ulforform-resizeable-title">业务类型</div>
+                    <div class="ulforform-resizeable-input">
+                        <!-- <input
+                                class="easyui-combobox"
+                                style="width:160px;"
+                                name="second_contract_type"
+                                required="true"
+                                id='second_contract_type_id4'
+                               
+                            > -->
+                        <select class="easyui-combobox" style="width:160px;"  id="second_contract_type_id4"  name="second_contract_type" required="true"  editable=false   >
+                            <?php if($contractInfo['second_contract_type']){?>
+                                <?php if(in_array($contractInfo['second_contract_type'], $arr1)){?>
+                                    <?php foreach($dat1 as $k1 => $v1): ?> 
+                                     <option value='<?php echo $v1[0]?>' <?php if($v1[0] == $contractInfo['second_contract_type']) echo 'selected'?>><?php echo $v1[0]?></option>
+                                    <?php endforeach;?>
+                                <?php } ?>
+                                <?php if(in_array($contractInfo['second_contract_type'], $arr2)){?>
+                                    <?php foreach($dat2 as $k2 => $v2): ?> 
+                                     <option value='<?php echo $v2[0]?>' <?php if($v2[0] == $contractInfo['second_contract_type']) echo 'selected'?>><?php echo $v2[0]?></option>
+                                    <?php endforeach;?>
+                                <?php } ?>
+                            <?php } ?>
+                            <?php if(!$contractInfo['second_contract_type']){?>
+                                <?php echo 123465;?>
+                                <?php if($contractInfo['contract_type'] == '租赁'){?>
+                                    <?php foreach($dat1 as $k1 => $v1): ?> 
+                                     <option value='<?php echo $v1[0]?>'><?php echo $v1[0]?></option>
+                                    <?php endforeach;?>
+                                <?php } ?>
+                                <?php if($contractInfo['contract_type'] == '自运营'){?>
+                                    <?php foreach($dat2 as $k2 => $v2): ?> 
+                                     <option value='<?php echo $v2[0]?>'><?php echo $v2[0]?></option>
+                                    <?php endforeach;?>
+                                <?php } ?>
+                            <?php } ?>
+                        </select>
                     </div>
                 </li>
                 <li class="ulforform-resizeable-group">
@@ -100,7 +165,7 @@
                             >
                     </div>
                 </li>
-                <li class="ulforform-resizeable-group">
+               <!--  <li class="ulforform-resizeable-group">
                     <div class="ulforform-resizeable-title">合同期限</div>
                     <div class="ulforform-resizeable-input">
                         <input
@@ -112,7 +177,7 @@
                             validType="date"
                             />
                     </div>
-                </li>
+                </li> -->
                 <li class="ulforform-resizeable-group">
                     <div class="ulforform-resizeable-title">总保证金</div>
                     <div class="ulforform-resizeable-input">
@@ -131,6 +196,98 @@
                             class="easyui-textbox"
                             style="width:160px;"
                             name="salesperson"
+                        />
+                    </div>
+                </li>
+                <li class="ulforform-resizeable-group">
+                    <div class="ulforform-resizeable-title">客户来源</div>
+                    <div class="ulforform-resizeable-input">
+                    <select
+                        class="easyui-combobox"
+                        name="source"
+                        style="width:160px;"
+                        required="true"
+                        editable="false"
+                        data-options="panelHeight:'auto'"
+                        align:"center"   
+                    >         
+                        <option value=''></option>
+                        <option value='1'>400呼叫中心</option>
+                        <option value='2'>地推</option>
+                        <option value='3'>大客户导入</option>
+                        <option value='4'>自主开发</option>
+                        <option value='5'>转介绍</option>
+                        <option value='6'>活动促销</option>
+                        <option value='7'>其他</option>
+                    </select>
+                    </div>
+                </li>
+                <li class="ulforform-resizeable-group">
+                    <div class="ulforform-resizeable-title">每月租金缴纳日</div>
+                    <div class="ulforform-resizeable-input">
+                        <!-- <input
+                            class="easyui-datebox"
+                            style="width:160px;"
+                            name="rent_day"
+                            required="true"
+                            missingMessage="请选择租金缴纳日！"
+                            validType="date"
+                        /> -->
+                        <select
+                        class="easyui-combobox"
+                        name="rent_day"
+                        style="width:160px;"
+                        required="true"
+                        editable="false"
+                        align:"center"   
+                        >   
+                            <option value=''></option>
+                            <option value='1'>1</option>
+                            <option value='2'>2</option>
+                            <option value='3'>3</option>
+                            <option value='4'>4</option>
+                            <option value='5'>5</option>
+                            <option value='6'>6</option>
+                            <option value='7'>7</option>
+                            <option value='8'>8</option>
+                            <option value='9'>9</option>
+                            <option value='10'>10</option>
+                            <option value='11'>11</option>
+                            <option value='12'>12</option>
+                            <option value='13'>13</option>
+                            <option value='14'>14</option>
+                            <option value='15'>15</option>
+                            <option value='16'>16</option>
+                            <option value='17'>17</option>
+                            <option value='18'>18</option>
+                            <option value='19'>19</option>
+                            <option value='20'>20</option>
+                            <option value='21'>21</option>
+                            <option value='22'>22</option>
+                            <option value='23'>23</option>
+                            <option value='24'>24</option>
+                            <option value='25'>25</option>
+                            <option value='26'>26</option>
+                            <option value='27'>27</option>
+                            <option value='28'>28</option>
+                            <option value='29'>29</option>
+                            <option value='30'>30</option>
+                            <option value='31'>31</option>
+
+                        </select>
+                    </div>
+                </li>
+                <li class="ulforform-resizeable-group">
+                    <div class="ulforform-resizeable-title">账期</div>
+                    <div class="ulforform-resizeable-input">
+                        <input
+                            class="easyui-textbox"
+                            style="width:160px;"
+                            name="rent_deadline"
+                            prompt="请输入天数"
+                            missingMessage="请填写账期！"
+                            validType="int"
+                            required="true"
                         />
                     </div>
                 </li>
@@ -295,12 +452,48 @@
         oldData.start_time = oldData.start_time > 0 ? formatDateToString(oldData.start_time) : '';
         oldData.end_time = oldData.end_time > 0 ? formatDateToString(oldData.end_time) : '';
         oldData.sign_date = oldData.sign_date > 0 ? formatDateToString(oldData.sign_date) : '';
+        //oldData.rent_day = oldData.rent_day > 0 ? formatDateToString(oldData.rent_day) : '';
         $('#personalContractIndex_editWin_form').form('load',oldData);
         //为combogrid查询赋值
         $('#personalContractIndex_editWin_combogrid_choosePersonalCustomer').combogrid('grid').datagrid('load',{'customerId':oldData.pCustomer_id});
 
     }
     personalContractIndex_editWin.init();
+
+    $('#contract_type_id3').combobox({
+
+            onChange:function(newValue,oldValue){
+
+                var contract_type_id3 = $('#contract_type_id3').combobox('getValue');
+                //alert(contract_type_id3);
+                $.ajax({
+                   url:"<?php echo yii::$app->urlManager->createUrl(['customer/contract-record/check']); ?>",
+                   type:'post',
+                   data:{contract_type_id3:contract_type_id3},
+                   dataType:'json',
+                   success:function(data){
+                            //console.log(data)
+                        var current_type = [];
+                        
+                        $.each(data,function(i, value){
+                            var a =[];
+  
+                                a['value'] = value.text;
+                                a['text'] = value.value;
+                                current_type.push(a);
+                                 
+
+                                
+                        });
+                        //console.log(current_type)
+                        $("#second_contract_type_id4").combobox("setValue",'');
+                        $("#second_contract_type_id4").combobox("loadData",current_type);
+                    }
+            });
+                
+
+         }
+    })
 
     //获取选择记录
     personalContractIndex_editWin.getSelected = function(multiple){

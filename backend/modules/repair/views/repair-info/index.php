@@ -184,8 +184,8 @@
         //初始化修改窗口`
         $('#easyui-dialog-repair-info-index-bohui').dialog({
             title: '驳回',
-            width: 400,
-            height: 150,
+            width: 600,
+            height: 300,
             cache: true,
             modal: true,
             closed: true,
@@ -198,6 +198,7 @@
                     var checkForm = $('#easyui-form-repair-info-check');
                     var checkForm_1=$('#easyui-form-repair-info-check-money');
                     var newForm = addForm.serialize();
+                    console.log(newForm)
                     var checkForm=checkForm.serialize();
                     var checkForm_1=checkForm_1.serialize();
                     var data={
@@ -487,12 +488,16 @@
                     for(var i = 0;i< repairData.length;i++){
                         order += ','+repairData[i].id;
                     }
+                    var order_no = ' ';
+                    for(var i = 0;i< repairData.length;i++){
+                        order_no += ','+repairData[i].order_number;
+                    }
                     var form = $('#repair-money-feng');
                     if(!form.form('validate')){
                         return false;
                     }
                     var data = form.serialize();
-                    data = data+'&order_id='+order;
+                    data = data+'&order_id='+order+'&order_no='+order_no;
                     var button = $(this);
                     button.linkbutton('disable');
                     $.ajax({
@@ -528,22 +533,25 @@
                     for(var i = 0;i< repairData.length;i++){
                         order += ','+repairData[i].id;
                     }
+                    var form = $('#repair-money-feng');
+                    var data = form.serialize();
+                    data = data+'&go_back='+order;
                     $.ajax({
                         type: 'post',
                         url: "<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/pay-money']); ?>",
-                        data: {go_back:order},
+                        data: data,
                         dataType: 'json',
                         success: function(data){
                             if(data.status == 1){
-                                $.messager.alert('付款成功',data.info,'info');
+                                $.messager.alert('驳回成功',data.info,'info');
                                 $('#easyui-dialog-repair-info-index-add').dialog('close');
                                 $('#easyui-datagrid-repair-repair-info-index').datagrid('reload');
                                 button.linkbutton('enable');
                             }else if(data.status == 2){
-                                $.messager.alert('付款失败',data.info,'error');
+                                $.messager.alert('驳回失败',data.info,'error');
                                 button.linkbutton('enable');
                             }else{
-                                $.messager.alert('付款失败',data.info,'error');
+                                $.messager.alert('驳回失败',data.info,'error');
                                 button.linkbutton('enable');
                             }
                         }
@@ -583,13 +591,13 @@
             $('#easyui-dialog-repair-info-index-add').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/add']); ?>');
         }else{
             if(repairData.length>1){
-               $.messager.alert('编辑失败','一次只能选择一条','error');
+               $.messager.alert('编辑失败','无法修改多行维修方案！请重新选择一行','error');
                     return false; 
             }
             var id = repairData[0].id;
             var check_status=repairData[0].check_status;
             if(check_status!=1 && check_status!=2){
-                 $.messager.alert('编辑失败','该选项卡不可编辑','error');
+                 $.messager.alert('编辑失败','该维修方案已通过，不可再编辑','error');
                     return false;
             }
             $('#easyui-dialog-repair-info-index-edit').dialog('open');
@@ -605,13 +613,13 @@
                     return false;
         }else{
             if(repairData.length>1){
-               $.messager.alert('编辑失败','一次只能选择一条','error');
+               $.messager.alert('编辑失败','无法修改多行完工结算！请重新选择一行','error');
                     return false; 
             }
             var id = repairData[0].id;
             var check_status=repairData[0].check_status;
-            if(check_status!=3 && check_status!=4){
-                 $.messager.alert('编辑失败','该选项卡不可编辑','error');
+            if(check_status!=3 && check_status!=4 && check_status!=6){
+                 $.messager.alert('编辑失败','请遵守操作流程','error');
                     return false;
             }
             $('#easyui-dialog-repair-info-index-finish').dialog('open');
@@ -620,7 +628,7 @@
     }
 
     //驳回方法
-    RepairInfoIndex.chechk = function(){
+    RepairInfoIndex.check = function(){
          var datagrid = $('#easyui-datagrid-repair-repair-info-index');
         var repairData = datagrid.datagrid('getChecked');
         if(repairData == 0){
@@ -633,11 +641,11 @@
             }
             var id = repairData[0].id;
             var check_status=repairData[0].check_status;
-            if(check_status==1 || check_status==2){
+            if(check_status==1 ){
                  
                 $('#easyui-dialog-repair-info-index-check').dialog('open');
                 $('#easyui-dialog-repair-info-index-check').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/check']); ?>&id='+id);
-            }else if(check_status==3 || check_status==4){
+            }else if(check_status==3 ){
                 $('#easyui-dialog-repair-info-index-checkmoney').dialog('open');
                 $('#easyui-dialog-repair-info-index-checkmoney').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/check-money']); ?>&id='+id);
             }else{
@@ -661,8 +669,8 @@
             $.messager.alert('删除失败','只能选择一项删除','error');
             return false;
         }
-        if(repairData[0].check_status != 2){
-            $.messager.alert('删除失败','只能删除维修方案未审核过的单','error');
+        if(repairData[0].check_status > 2 ){
+            $.messager.alert('删除失败','只能删除维修方案未审核过的单和维修方案待审核的单','error');
             return false;
         }
         var id = repairData[0].id;
@@ -718,7 +726,7 @@
             $.messager.alert('作废失败','只能选择一项作废','error');
             return false;
         }
-        if(repairData[0].check_status < 5){
+        if(repairData[0].check_status < 4){
             $.messager.alert('作废失败','结算单审核完后才可作废','error');
             return false;
         }

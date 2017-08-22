@@ -142,9 +142,9 @@
         </tr>
         <?php foreach ($row_c as $row): ?>
             <tr type="checkbox">
-				<td><?=$row['item_type']?></td>
-				<td><?=$row['brand_id']?></td>
-				<td><?=$row['car_type_id']?></td>
+				<td><?php if($row['item_type'] =='zhengche'){echo '整车';}?></td>
+                <td><?=$row['brand_name']?></td>
+                <td><?=$row['car_model_name']?></td>
 				<td><?=$row['quantity']?></td>
 				<td><?=$row['already_num']?></td>
 				<td>

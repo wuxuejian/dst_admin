@@ -445,7 +445,7 @@ class Car extends \common\models\Car
     				}
     				break;
     			case 'STOCK':	//库存
-    				if(!in_array($preStatus, ['NAKED','DSTCAR','INTRIAL','LETING','PREPARE','BACK'])){
+    				if(!in_array($preStatus, ['NAKED','DSTCAR','INTRIAL','LETING','PREPARE','BACK','TRANSFER'])){
     					$returnArr['info'] = '目标状态库存，更改前状态不满足！，'.$preStatus;
     					return $returnArr;
     				}
@@ -477,6 +477,12 @@ class Car extends \common\models\Car
     			case 'PREPARE':	//提车中
     				if(!in_array($preStatus, ['STOCK'])){
     					$returnArr['info'] = '目标状态提车中，更改前状态不满足！，'.$preStatus;
+    					return $returnArr;
+    				}
+    				break;
+    			case 'TRANSFER'://调拨中
+    				if(!in_array($preStatus, ['STOCK'])){
+    					$returnArr['info'] = '目标状态调拨中，更改前状态不满足！，'.$preStatus;
     					return $returnArr;
     				}
     				break;

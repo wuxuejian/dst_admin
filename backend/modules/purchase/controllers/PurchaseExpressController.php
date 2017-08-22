@@ -194,7 +194,7 @@ class PurchaseExpressController extends BaseController
 		->one();
 		//运单详情
 		$purchase_express_detials=Yii::$app->db->createCommand(
-				"SELECT a.*,b.item_type,c.name as brand_name,d.car_type as type_name
+				"SELECT a.*,b.item_type,c.name as brand_name,d.car_model_name as type_name
 				FROM cs_purchase_express_details a
 				left join cs_purchase_order_details b on a.order_details_id=b.id
 				left join cs_car_brand c on c.id=b.brand_id and c.is_del=0
@@ -332,7 +332,7 @@ class PurchaseExpressController extends BaseController
 	
 		//运单详情
 		$purchase_express_detials=Yii::$app->db->createCommand(
-				"SELECT a.*,b.item_type,c.name as brand_name,d.car_type as type_name
+				"SELECT a.*,b.item_type,c.name as brand_name,d.car_model_name as type_name
 				FROM cs_purchase_express_details a
 				left join cs_purchase_order_details b on a.order_details_id=b.id
 				left join cs_car_brand c on c.id=b.brand_id and c.is_del=0

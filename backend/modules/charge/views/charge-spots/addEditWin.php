@@ -94,8 +94,16 @@
                 </select>
             </td>
             <td align="right">购置日期</td>
-            <td colspan="3">
+            <td>
                 <input class="easyui-datebox" name="purchase_date" style="width:160px;" validType="date"  />
+            </td>
+			<td align="right">通讯方式</td>
+            <td>
+				<select class="easyui-combobox" name="communication_way" style="width:160px;" data-options="panelHeight:'auto',required:false"  editable=false >
+                     <option value="0"></option>
+					 <option value="1">局域网</option>
+					 <option value="2">GPRS</option>
+                </select>
             </td>
         </tr>
         <tr hidden>

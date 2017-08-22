@@ -6,6 +6,7 @@
     ">   
         <div class="data-search-form">
             <form id="search-form-car-insurance-business-insurance">
+
                 <ul class="search-main">
                     <li>
                         <div class="item-name">保险公司</div>
@@ -58,6 +59,7 @@
     </div>
     <?php } ?>
 </div>
+
 <!-- 窗口 -->
 <div id="easyui-dialog-car-insurance-bi-add"></div>
 <div id="easyui-dialog-car-insurance-bi-edit"></div>
@@ -98,6 +100,8 @@
                         }
                     }
                 },
+
+
 				{
                     field: 'insurance_text',title: '险种',width: 200,
                     sortable: true,
@@ -106,13 +110,45 @@
 							return '';
 						}
 						var data = eval(value);
+                       // alert(data);
 						var insurance_str='';
 						for(var i=0;i<data.length;i++){
+                            //alert(data[i]);
+                            if(data[i][0]=='车损险'){
+                                //alert(123);
+                                data[i][0] = '机动车损失保险';
+                            } else if(data[i][0]=='三者险') {
+                                data[i][0] = '机动车第三者责任保险';
+                            }
+                            else if(data[i][0]=='司乘险(司机)') {
+                                data[i][0] = '机动车车上人员责任保险(司机)';
+                            }
+                            else if(data[i][0]=='司乘险(乘客)') {
+                                data[i][0] = '机动车车上人员责任保险(乘客)';
+                            }
+                            else if(data[i][0]=='盗抢险') {
+                                data[i][0] = '全车盗抢保险';
+                            }
+                            else if(data[i][0]=='玻璃险') {
+                                data[i][0] = '玻璃单独破碎险';
+                            }
+                            else if(data[i][0]=='涉水险') {
+                                data[i][0] = '发动机涉水损失险';
+                            }
+                            else if(data[i][0]=='不计免赔险') {
+                                data[i][0] = '不计免赔率险';
+                            }
+                            else if(data[i][0]=='无法找到第三方特约险') {
+                                data[i][0] = '机动车损失保险无法找到第三方特约险';
+                            }
+                              
 							insurance_str+=data[i][0]+'('+data[i][1]+'),';
+                            
 						}
 						return insurance_str;
                     }
                 },
+
                 {field: 'money_amount',title: '保险金额',sortable: true},
                 {
                     field: 'start_date',title: '开始时间',width: 80,
@@ -123,6 +159,7 @@
                         }
                     }
                 },
+                 
                 {
                     field: 'end_date',title: '结束时间',width: 80,align: 'center',
                     sortable: true,
@@ -192,7 +229,7 @@
         //初始化添加窗口
         $('#easyui-dialog-car-insurance-bi-add').dialog({
             title: '添加商业保险记录',   
-            width: '615px',   
+            width: '850px',   
             height: '750px',   
             closed: true,   
             cache: true,   
@@ -217,7 +254,7 @@
         //初始化修改窗口
         $('#easyui-dialog-car-insurance-bi-edit').dialog({
             title: '修改商业保险记录',   
-            width: '615px',   
+            width: '850px',   
             height: '750px',   
             closed: true,   
             cache: true,   

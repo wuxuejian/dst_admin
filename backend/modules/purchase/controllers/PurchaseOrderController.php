@@ -284,28 +284,10 @@ class PurchaseOrderController extends BaseController
 		}
 		//品牌
 		$query1 = CarBrand::find()
-		->select(['id','pid','text'=>'name'])
-		->andWhere(['`is_del`'=>0]);
-		$rows = $query1->asArray()->all();
-		$nodes = [];
-		if(!empty($rows)){
-			$nodes = Category::unlimitedForLayer($rows,'pid');
-		}
-		$data = [['id'=>0,'text'=>'顶级','iconCls'=>'icon-filter','children'=>$nodes]];
-		$data1 = array();
-		foreach($data[0]['children'] as $key => $value3){
-			$obj = array();
-			if(count($value3['children']) != 0){
-				$obj['id'] = $value3['children'][0]['id'];
-				$obj['text'] = $value3['children'][0]['text'];
-				$data1[] = $obj;
-			} else {
-				$obj['id'] = $value3['id'];
-				$obj['text'] = $value3['text'];
-				$data1[] = $obj;
-			}
-		}
-		return $this->render('add',['cars'=>$cars,'searchFormOptions'=>$searchFormOptions,'data1'=>$data1,'arr2'=>$arr2,'order_n'=>$order_n]);
+			->select(['id','pid','text'=>'name'])
+			->andWhere(['`is_del`'=>0]);
+		$carBrandData = Category::unlimitedForLayer($query1->asArray()->all(),'pid');
+		return $this->render('add',['cars'=>$cars,'searchFormOptions'=>$searchFormOptions,'data1'=>$carBrandData,'arr2'=>$arr2,'order_n'=>$order_n]);
 	}
 
 	/**
@@ -399,6 +381,7 @@ class PurchaseOrderController extends BaseController
 			if($purchase_express_record && $purchase_express_details_record){
 				$transaction->commit();  //提交事务
 				$returnArr['status'] = true;
+				$returnArr['id'] = $express_id;
 				$returnArr['info'] = '物流状态添加成功!';
 			} else {
 				$transaction->rollback(); //回滚事务
@@ -413,7 +396,15 @@ class PurchaseOrderController extends BaseController
 		$row_n = Owner::find()->select(['name'])->andWhere(['`id`'=>$order_main['receiver_id']])->asArray()->one();
 		$order_main['row_n'] = $row_n['name'];
 		//采购的车辆查询
-		$row_c  = (new \yii\db\Query())->select(['id','item_type','brand_id','car_type_id','quantity','parts'])->from('cs_purchase_order_details')->andWhere(['`main_id`'=>$id])->all();
+		//$row_c  = (new \yii\db\Query())->select(['id','item_type','brand_id','car_type_id','quantity','parts'])->from('cs_purchase_order_details')->andWhere(['`main_id`'=>$id])->all();
+		$row_c  = (new \yii\db\Query())
+			->select(['a.id','a.item_type','a.brand_id','a.car_type_id','a.quantity','a.parts','b.name as brand_name','c.car_model_name'])
+			//->leftjoin('')
+			->leftjoin('cs_car_brand b','b.id = a.brand_id')
+			->leftjoin('cs_car_type c','c.id = a.car_type_id')
+			->from('cs_purchase_order_details a')
+			->andWhere(['a.main_id'=>$id])
+			->all();
 		//计算订单已发车数量
 		$already_num_arr = [];
 		$purchase_express_list  = (new \yii\db\Query())->select(['details_text'])->from('cs_purchase_express')->andWhere(['`main_id`'=>$id])->all();

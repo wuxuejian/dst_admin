@@ -16,7 +16,14 @@
                     <li>
                         <div class="item-name">合同类型</div>
                         <div class="item-input">
-							<input style="width:200px;" name="contract_type" />
+							<input id="contract_type_p_id" style="width:200px;" name="contract_type" />
+                        </div>
+                    </li>
+                    <span id='tip3'></span>
+                     <li>
+                        <div class="item-name">客户来源</div>
+                        <div class="item-input">
+                            <input style="width:200px;" name="source" />
                         </div>
                     </li>
                     <li>
@@ -118,13 +125,13 @@
                     }
                 },
                 {
-                    field: 'due_time',title: '合同期限',width: 80, align: 'center',
+                    field: '_due_time',title: '合同期限',width: 80, align: 'center',
                     sortable: true,
-                    formatter: function(value){
+                    /*formatter: function(value){
                         if(value){
                             return formatDateToString(value)
                         }
-                    }
+                    }*/
                 },
                 {
                     field: 'cost_expire_time',title: '费用到期时间',
@@ -176,6 +183,37 @@
 						return stop_type_arr[value];
                     }
 				},
+                {field: 'source',title: '客户来源',width: 90,align: 'center',
+                    formatter: function(value){
+                        if(value == 1){
+                            return '400呼叫中心';
+                        } else if(value == 1){
+                            return '400呼叫中心';
+                        }else if(value == 2){
+                            return '地推';
+                        } else if(value == 3){
+                            return '大客户导入';
+                        } else if(value == 4){
+                            return '自主开发';
+                        } else if(value == 5){
+                            return '转介绍';
+                        } else if(value == 6){
+                            return '活动促销';
+                        } else if(value == 7){
+                            return '其他';
+                        } else {
+                            return '';
+                        }  
+                    }
+                },
+                {field: 'second_contract_type',title: '业务类型',width: 90,align: 'center'},
+                {field: 'rent_day',title: '每月租金缴纳日',width: 110,align: 'center',
+                     /*formatter: function(value){
+                        if(value){
+                            return formatDateToString(value)
+                        }
+                    }*/
+                },
                 {field: 'note',title: '备注',width: 200,halign: 'center'},
                 {field: 'operating_company',title: '所属运营公司',width: 170,halign: 'center'},
                 {
@@ -447,6 +485,62 @@
                 searchForm.submit();
             }
         });
+     searchForm.find('input[name=source]').combobox({
+            valueField:'value',
+            textField:'text',
+            editable: false,
+            panelHeight:'auto',
+            data: [{"value": '',"text": '不限'},{"value": '1',"text": '400呼叫中心'},{"value": '2',"text": '地推'},{"value": '3',"text": '大客户导入'},{"value": '4',"text": '自主开发'},{"value": '5',"text": '转介绍'},{"value": '6',"text": '活动促销'},{"value": '7',"text": '其他'}],
+            onSelect: function(){
+                searchForm.submit();
+            }
+        });
+      searchForm.find('input[name=second_contract_type]').combobox({
+            valueField:'value',
+            textField:'text',
+            editable: false,
+            panelHeight:'auto',
+            data: [{"value": '',"text": '不限'},{"value": '长租',"text": '长租'},{"value": '以租代售',"text": '以租代售'},{"value": '分时租赁',"text": '分时租赁'},{"value": '短租',"text": '短租'},{"value": '店配',"text": '店配'},{"value": '宅配',"text": '宅配'},{"value": '调拨转运',"text": '调拨转运'},{"value": '接驳运输',"text": '接驳运输'},{"value": '收派',"text": '收派'}],
+            onSelect: function(){
+                searchForm.submit();
+            }
+        });
+     $('#contract_type_p_id').combobox({
+
+            onChange:function(newValue,oldValue){
+              // alert(newValue)
+                    var data = 0;
+                    if(newValue == '租赁'){
+                        var html = "<li>\
+                        <div class='item-input'><select id='second_contract_type_id3' name='second_contract_type' style='width:160px;' class='easyui-combobox' align:'center' ><option value=''>不限</option><option>长租</option><option>以租代售</option><option>分时租赁</option><option>短租</option></select>\
+                        </div></li>";
+                    }
+                    if(newValue == '自运营'){
+                        var html = "<li class='ulforform-resizeable-group'>\
+                        <div class='ulforform-resizeable-input'><select id='second_contract_type_id3' name='second_contract_type' style='width:160px;' class='easyui-combobox' align:'center' ><option value=''>不限</option><option>店配</option><option>宅配</option><option>调拨转运</option><option>接驳运输</option><option>收派</option></select>\
+                        </div></li>";
+                    }
+                    
+                    $("#tip3").html(html);
+                     //$("#contract_type_id").parent().parent().after(html);
+               /* var datax,json;
+                datax = [];
+                datax.push({ "text": "测试", "id": 100 });*/
+                //$("#user_id"+data).combobox("loadData", datax);
+
+                $("#second_contract_type_id3").combobox({
+                    //data:<?=json_encode($users)?>,
+                    valueField:'id',
+                    textField:'name',
+                    /*onSelect: function () {
+                        changeValue(data);
+                    } */
+                });
+                
+                //$("#site_tel"+data).textbox();
+
+         }
+    })
 
     //获取选择的记录
     personalContractIndex.getSelected = function(){

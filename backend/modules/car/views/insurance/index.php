@@ -108,25 +108,72 @@
 				{field: 'plate_number',title: '车牌号',width: 70,sortable: true,align: 'center'}
 			]],
 		    columns: [[
-                {
-                    field: 'customer_name',title: '归属客户',width: 70,align: 'center'
-                },
-                {
-                    field: 'car_model',title: '车型名称',width: 90,align: 'left',
+                {field: 'car_status',title: '一级状态',width: 70,sortable: true,align: 'center',
                     sortable: true,
                     formatter: function(value){
+                        var status = <?php echo json_encode($config['car_status']); ?>;
+                        //alert(status)
+                        //console.log(status)
+                        try{
+                            return status[value].text;
+                        }catch(e){
+                            return '';
+                        }
+                    }
+                },
+                {field: 'use_nature',title: '使用性质',width: 85,sortable: true,align: 'center',
+                    sortable: true,
+                    formatter: function(value,row){
+                        //console.log(row);
+                        if(row.use_nature_p){
+                            if(row.use_nature_p == 1){
+                            return '企业营运货车';
+                            }else if(row.use_nature_p == 2) {
+                                return '企业非营运货车';   
+                            }else if(row.use_nature_p == 3) {
+                                return '企业非营运客车';   
+                            }else if(row.use_nature_p == 4) {
+                                return '企业营运客车';   
+                            } else if(row.use_nature_p == 5) {
+                                return '个人家庭自用车';   
+                            }else if(row.use_nature_p == 6) {
+                                return '特种车';   
+                            }  
+                        } else {
+                           if(row.use_nature == 1){
+                            return '企业营运货车';
+                            }else if(row.use_nature == 2) {
+                                return '企业非营运货车';   
+                            }else if(row.use_nature == 3) {
+                                return '企业非营运客车';   
+                            }else if(row.use_nature == 4) {
+                                return '企业营运客车';   
+                            } else if(row.use_nature == 5) {
+                                return '个人家庭自用车';   
+                            }else if(row.use_nature == 6) {
+                                return '特种车';   
+                            } 
+                        } 
+                        
+                    }
+                },
+                {
+                    field: 'car_model_name2',title: '车型名称',width: 90,align: 'center',
+                    sortable: true,
+                    /*formatter: function(value){
                         var car_type = <?php echo json_encode($config['car_model_name']); ?>;
                         try{
                             return car_type[value].text;
                         }catch(e){
                             return '';
                         }
-                    }
+                    }*/
                 },
                 {
                     field: 'transact_ic',title: '交强险',width: 70,align: 'center',
                     sortable: true,
                     formatter: function(value){
+                        //alert(value);
                         if(value >= 1){
                             return '<img src="./jquery-easyui-1.4.3/themes/icons/ok.png" />';
                         }else{
@@ -135,7 +182,19 @@
                     }
                 },
                 {
-                    field: 'compulsory_start_date',title: '开始时间',width: 70,align: 'center',
+                    field: 'transact_ic_f',title: '交强险附件',width: 70,align: 'center',
+                    sortable: true,
+                    formatter: function(value){
+                        if(value == null || value == '[]'){
+                            return '<img src="./jquery-easyui-1.4.3/themes/icons/no.png" />';
+                        }else{
+                            
+                            return '<img src="./jquery-easyui-1.4.3/themes/icons/ok.png" />';
+                        }
+                    }
+                },
+                {
+                    field: 'start_date_tic',title: '开始时间',width: 70,align: 'center',
                     sortable: false,
                     formatter: function(value){
                     	if(!isNaN(value) && value >0){
@@ -144,7 +203,7 @@
                     }
                 },
                 {
-                    field: 'compulsory_end_date',title: '结束时间',width: 70,align: 'center',
+                    field: 'end_date_tic',title: '结束时间',width: 70,align: 'center',
                     sortable: false,
                     formatter: function(value){
                     	if(!isNaN(value) && value >0){
@@ -152,7 +211,7 @@
                         }
                     }
                 },
-                {
+                /*{
                     field: '_compulsory_end_date',title: '交强险倒计时',width: 80,align: 'center',
                     sortable: true,
                     formatter: function(value){
@@ -170,6 +229,18 @@
                         }
                         return leftDay+'天';
                     }
+                },*/
+                {
+                    field: 'transact_ic_pd',title: '交强险批单',width: 70,align: 'center',
+                    sortable: true,
+                    formatter: function(value){
+                        //alert(value);
+                        if(value >= 1){
+                            return '<img src="./jquery-easyui-1.4.3/themes/icons/ok.png" />';
+                        }else{
+                            return '<img src="./jquery-easyui-1.4.3/themes/icons/no.png" />';
+                        }
+                    }
                 },
                 {
                     field: 'transact_ib',title: '商业险',width: 70,align: 'center',
@@ -182,8 +253,19 @@
                         }
                     }
                 },
+                 {
+                    field: 'transact_ib_f',title: '商业险附件',width: 70,align: 'center',
+                    sortable: true,
+                    formatter: function(value){
+                        if(value == null || value=='[]'){
+                            return '<img src="./jquery-easyui-1.4.3/themes/icons/no.png" />';
+                        }else{
+                            return '<img src="./jquery-easyui-1.4.3/themes/icons/ok.png" />';
+                        }
+                    }
+                },
                 {
-                    field: 'business_start_date',title: '开始时间',width: 70,align: 'center',
+                    field: 'start_date_bi',title: '开始时间',width: 70,align: 'center',
                     sortable: false,
                     formatter: function(value){
                     	if(!isNaN(value) && value >0){
@@ -192,7 +274,7 @@
                     }
                 },
                 {
-                    field: 'business_end_date',title: '结束时间',width: 70,align: 'center',
+                    field: 'end_date_bi',title: '结束时间',width: 70,align: 'center',
                     sortable: false,
                     formatter: function(value){
                     	if(!isNaN(value) && value >0){
@@ -200,7 +282,7 @@
                         }
                     }
                 },
-                {
+                /*{
                     field: '_business_end_date',title: '商业险倒计时',width: 80,align: 'center',
                     sortable: true,
                     formatter: function(value){
@@ -218,11 +300,24 @@
                         }
                         return leftDay+'天';
                     }
+                },*/
+                 {
+                    field: 'transact_ib_pd',title: '商业险批单',width: 70,align: 'center',
+                    sortable: true,
+                    formatter: function(value){
+                        if(value >= 1){
+                            return '<img src="./jquery-easyui-1.4.3/themes/icons/ok.png" />';
+                        }else{
+                            return '<img src="./jquery-easyui-1.4.3/themes/icons/no.png" />';
+                        }
+                    }
                 },
+
+
 				{field: 'operating_company_id', title: '车辆运营公司', width: 170, halign: 'center', sortable: true},
 				{field: 'owner_name', title: '机动车辆所有人', width: 170, halign: 'center', sortable: true},
                 
-                {
+                /*{
                     field: 'insurance_last_update_time',title: '上次修改时间',width: 90,align: 'center',
                     sortable: false,
                     formatter: function(value){
@@ -230,6 +325,9 @@
                             return formatDateToString(value);
                         }
                     }
+                },*/
+                {
+                    field: 'customer_name',title: '归属客户',width: 70,align: 'center'
                 },
                 {field: 'username',title: '操作人员',width: 100,halign: 'center',sortable: false}
             ]],

@@ -350,16 +350,20 @@ class CarTypeLeaseController extends BaseController
         $config = $configCategoryModel->getCategoryConfig($configItems,'value');
 
 		$arr2 = [];
-        $cartype_a = CarType::find()->select(['id as value','car_model as text'])->andWhere(['`is_del`'=>0,'brand_id'=>$brand_id])->asArray()->all();
-        //var_dump($cartype_a);exit;
-        foreach($cartype_a as $key2 =>$val2) {  
+        $cartype_a = CarType::find()->select(['id as value','car_model as text','car_model_name'])->andWhere(['`is_del`'=>0,'brand_id'=>$brand_id])->asArray()->all();
+        
+        foreach($cartype_a as $key2 =>$val2) { 
+        //echo '<pre>';
+       // var_dump($val2['car_model_name']);exit; 
             //$obje = [];
-            $cartype_a[$key2]['text'] = $config['car_model_name'][$val2['text']]['text'];
-            $cartype_a[$key2]['value'] = $val2['value'];
+            //var_dump($val2);exit;
+            $arr2[$key2]['text'] = $val2['car_model_name'];
+            $arr2[$key2]['value'] = $val2['value'];
            // $searchFormOptions[ = $obje;
         }
-			
-        return json_encode($cartype_a);
+        //echo '<pre>';
+		//var_dump($arr2);exit;
+        return json_encode($arr2);
 		
 	}
 	//同步车型租赁数据到菜鸟
@@ -527,12 +531,13 @@ class CarTypeLeaseController extends BaseController
     			'a.*',	
 				'r.region_name',
 				'o.name as operating_company_id',
-				'i.text as car_model',
+				//'i.text as car_model',
+				't.car_model_name as car_model',
     			'b.name as brand_id'    			
     			])->from('cs_car_type_lease a')
     			->leftJoin('cs_car_brand b', 'a.brand_id = b.id')    			
     			->leftJoin('cs_car_type t', 'a.car_type_id = t.id')    			
-    			->leftJoin('cs_config_item i', 'i.value = t.car_model and i.belongs_id=62')    			
+    			//->leftJoin('cs_config_item i', 'i.value = t.car_model and i.belongs_id=62')    			
     			->leftJoin('cs_operating_company o', 'a.operating_company_id = o.id')    			
     			->leftJoin('zc_region r', 'a.city_id = r.region_id')    			
     			 ->where(['a.is_del'=>0])
@@ -596,12 +601,13 @@ class CarTypeLeaseController extends BaseController
 				'r.region_name',
 				'r2.region_name as province_name',
 				'o.name as operating_company_name',
-				'i.text as car_model',
+				//'i.text as car_model',
+				't.car_model_name as car_model',
     			'b.name as brand_name'    			
     			])->from('cs_car_type_lease a')
     			->leftJoin('cs_car_brand b', 'a.brand_id = b.id')    			
     			->leftJoin('cs_car_type t', 'a.car_type_id = t.id')    			
-    			->leftJoin('cs_config_item i', 'i.value = t.car_model and i.belongs_id=62')    			
+    			//->leftJoin('cs_config_item i', 'i.value = t.car_model and i.belongs_id=62')    			
     			->leftJoin('cs_operating_company o', 'a.operating_company_id = o.id')    			
     			->leftJoin('zc_region r', 'a.city_id = r.region_id')    			
     			->leftJoin('zc_region r2', 'a.province_id = r2.region_id')    			
@@ -891,11 +897,13 @@ class CarTypeLeaseController extends BaseController
 		->all();
 	    //查询所有的车型
         $arr2 = [];
-        $cartype_a = CarType::find()->select(['id','car_model'])->andWhere(['`is_del`'=>0,'brand_id'=>$data['brand_id']])->asArray()->all();
+        $cartype_a = CarType::find()->select(['id','car_model','car_model_name'])->andWhere(['`is_del`'=>0,'brand_id'=>$data['brand_id']])->asArray()->all();
         //var_dump($cartype_a);exit;
-        foreach($cartype_a as $key2 =>$val2) {  
+        foreach($cartype_a as $key2 =>$val2) {
+        	//$arr2[$key2]['text'] = $val2['car_model_name'];
+        	//$obje['text'] = $config['car_model_name'][$val2['car_model']]['text'];  
             $obje = [];
-            $obje['text'] = $config['car_model_name'][$val2['car_model']]['text'];
+            $obje['text'] = $val2['car_model_name'];
             $obje['value'] = $val2['id'];
             $config['car_type_id'][] = $obje;
         }

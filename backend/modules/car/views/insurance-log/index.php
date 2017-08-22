@@ -118,43 +118,80 @@
                 {field: '_type',title: 'type',hidden: true}
             ]],
             columns:[[
-				{
-                    field: 'number',title: '保单号',align: 'center'
+                {
+                    field: 'plate_number',title: '车牌号',align: 'center',
+                    sortable: true
                 },
-				{
-				    field: 'plate_number',title: '车牌号',
-				    sortable: true
-				},
-				{
-                    field: 'car_model',title: '车型名称',align: 'left',
+                {
+                    field: 'car_status',title: '一级状态',align: 'center',
                     sortable: true,
                     formatter: function(value){
+                        var status = <?php echo json_encode($config['car_status']); ?>;
+                        //console.log(status)
+                        try{
+                            return status[value].text;
+                        }catch(e){
+                            return '';
+                        }
+                    }
+                },
+
+                {
+                    field: 'use_nature_a',title: '使用性质',align: 'center',
+
+                    sortable: true,
+                    formatter: function(value, row){
+                        //console.log(row.use_nature_a);
+                        //console.log(row.use_nature_d);
+                        if(row.use_nature_d){
+                            if(row.use_nature_d == 1){
+                            return '企业营运货车';
+                            }else if(row.use_nature_d == 2) {
+                                return '企业非营运货车';   
+                            }else if(row.use_nature_d == 3) {
+                                return '企业非营运客车';   
+                            }else if(row.use_nature_d == 4) {
+                                return '企业营运客车';   
+                            } else if(row.use_nature_d == 5) {
+                                return '个人家庭自用车';   
+                            }else if(row.use_nature_d == 6) {
+                                return '特种车';   
+                            }  
+                        } else {
+                           if(row.use_nature_a == 1){
+                            return '企业营运货车';
+                            }else if(row.use_nature_a == 2) {
+                                return '企业非营运货车';   
+                            }else if(row.use_nature_a == 3) {
+                                return '企业非营运客车';   
+                            }else if(row.use_nature_a == 4) {
+                                return '企业营运客车';   
+                            } else if(row.use_nature_a == 5) {
+                                return '个人家庭自用车';   
+                            }else if(row.use_nature_a == 6) {
+                                return '特种车';   
+                            } 
+                        } 
+                        
+                    }
+                },
+				{
+                    field: 'car_model_name',title: '车型名称',align: 'center',
+                    sortable: true,
+                   /* formatter: function(value){
                         var car_type = <?php echo json_encode($config['car_model_name']); ?>;
                         try{
                             return car_type[value].text;
                         }catch(e){
                             return '';
                         }
-                    }
+                    }*/
                 },
-                {
-                    field: 'start_date',title: '开始时间',
-                    align: 'center',sortable: true,
-                    formatter: function(value){
-                        if(!isNaN(value) && value > 0){
-                            return formatDateToString(value);
-                        }
-                    }
-                },
-                {
-                    field: 'end_date',title: '结束时间',align: 'center',
-                    sortable: true,
-                    formatter: function(value){
-                        if(!isNaN(value) && value > 0){
-                            return formatDateToString(value);
-                        }
-                    }
-                },
+                 /*{
+                    field: 'customer_name',title: '归属客户',align: 'center',width: 80,
+                    sortable: true
+                },*/
+                
                 // {
                     // field: '_end_date',title: '倒计时',align: 'center',
                     // sortable: true,
@@ -180,18 +217,72 @@
                         if(value==1){
                             return '交强险';
                         }else{
+                            /*if(value==3){
+                                var data = eval(value);
+                                //alert(data);
+                                return '其他险';
+                            }*/
 							if(value=='' || value==null){
 								return '';
 							}
 							var data = eval(value);
+                            
 							var insurance_str='';
 							for(var i=0;i<data.length;i++){
+                                if(data[i][0]=='车损险'){
+                                //alert(123);
+                                data[i][0] = '机动车损失保险';
+                            } else if(data[i][0]=='三者险') {
+                                data[i][0] = '机动车第三者责任保险';
+                            }
+                            else if(data[i][0]=='司乘险(司机)') {
+                                data[i][0] = '机动车车上人员责任保险(司机)';
+                            }
+                            else if(data[i][0]=='司乘险(乘客)') {
+                                data[i][0] = '机动车车上人员责任保险(乘客)';
+                            }
+                            else if(data[i][0]=='盗抢险') {
+                                data[i][0] = '全车盗抢保险';
+                            }
+                            else if(data[i][0]=='玻璃险') {
+                                data[i][0] = '玻璃单独破碎险';
+                            }
+                            else if(data[i][0]=='涉水险') {
+                                data[i][0] = '发动机涉水损失险';
+                            }
+                            else if(data[i][0]=='不计免赔险') {
+                                data[i][0] = '不计免赔率险';
+                            }
+                            else if(data[i][0]=='无法找到第三方特约险') {
+                                data[i][0] = '机动车损失保险无法找到第三方特约险';
+                            }
 								insurance_str+=data[i][0]+'('+data[i][1]+'),';
 							}
 							return insurance_str;
                         }
                         return '';
                     }
+                },
+                {
+                    field: 'start_date',title: '开始时间',
+                    align: 'center',sortable: true,
+                    formatter: function(value){
+                        if(!isNaN(value) && value > 0){
+                            return formatDateToString(value);
+                        }
+                    }
+                },
+                {
+                    field: 'end_date',title: '结束时间',align: 'center',
+                    sortable: true,
+                    formatter: function(value){
+                        if(!isNaN(value) && value > 0){
+                            return formatDateToString(value);
+                        }
+                    }
+                },
+                {
+                    field: 'number',title: '保单号',align: 'center'
                 },
                 {
                     field: 'insurer_company',title: '保险公司',width: 160,
@@ -203,9 +294,12 @@
                         }
                     }
                 },
-                {field: 'money_amount',title: '保费',sortable: true},
-                {field: 'note',title: '备注',width: 200,align: 'left',sortable: true},
+                {field: 'money_amount',title: '保费金额',sortable: true},
                 {
+                    field: 'numberp',title: '批单号',align: 'center'
+                },
+                /*{field: 'note',title: '备注',width: 200,align: 'left',sortable: true},*/
+                /*{
                     field: 'add_datetime',title: '上次修改时间',width: 160,
                     align: 'center',sortable: true,
                     formatter: function(value){
@@ -213,12 +307,22 @@
                             return formatDateToString(value,true);
                         }
                     }
+                },*/
+                /*{field: 'username',title: '操作人员',align: 'center',sortable: true}*/
+                {field: 'money_amount_p',title: '批改后保费金额',sortable: true,align: 'center'},
+                {
+                    field: 'operating_company_id',title: '车辆运营公司',align: 'center'
                 },
-                {field: 'username',title: '操作人员',align: 'center',sortable: true}
+                {
+                    field: 'owner_name',title: '机动车辆所有人',align: 'center'
+                },
+
             ]],
-            onDblClickRow: function(rowIndex,rowData){
+           /* onDblClickRow: function(rowIndex,rowData){
+                console.log(rowData);
+                //alert(rowData);
                 CarInsuranceLog.scan(rowData.id,rowData.type);
-            },
+            },*/
             onLoadSuccess: function (data){
                 $(this).datagrid('doCellTip',{
                     position : 'bottom',
@@ -311,8 +415,8 @@
       	//初始化查看窗口
 		$('#easyui-window-car-insurance-log-scan').window({
 			title: '购买保险记录',
-            width: '700',   
-            height: '300',   
+            width: '750',   
+            height: '600',   
             closed: true,   
             cache: true,   
             modal: true,

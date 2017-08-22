@@ -92,6 +92,53 @@
 		      		</div>
 		      		<form class="ui form" id="form1"  action="../index.php?r=car/car-back/add6" method="post">
 		      			<input name='id' class="hide" />
+						<h3 class="ui black block header">
+					      <span class="ui left" style="cursor:pointer; color:#00b5ad" onclick="refresh2()">违章复核</span>						
+					      <span class="ui right" style="float:right; cursor:pointer; color:#00b5ad"></span>
+					    </h3>
+						  <span class="ui left" >&nbsp;&nbsp;（还车验车后30天复核原租赁期内是否有新增违章）</span>
+						<table class="ui celled structured table">
+					      <thead>
+					        <tr>
+						        <th>车牌号</th>
+						        <th>违章时间</th>
+						        <th>违章地点</th>
+						        <th>违章说明</th>
+						        <th>扣分</th>
+						        <th width='100'>代办费单价</th>
+						        <th>罚款</th>
+						        <th>总额</th>
+						        <th>注销状态</th>
+					        </tr>
+					      </thead>
+					      <tbody id='wz_table_new'>	
+					      </tbody>	
+					    </table>
+						<h3 class="ui black block header">
+					      <span class="ui left">还车验车时的违章情况</span>
+					      <span class="ui right" style="float:right; cursor:pointer; color:#00b5ad" "></span>
+					    </h3>
+					    <!-- <div class="field"><label><div ><label>&nbsp;&nbsp;还车验车时的违章情况：</label></div></label></div>-->
+			      		<table class="ui celled structured table">
+					      <thead>
+					        <tr>
+						        <th>车牌号</th>
+						        <th>违章时间</th>
+						        <th>违章地点</th>
+						        <th>违章说明</th>
+						        <th>扣分</th>
+						        <th width='100'>代办费单价</th>
+						        <th>罚款</th>
+						        <th>总额</th>
+						        <th>注销状态</th>
+					        </tr>
+					      </thead>
+					      <tbody id='wz_table'>	
+					      </tbody>	
+					    </table>
+						<h3 class="ui black block header">
+					      <span class="ui left">结算信息</span>
+					       </h3>
 		      			 <div class="two fields">
 					    	<div class="field">
 					        	<label>违章罚款总额</label>
@@ -150,7 +197,7 @@
 							    </div>
 							</div>
 							<div class="field">
-					          	<label><span class="c-red">*</span>退还时间</label>
+					          	<label><span class="c-red">*</span>退还金额时间</label>
 					          	<input class="date_picker" id="back_time3" placeholder="请输入退还时间" name="back_time3" type="text" readonly="">
 					        </div>			        
 					    </div>
@@ -192,6 +239,17 @@
 		    </div>
 		    <div class="actions">
 		      	<div class="ui green button" onclick="cancel()">确定</div>
+		    </div>
+		</div>
+		<div class="ui small modal" id="b_modal2" >
+			<input name='id' class="hide" />
+		  	<div class="header">违章查询成功！</div>
+		  	<div class="content">
+		      	<p>1分钟后刷新页面即可得最新违章结果，<span class="c-red">(每次违章查询会花费0.04*车数（元），请谨慎使用!)</span></p>
+		    </div>
+		    <div class="actions">
+		    	<div class="ui button" onclick="modal_close2()">取消查询</div>
+		      	<div class="ui green button" onclick="sure_refresh2()">确定查询</div>
 		    </div>
 		</div>
 	</body>
@@ -254,11 +312,7 @@
            	dataType:'json',
            	success:function(data){
            		if(data == false){
-           			/*
-           			//预处理遮盖层
-			  		$('.ui .segments').dimmer('show','on');
-			  		$('.ui .segments').off("click");//让点击事件取消
-			  		*/
+           			
 			  	
 			  		//不可操作
 			  		$('.id_test').show();
@@ -267,7 +321,7 @@
            	},
            	error: function (msg) {}
         })
-  		
+  		var is_pass = 0;
   		//获取客户列表
   		$(document).ready(function(){
        		//获取页面值
@@ -277,6 +331,8 @@
 	           	type:'get',
 	           	dataType:'json',
 	           	success:function(datai){
+					is_pass = datai.data.is_wz_review;
+					console.log(datai.data.is_wz_review);
 	           		if(datai.status){
 						if(datai.data.state != 5 && datai.data.state != 6 && datai.data.state != 22){
 							$('.ui .segments').dimmer('show','on');
@@ -302,21 +358,294 @@
 	           				$('p[name="reject_cause2"]').text(datai.data.reject_cause2);
 	           			}else{
 	           			}
+						//TODO 违章复核-新增违章列表	
+						//console.log(datai.data.wz_text_new);
+						if (datai.data.wz_text_new.length != null) {
+	           			for(var i = 0; i <datai.data.wz_text_new.length ; i++){
+	           				if(datai.data.wz_text_new[i].lists.length==0){
+	           					continue;
+	           				}
+	           				var html=[];
+	           				var leng = datai.data.wz_text_new[i].lists.length;
+	           				if(datai.data.wz_text_new[i].province == undefined){
+	           					if(datai.data.wz_text_new[i].lists[0] == undefined){
+		           					datai.data.wz_text_new[i].lists[0] = {};
+		           					datai.data.wz_text_new[i].lists[0].date = '出错！请手动查询';
+		           					datai.data.wz_text_new[i].lists[0].area = '出错！请手动查询';
+		           					datai.data.wz_text_new[i].lists[0].act = '出错！请手动查询';
+		           					datai.data.wz_text_new[i].lists[0].code = '出错！请手动查询';
+		           					datai.data.wz_text_new[i].lists[0].fen = '出错！请手动查询';
+		           					datai.data.wz_text_new[i].lists[0].money = '出错！请手动查询';
+		           					datai.data.wz_text_new[i].lists[0].handled = '出错！请手动查询';
+		           				}
+	           				}
+	           				if(datai.data.wz_text_new[i].lists[0] == undefined){
+	           					datai.data.wz_text_new[i].lists[0] = {};
+	           					datai.data.wz_text_new[i].lists[0].date = '';
+	           					datai.data.wz_text_new[i].lists[0].area = '';
+	           					datai.data.wz_text_new[i].lists[0].act = '';
+	           					datai.data.wz_text_new[i].lists[0].code = '';
+	           					datai.data.wz_text_new[i].lists[0].fen = '';
+	           					datai.data.wz_text_new[i].lists[0].money = '';
+	           					datai.data.wz_text_new[i].lists[0].handled = '';
+	           				}
+	           				if (datai.data.wz_text_new[i].lists[0].fenjia == undefined) {
+											datai.data.wz_text_new[i].lists[0].fenjia = 0;
+										}
+	           				html.push('<tr>');	           				
+	           					html.push('<td rowspan='+leng+'>'+datai.data.wz_text_new[i].hphm+'</td>');
+	           					html.push('<td>'+datai.data.wz_text_new[i].lists[0].date+'</td>');
+	           					html.push('<td>'+datai.data.wz_text_new[i].lists[0].area+'</td>');
+	           					html.push('<td>'+datai.data.wz_text_new[i].lists[0].act+'</td>');
+	           					html.push('<td class="sum_fen2">'+datai.data.wz_text_new[i].lists[0].fen+'</td>');
+								html.push('<td><input name="fenjia['+datai.data.wz_text_new[i].hphm+'_'+datai.data.wz_text_new[i].lists[0].date+']" value="'+datai.data.wz_text_new[i].lists[0].fenjia+'" type="number" max="500" min="100" class="sum_fenjia2" /></td>');
+	           					html.push('<td class="fakuan2">'+datai.data.wz_text_new[i].lists[0].money+'</td>');
+								
+								html.push('<td class="result_fenjia2"></td>');
+	           					if(datai.data.wz_text_new[i].lists[0].handled == '0'){
+	           						html.push('<td class="warning">未处理</td>');
+	           					}else if(datai.data.wz_text_new[i].lists[0].handled == 1){
+	           						html.push('<td>已处理</td>');
+	           					}else{
+	           						html.push('<td></td>');
+	           					}
+	           				html.push('</tr>');
+	           				if(leng > 1){
+		           				for(var j = 1 ; j < leng ; j++){
+		           					if(datai.data.wz_text_new[i].lists[j] == undefined){
+			           					datai.data.wz_text_new[i].lists[j] = {};
+			           					datai.data.wz_text_new[i].lists[j].date = '';
+			           					datai.data.wz_text_new[i].lists[j].area = '';
+			           					datai.data.wz_text_new[i].lists[j].act = '';
+			           					datai.data.wz_text_new[i].lists[j].code = '';
+			           					datai.data.wz_text_new[i].lists[j].fen = '';
+			           					datai.data.wz_text_new[i].lists[j].money = '';
+			           					datai.data.wz_text_new[i].lists[j].handled = '';
+			           				}
+									if (datai.data.wz_text_new[i].lists[j].fenjia == undefined) {
+											datai.data.wz_text_new[i].lists[j].fenjia = 0;
+										}
+		           					html.push('<tr>');
+		           						html.push('<td>'+datai.data.wz_text_new[i].lists[j].date+'</td>');
+			           					html.push('<td>'+datai.data.wz_text_new[i].lists[j].area+'</td>');
+			           					html.push('<td>'+datai.data.wz_text_new[i].lists[j].act+'</td>');
+			           					html.push('<td class="sum_fen2">'+datai.data.wz_text_new[i].lists[j].fen+'</td>');
+			           					html.push('<td><input name="fenjia['+datai.data.wz_text_new[i].hphm+'_'+datai.data.wz_text_new[i].lists[j].date+']" value="'+datai.data.wz_text_new[i].lists[j].fenjia+'" type="number" max="500" min="100" class="sum_fenjia2" /></td>');
+			           					html.push('<td class="fakuan2">'+datai.data.wz_text_new[i].lists[j].money+'</td>');
+										
+			           					html.push('<td class="result_fenjia2"></td>');
+			           					if(datai.data.wz_text_new[i].lists[j].handled == '0'){
+			           						html.push('<td class="warning">未处理</td>');
+			           					}else if(datai.data.wz_text_new[i].lists[j].handled == 1){
+			           						html.push('<td>已处理</td>');
+			           					}else{
+			           						html.push('<td></td>');
+			           					}
+			           					
+		           					html.push('</tr>');
+		           				}
+	           				}
+	           				$(html.join('')).appendTo('#wz_table_new');			
+	           			}
+						
+						}
+						//违章列表
+	           			for(var i = 0; i <datai.data.wz_text.length ; i++){
+	           				if(datai.data.wz_text[i].lists.length==0){
+	           					continue;
+	           				}
+	           				var html=[];
+	           				var leng = datai.data.wz_text[i].lists.length;
+	           				if(datai.data.wz_text[i].province == undefined){
+	           					if(datai.data.wz_text[i].lists[0] == undefined){
+		           					datai.data.wz_text[i].lists[0] = {};
+		           					datai.data.wz_text[i].lists[0].date = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].area = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].act = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].code = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].fen = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].money = '出错！请手动查询';
+		           					datai.data.wz_text[i].lists[0].handled = '出错！请手动查询';
+		           				}
+	           				}
+	           				if(datai.data.wz_text[i].lists[0] == undefined){
+	           					datai.data.wz_text[i].lists[0] = {};
+	           					datai.data.wz_text[i].lists[0].date = '';
+	           					datai.data.wz_text[i].lists[0].area = '';
+	           					datai.data.wz_text[i].lists[0].act = '';
+	           					datai.data.wz_text[i].lists[0].code = '';
+	           					datai.data.wz_text[i].lists[0].fen = '';
+	           					datai.data.wz_text[i].lists[0].money = '';
+	           					datai.data.wz_text[i].lists[0].handled = '';
+	           				}
+	           				if (datai.data.wz_text[i].lists[0].fenjia == undefined) {
+											datai.data.wz_text[i].lists[0].fenjia = 0;
+											//alert('111');
+							}
+								//alert(datai.data.wz_text[i].lists[0].fenjia);
+								
+	           				html.push('<tr>');	           				
+	           					html.push('<td rowspan='+leng+'>'+datai.data.wz_text[i].hphm+'</td>');
+	           					html.push('<td>'+datai.data.wz_text[i].lists[0].date+'</td>');
+	           					html.push('<td>'+datai.data.wz_text[i].lists[0].area+'</td>');
+	           					html.push('<td>'+datai.data.wz_text[i].lists[0].act+'</td>');
+	           					html.push('<td class="sum_fen">'+datai.data.wz_text[i].lists[0].fen+'</td>');
+								html.push('<td>'+datai.data.wz_text[i].lists[0].fenjia+'</td>');
+	           					html.push('<td class="fakuan">'+datai.data.wz_text[i].lists[0].money+'</td>');
+								if (datai.data.wz_text[i].lists[0].fenjia == undefined) {
+											datai.data.wz_text[i].lists[0].fenjia = 0;
+								}								
+								html.push('<td class="result_fenjia">'+((datai.data.wz_text[i].lists[0].fen * datai.data.wz_text[i].lists[0].fenjia)-(-datai.data.wz_text[i].lists[0].money))+'</td>');
+	           					if(datai.data.wz_text[i].lists[0].handled == '0'){
+	           						html.push('<td class="warning">未处理</td>');
+	           					}else if(datai.data.wz_text[i].lists[0].handled == 1){
+	           						html.push('<td>已处理</td>');
+	           					}else{
+	           						html.push('<td></td>');
+	           					}
+	           				html.push('</tr>');
+	           				if(leng > 1){
+		           				for(var j = 1 ; j < leng ; j++){
+		           					if(datai.data.wz_text[i].lists[j] == undefined){
+			           					datai.data.wz_text[i].lists[j] = {};
+			           					datai.data.wz_text[i].lists[j].date = '';
+			           					datai.data.wz_text[i].lists[j].area = '';
+			           					datai.data.wz_text[i].lists[j].act = '';
+			           					datai.data.wz_text[i].lists[j].code = '';
+			           					datai.data.wz_text[i].lists[j].fen = '';
+			           					datai.data.wz_text[i].lists[j].money = '';
+			           					datai.data.wz_text[i].lists[j].handled = '';
+			           				}
+									if (datai.data.wz_text[i].lists[j].fenjia == undefined) {
+											datai.data.wz_text[i].lists[j].fenjia = 0;
+										}
+		           					html.push('<tr>');
+		           						html.push('<td>'+datai.data.wz_text[i].lists[j].date+'</td>');
+			           					html.push('<td>'+datai.data.wz_text[i].lists[j].area+'</td>');
+			           					html.push('<td>'+datai.data.wz_text[i].lists[j].act+'</td>');
+			           					html.push('<td class="sum_fen">'+datai.data.wz_text[i].lists[j].fen+'</td>');
+			           					html.push('<td>'+datai.data.wz_text[i].lists[j].fenjia+'</td>');
+			           					html.push('<td class="fakuan">'+datai.data.wz_text[i].lists[j].money+'</td>');
+										
+			           					html.push('<td class="result_fenjia">'+((datai.data.wz_text[i].lists[j].fen * datai.data.wz_text[i].lists[j].fenjia)-(-datai.data.wz_text[i].lists[j].money))+'</td>');
+			           					if(datai.data.wz_text[i].lists[j].handled == '0'){
+			           						html.push('<td class="warning">未处理</td>');
+			           					}else if(datai.data.wz_text[i].lists[j].handled == 1){
+			           						html.push('<td>已处理</td>');
+			           					}else{
+			           						html.push('<td></td>');
+			           					}
+			           					
+		           					html.push('</tr>');
+		           				}
+	           				}
+	           				$(html.join('')).appendTo('#wz_table');	
+							
+	           			}
+						
+						//计算单条违章的复核总额
+						$('.sum_fenjia2').blur(function(){							
+							var lastval;
+							var fen = $(this).parent('td').siblings('.sum_fen2').text();
+							var fenjia = $(this).val();
+							var fakuan = $(this).parent('td').siblings('.fakuan2').text();
+							if(fenjia > 100 && fenjia <500){
+								//alert("nonono1");
+								lastval = fen*fenjia + parseInt(fakuan);
+								$(this).parent('td').siblings('.result_fenjia2').text(lastval);
+								
+							}else if(fenjia <= 100){
+								if(fenjia == 0) {
+									fenjia = 0;
+								} else {
+									fenjia=100;
+								}
+								$(this).val(fenjia);
+								lastval = fen*fenjia + parseInt(fakuan);
+								//console.log('fen:'+fen+',fenjia:'+fenjia+',fakuan:'+fakuan);
+								//alert(lastval);
+								$(this).parent('td').siblings('.result_fenjia2').text(lastval);
+							}else{
+								//alert("nonono3");
+								fenjia=500;
+								$(this).val(500);
+								lastval = fen*fenjia + parseInt(fakuan);
+								$(this).parent('td').siblings('.result_fenjia2').text(lastval);
+							}
+							var total_wz_se = 0;
+							for(var i=0;i< $('.result_fenjia').length; i++){
+								total_wz_se += parseFloat($('.result_fenjia').eq(i).text());
+							}
+							for(var i=0;i< $('.result_fenjia2').length; i++){
+								total_wz_se += parseFloat($('.result_fenjia2').eq(i).text());
+							}
+							$('input[name="wzfkze"]').val(total_wz_se);
+							
+						})
+						//计算单条违章的总额
+						$('.sum_fenjia').click(function(){
+							var lastval;
+							var fen = $(this).siblings('.sum_fen').text();
+							var fenjia = $(this).val();
+							var fakuan = $(this).siblings('.fakuan').text();
+							if(fenjia > 100 && fenjia <500){
+								lastval = fen*fenjia + parseInt(fakuan);
+								$(this).siblings('.result_fenjia').text(lastval);
+							}else if(fenjia <= 100){
+								fenjia=100;
+								$(this).val(100);
+								lastval = fen*fenjia + parseInt(fakuan);
+								$(this).siblings('.result_fenjia').text(lastval);
+							}else{
+								fenjia=500;
+								$(this).val(500);
+								lastval = fen*fenjia + parseInt(fakuan);
+								$(this).siblings('.result_fenjia').text(lastval);
+							}
+							
+						})
+						//初始化时计算所有违章的罚款总额
+						function total_wz() {
+							var wzfkze_money = 0;
+							if(datai.data.wz_text != ''){
+								for (var i =0; i < datai.data.wz_text.length; i++){
+									for(var j = 0; j < datai.data.wz_text[i].lists.length; j++){
+										if (datai.data.wz_text[i].lists[j].fenjia == '') {
+											datai.data.wz_text[i].lists[j].fenjia = 0;
+										}
+										wzfkze_money += (datai.data.wz_text[i].lists[j].fenjia*datai.data.wz_text[i].lists[j].fen+parseFloat(datai.data.wz_text[i].lists[j].money));
+									}
+								}
+							}
+							if(datai.data.wz_text_new != ''){
+								for (var i =0; i < datai.data.wz_text_new.length; i++){
+									for(var j = 0; j < datai.data.wz_text_new[i].lists.length; j++){
+										if (datai.data.wz_text_new[i].lists[j].fenjia == '') {
+											datai.data.wz_text_new[i].lists[j].fenjia = 0;
+										}
+										wzfkze_money += (datai.data.wz_text_new[i].lists[j].fenjia*datai.data.wz_text_new[i].lists[j].fen+parseFloat(datai.data.wz_text_new[i].lists[j].money));
+									}
+								}
+							}
+							return wzfkze_money;
+						}
+						
+						$(document).ready(function(){ 
+							<!-- alert("hi"); -->
+						　　$('.sum_fenjia').trigger("blur");
+							$('.sum_fenjia2').trigger("blur");
+						}); 
+						
+						
+						
+					
 	           			//计算违章总额和定损总额
-	           			var cldsze_money = 0;
-	           			var wzfkze_money = 0;
+	           			var cldsze_money = 0;	           			
 	           			for(var i = 0; i < datai.data.damage_text.length; i++){
 	           				cldsze_money += parseFloat(datai.data.damage_text[i].damage_money);
-	           			}
+	           			}						
 	           			$('input[name="cldsze"]').val(cldsze_money);
-	           			if(datai.data.wz_text != ''){
-		           			for (var i =0; i < datai.data.wz_text.length; i++){
-		           				for(var j = 0; j < datai.data.wz_text[i].lists.length; j++){
-		           					wzfkze_money += parseFloat(datai.data.wz_text[i].lists[j].money);
-		           				}
-		           			}
-	           			}
-	           			$('input[name="wzfkze"]').val(wzfkze_money);
+	           			$('input[name="wzfkze"]').val(total_wz());
 	           			for(var i = 0; i < datai.data.arrear_text.length; i++){
 	           				a_l++;
 							var html = [];
@@ -395,9 +724,13 @@
   			}
   			$('#money_all').text(m_a);
   		}
-
+	
   		
 		function add6(){
+			if (is_pass == 0) {
+				alert("你还未进行违章复核。");
+				return 0;
+			}
 			var oTxt = document.getElementById('name11');
 			var oTxt2 = document.getElementById('name22');
 			var oTxt3 = document.getElementById('name33');
@@ -434,6 +767,8 @@
 				}
 			});
 		}
+		
+		
 
 	/*function validate_form($this) {
 		alert(456);
@@ -444,6 +779,25 @@
 
 	}*/
 
-	
+	//刷新违章new_wz_text
+	function refresh2(){
+		$('#b_modal2').modal('show');		
+	}
+	function modal_close2(){
+	  		$('.ui.modal').modal('hide');
+  	}
+	function sure_refresh2(){
+			$('#b_modal2').modal('hide');	
+			//is_pass = 1;
+			$.ajax({
+	           	url:'../index.php?r=car/car-back/wz-refresh-new&id='+page_id,
+	           	type:'get',
+	           	dataType:'json',
+	           	success:function(data){
+					
+	           	},
+	           	error: function (msg) {}
+	        })	
+	}
   	</script>
 </html>
