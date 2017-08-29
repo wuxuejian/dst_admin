@@ -65,6 +65,7 @@
                                 <option value="1">维修方案待审核</option>
                                 <option value="2">维修方案未通过</option>
                                 <option value="3">维修方案已通过</option>
+                                <option value="8">完工结算待审核</option>
                                 <option value="4">完工结算未通过</option>
                                 <option value="5">完工结算已通过</option>
                                 <option value="6">付款驳回</option>
@@ -76,6 +77,7 @@
                         <div class="item-name">单据状态</div>
                         <div class="item-input">
                             <select class="easyui-combobox" name="bill_status" style="width:150px;">
+                                <option value="  ">请选择</option>
                                 <option value="1">正常</option>
                                 <option value="0">作废</option>
                             </select>
@@ -155,6 +157,8 @@
                             return '<span style="background:lawngreen;">完工结算已通过</span>';
                         }else if(row.check_status == 6){
                             return '<span style="background:red;">付款驳回</span>';
+                        }else if(row.check_status == 8){
+                            return '<span style="background:yellow;">完工结算待审核</span>';
                         }else {
                             return '<span style="background:yellow;">维修方案待审核</span>';
                         }
@@ -618,7 +622,7 @@
             }
             var id = repairData[0].id;
             var check_status=repairData[0].check_status;
-            if(check_status!=3 && check_status!=4 && check_status!=6){
+            if(check_status!=3 && check_status!=4 && check_status!=6 && check_status!=8){
                  $.messager.alert('编辑失败','请遵守操作流程','error');
                     return false;
             }
@@ -632,7 +636,7 @@
          var datagrid = $('#easyui-datagrid-repair-repair-info-index');
         var repairData = datagrid.datagrid('getChecked');
         if(repairData == 0){
-           $.messager.alert('审核失败','请选择删除项','error');
+           $.messager.alert('审核失败','请选择要审核的项','error');
             return false;
         }else{
             if(repairData.length>1){
@@ -645,7 +649,7 @@
                  
                 $('#easyui-dialog-repair-info-index-check').dialog('open');
                 $('#easyui-dialog-repair-info-index-check').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/check']); ?>&id='+id);
-            }else if(check_status==3 ){
+            }else if(check_status==8 ){
                 $('#easyui-dialog-repair-info-index-checkmoney').dialog('open');
                 $('#easyui-dialog-repair-info-index-checkmoney').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/check-money']); ?>&id='+id);
             }else{
@@ -707,8 +711,9 @@
             return false;
         }
         repairData.check_status = parseInt(repairData[0].check_status);
-        if(repairData.check_status != 5){
-            $.messager.alert('打印失败','只有完工结算已通过才能打印结算单','error');
+        if((repairData.check_status == 5) || (repairData.check_status == 7)){
+        }else{
+            $.messager.alert('打印失败','完工结算已通过和结算完结才能打印结算单','error');
             return false;
         }
         var id = repairData[0].id;
@@ -726,22 +731,20 @@
             $.messager.alert('作废失败','只能选择一项作废','error');
             return false;
         }
-        if(repairData[0].check_status < 4){
-            $.messager.alert('作废失败','结算单审核完后才可作废','error');
-            return false;
-        }
         if(repairData[0].bill_status = 0){
             $.messager.alert('作废失败','选项已作废，请不要重复操作','error');
             return false;
         }
         var id = repairData[0].id;
+        var check_status = repairData[0].check_status;
+        var order_number = repairData[0].order_number;
         var msg = "维修记录：车牌号["+repairData[0].car_id+"]，工单号["+repairData[0].order_number+"]将作废！";
         $.messager.confirm('确认对话框', msg, function(r){
             if (r){
                 $.ajax({
                     type: 'post',
                     url: "<?php echo yii::$app->urlManager->createUrl(['repair/repair-info/abandon']); ?>",
-                    data: {id:id},
+                    data: {id:id,order_number:order_number,check_status:check_status},
                     dataType: 'json',
                     success: function(data){
                         if(data.status == 1){
@@ -794,10 +797,10 @@
                 $.messager.alert('付款失败','完工结算已通过才能付款','error');
                 return false;
             }
-//            if(repairData.check_status == 7){
-//                $.messager.alert('付款失败','已经付款完结的方案不能重复付款操作,有问题请联系管理员','error');
-//                return false;
-//            }
+            if(repairData.check_status == 8){
+                $.messager.alert('付款失败','完工结算已通过才能付款,有问题请联系管理员','error');
+                return false;
+            }
 //            if(repairData.check_status == 6){
 //                $.messager.alert('付款失败','已经驳回的方案不能重复付款操作,有问题请联系管理员','error');
 //                return false;

@@ -513,7 +513,7 @@
                 }
             }
             function onClickRow(index){
-                is_save_task=0;
+                is_save_task=1;
                 $("#is_save_task").val(is_save_task);
                 if (editIndex != index){
                     if (endEditing()){
@@ -526,7 +526,7 @@
                 }
             }
             function append_task(){
-                is_save_task=0;
+                is_save_task=1;
                 $("#is_save_task").val(is_save_task);
                 if (endEditing()){
                     $('#dg').datagrid('appendRow',{status:'P'});
@@ -536,7 +536,7 @@
                 }
             }
             function accept(){
-                is_save_task=1;
+                is_save_task=3;
                 $("#is_save_task").val(is_save_task);
                 $("#task_money_all").text(0);
                 //alert($("task_money_all").text())
@@ -575,7 +575,7 @@
 
             }
             function removeit_task(){
-                is_save_task=0;
+                is_save_task=1;
                 $("#is_save_task").val(is_save_task);
                 if (editIndex == undefined){return}
                 $('#dg').datagrid('cancelEdit', editIndex)
@@ -603,7 +603,7 @@
                 }
             }
             function onClickRow_1(index){
-                is_save_part=0;
+                is_save_part=1;
                 $("#is_save_part").val(is_save_part);
                 if (editIndex_1 != index){
                     if (endEditing_1()){
@@ -616,7 +616,7 @@
                 }
             }
             function append_part(){
-                is_save_part=0;
+                is_save_part=1;
                 $("#is_save_part").val(is_save_part);
                 if (endEditing_1()){
                     $('#bg').datagrid('appendRow',{status:'P',part_no:'',part_number:'',part_fee:'',part_unit:'',part_name:'',part_total:'',before_repair_time:'',before_repair_li:''});
@@ -626,7 +626,7 @@
                 }
             }
             function removeit_part(){
-                is_save_part=0;
+                is_save_part=1;
                 $("#is_save_part").val(is_save_part);
                 if (editIndex_1 == undefined){return}
                 $('#bg').datagrid('cancelEdit', editIndex_1)
@@ -709,7 +709,7 @@
                        console.log(arrayToJson(part_info))
                          // part_info=part_info.join("-");
                         $("#part_info").val(arrayToJson(part_info));
-                        is_save_part=1; 
+                        is_save_part=3; 
                         $("#is_save_part").val(is_save_part);               
                                          
                      

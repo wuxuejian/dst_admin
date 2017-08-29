@@ -29,6 +29,8 @@
                     <div style="background:red;">付款驳回</div>
                 <?php }elseif($detail_data['check_status'] == 7){?>
                     <div style="background:lawngreen;">付款完结</div>
+                <?php }elseif($detail_data['check_status'] == 8){?>
+                    <div style="background:yellow;">完工结算待审核</div>
                 <?php }else{?>
                     <div style="background:red;">审核状态异常</div>
                 <?php }?>
@@ -113,7 +115,7 @@
                         class="easyui-textbox"
                         style="width:150px;"
                         name="car_brand"
-                        value="<?php echo $detail_data['car_model_name'];?>"
+                        value="<?php echo $detail_data['che_type'];?>"
                         disabled="disabled"
                     >
                 </td>

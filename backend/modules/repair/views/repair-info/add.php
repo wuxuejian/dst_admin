@@ -192,6 +192,7 @@
                         style="width:160px;"
                         name="soc"
                         validType="length[100]"
+                        data-options="prompt:'请填写百分数....'"
                      
                     />
                 </td> 
