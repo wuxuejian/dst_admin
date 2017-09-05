@@ -8,104 +8,37 @@
              <form id="search-form-parts-stock-index">
                 <ul class="search-main">
                     <li>
-                        <div class="item-name">大区</div>
-                        <div class="item-input">
-                           <select
-                        class="easyui-combobox"
-                        style="width:160px;"
-                        id="s_province_2"
-                        name="region"
-                        editable="true"
-                    >
-                       <?php foreach($searchFormOptions['region'] as $val){?>
-                        <option value="<?php echo $val['id']; ?>"><?php echo $val['name']; ?></option>
-                       <?php }?>
-                    </select>
-                        </div>
-                    </li>   
-                    <li>
-                        <div class="item-name">运营公司</div>
-                        <!-- <div class="item-input">
-                            <input style="width:200px;" name="operating_company_id" />
-                        </div> -->
-                        <select class="easyui-combobox" id="s_city_2" name="operating_company_id" style="width:200px;"></select>
-                    </li> 
-                    <li>
-                        <div class="item-name">仓储地点</div>
-                        <!-- <div class="item-input">
-                            <input class="easyui-textbox" type="text" name="warehouse_address" style="width:100%;"  />
-                        </div> -->
-                        <select class="easyui-combobox" id="s_county_2" name="warehouse_address" style="width: 150px;"></select>
-
+                        <div class="item-name">配件编码</div>
+                        <input class="easyui-textbox" type="text" style="width:150px;" name="parts_code" data-options="prompt:'请输入',"/>
                     </li>
-                 <!--    <li>
-                        <div class="item-name">仓储编码</div>
-                        <div class="item-input">
-                            <input class="easyui-textbox" type="text" name="order_number" style="width:100%;"  />
-                        </div>
-                    </li> -->
-                    <li>
-                        <div class="item-name">车辆品牌</div>
-                        <div class="item-input">
-                           <input style="width:200px;" name="brand_id" />
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item-name">配件类别</div>
-                        <div class="item-input">
-                            <select
-                                    class="easyui-combobox"
-                                    style="width:150px;"
-                                    id="parts_type_instock_3"
-                                    name="parts_type"
-                                    editable="true"
-                                    listHeight="200px"
-                            >
-                                <?php foreach($searchFormOptions['parts_type'] as $val){?>
-                                    <option value="<?php echo $val['id']; ?>"><?php echo $val['name']; ?></option>
-                                <?php }?>
-                            </select>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item-name">配件种类</div>
-                        <div class="item-input">
-                            <select
-                                    class="easyui-combobox"
-                                    style="width:150px;"
-                                    id="parts_kind_instock_3"
-                                    name="parts_kind"
-                                    editable="true"
-                                    data-options="panelHeight:'auto'"
-                            >
-                            </select>
-                        </div>
-                    </li> 
                     <li>
                         <div class="item-name">配件名称</div>
-                        <div class="item-input">
-                            <input class="easyui-textbox" type="text" name="parts_name" style="width:100%;"  />
-                        </div>
+                        <input class="easyui-textbox" type="text" style="width:150px;" name="parts_name" data-options="prompt:'请输入',"/>
                     </li>
                     <li>
-                        <div class="item-name">配件品牌</div>
-                        <div class="item-input">
-                            <input class="easyui-textbox" type="text" name="parts_brand" style="width:100%;"  />
-                        </div>
+                        <div class="item-name">运营公司</div>
+                        <select
+                                class="easyui-combobox"
+                                style="width:150px;"
+                                name="company"
+                                id="company_feng_stock"
+                                editable="true"
+                                listHeight="200px"
+                        >
+                            <option value=" ">请选择</option>
+                            <?php foreach($searchFormOptions['company'] as $val){?>
+                                <option value="<?php echo $val['id']; ?>"><?php echo $val['name']; ?></option>
+                            <?php }?>
+                        </select>
                     </li>
                     <li>
-                        <div class="item-name">厂家配件编码</div>
-                        <div class="item-input">
-                           <input class="easyui-textbox" type="text" name="vender_code" style="width:100%;"  />
-                        </div>
-                    </li> 
+                        <div class="item-name">仓库名称</div>
+                        <input class="easyui-combobox" name="warehouse_address" id="house_name_stock" data-options="prompt:'请输入'," style="width:150px;">
+                    </li>
                     <li>
-                        <div class="item-name">我方配件编码</div>
-                        <div class="item-input">
-                           <input class="easyui-textbox" type="text" name="dst_code" style="width:100%;"  />
-                        </div>
-                    </li> 
-                              
+                        <div class="item-name">原厂编码</div>
+                            <input class="easyui-textbox" type="text" name="factory_code" style="width:150px;" data-options="prompt:'请输入'," />
+                    </li>
                     <li class="search-button">
                         <button type="submit" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</button>
                         <button type="submit" onclick="PartsStockIndex.resetForm()" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">重置</button>
@@ -145,28 +78,15 @@
             rownumbers: true,
             singleSelect: true,
 			pageSize: 20,
-			
 		    columns:[[
-                {field: 'region_name',title: '大区',width: 93,halign: 'center'
-            },
-                {field: 'company_name',title: '运营公司',width: 100,halign: 'center'},
-                {field: 'warehouse_address',title: '仓储地点',width: 100,halign: 'center'
-                    
-                },
-    
-                {field: 'brand_name',title: '车辆品牌',width: 100,halign: 'center'
-                    
-                
-                },
-                {field: 'parents_name',title: '配件类别',width: 150,halign: 'center'},
-                {field: 'son_name',title: '配件种类',width: 150,halign: 'center'},
+                {field: 'company',title: '运营公司',width: 150,halign: 'center'},
+                {field: 'house_name',title: '仓储地点',width: 100,halign: 'center'},
+                {field: 'parts_code',title: '配件编码',width: 100,halign: 'center'},
                 {field: 'parts_name',title: '配件名称',width: 150,halign: 'center'},
-                {field: 'parts_brand',title: '配件品牌',width: 150,halign: 'center'},
-                {field: 'vender_code',title: '厂家配件编码',width: 150,halign: 'center'},
-                {field: 'dst_code',title: '我方配件编码',width: 150,halign: 'center'},
+                {field: 'size',title: '规格',width: 150,halign: 'center'},
                 {field: 'unit',title: '单位',width: 150,halign: 'center'},
-                {field: 'main_engine_price',title: '主机厂参考价（元）',width: 150,halign: 'center'},
-                {field: 'storage_quantity',title: '数量',width: 150,halign: 'center'},
+                {field: 'storage_num',title: '库存数量',width: 150,halign: 'center'},
+                {field: 'factory_code',title: '原厂编码',width: 150,halign: 'center'},
             ]],
             onDblClickRow: function(rowIndex,rowData){
                 PartsStockIndex.edit(rowData.id);
@@ -195,18 +115,6 @@
             }
         });
 
-    
-        
-        searchForm.find('select[name=operating_company_id]').combobox({
-            valueField:'value',
-            textField:'text',
-            data: '',
-            editable: true,
-            panelHeight:'auto',
-            onSelect: function(){
-                searchForm.submit();
-            }
-        });
         searchForm.find('select[name=warehouse_address]').combobox({
             valueField:'value',
             textField:'text',
@@ -217,58 +125,6 @@
                 searchForm.submit();
             }
         });
-
-        searchForm.find('select[name=operating_company_id]').combobox({
-            valueField:'value',
-            textField:'text',
-            data: '',
-            editable: true,
-            panelHeight:'auto',
-            onSelect: function(){
-                searchForm.submit();
-            }
-        });
-         searchForm.find('input[name=part_type]').combobox({
-            valueField:'value',
-            textField:'text',
-            data: <?= json_encode($searchFormOptions['part_type']); ?>,
-            editable: true,
-            panelHeight:'auto',
-            onSelect: function(){
-                searchForm.submit();
-            }
-        });
-         searchForm.find('input[name=parts_name]').combobox({
-            valueField:'value',
-            textField:'text',
-            data: <?= json_encode($searchFormOptions['parts_name']); ?>,
-            editable: true,
-            panelHeight:'auto',
-            onSelect: function(){
-                searchForm.submit();
-            }
-        });
-         searchForm.find('input[name=part_kind]').combobox({
-            valueField:'value',
-            textField:'text',
-            data: <?= json_encode($searchFormOptions['part_kind']); ?>,
-            editable: true,
-            panelHeight:'500px',
-            onSelect: function(){
-                searchForm.submit();
-            }
-        });
-    
-        searchForm.find('input[name=region]').combobox({
-            valueField:'id',
-            textField:'name',
-            data: <?= json_encode($searchFormOptions['region']); ?>,
-            editable: true,
-            panelHeight:'auto',
-            onSelect: function(){
-                searchForm.submit();
-            }
-        });         
         //构建查询表单结束
 	
 	}
@@ -374,72 +230,98 @@
         $('#easyui-datagrid-parts-stock-index').datagrid('load',data);
     }
 </script>
-<script type="text/javascript">
-//二级联动
-    $('#parts_type_instock_3').combobox({
+<script>
+    //二级联动
+    $('#company_feng_stock').combobox({
         onChange: function (n,o) {
-            var id = $('#parts_type_instock_3').combobox('getValue');
+            var id = $('#company_feng_stock').combobox('getValue');
             $.ajax({
                 async: false,
-                url:'<?php echo yii::$app->urlManager->createUrl(['parts/parts-instock/get-kind']); ?>',
+                url:'<?php echo yii::$app->urlManager->createUrl(['parts/parts-instock/get-site']); ?>',
                 type:'post',
                 data:{'id':id},
                 dataType:'json',
                 success:function(data){
 //                    $('#parts_kind').combobox('clear');
-                    $('#parts_kind_instock_3').combobox({
+                    $('#house_name_stock').combobox({
                         valueField:'value',
                         textField:'text',
                         editable: false,
                         panelHeight:'auto',
                         data: data
                     });
-                    $('#parts_kind_instock_3').combobox('setValues','');
+                    $('#house_name_stock').combobox('setValues','');
                 }
             });
         }
     });
+</script>
+<script type="text/javascript">
+////二级联动
+//    $('#parts_type_instock_3').combobox({
+//        onChange: function (n,o) {
+//            var id = $('#parts_type_instock_3').combobox('getValue');
+//            $.ajax({
+//                async: false,
+//                url:'<?php //echo yii::$app->urlManager->createUrl(['parts/parts-instock/get-kind']); ?>//',
+//                type:'post',
+//                data:{'id':id},
+//                dataType:'json',
+//                success:function(data){
+////                    $('#parts_kind').combobox('clear');
+//                    $('#parts_kind_instock_3').combobox({
+//                        valueField:'value',
+//                        textField:'text',
+//                        editable: false,
+//                        panelHeight:'auto',
+//                        data: data
+//                    });
+//                    $('#parts_kind_instock_3').combobox('setValues','');
+//                }
+//            });
+//        }
+//    });
     //三级联动
-    $('#s_province_2').combobox({
-        onChange: function (n,o) {
-            var id = $('#s_province_2').combobox('getValue');
-            $.ajax({
-                async: false,
-                url:'<?php echo yii::$app->urlManager->createUrl(['parts/parts-instock/get-company']); ?>',
-                type:'post',
-                data:{'id':id},
-                dataType:'json',
-                success:function(data){
-                    $('#s_city_2').combobox({
-                        valueField:'value',
-                        textField:'text',
-                        editable: false,
-                        panelHeight:'auto',
-                        data: data,
-                        onChange:function (n,o) {
-                            var id = $('#s_city_2').combobox('getValue');
-                            $.ajax({
-                                async: false,
-                                url:'<?php echo yii::$app->urlManager->createUrl(['parts/parts-instock/get-site']); ?>',
-                                type:'post',
-                                data:{'id':id},
-                                dataType:'json',
-                                success:function(data){
-                                    $('#s_county_2').combobox({
-                                        valueField:'value',
-                                        textField:'text',
-                                        editable: false,
-                                        panelHeight:'auto',
-                                        data: data
-                                    });
-                                    $('#s_county_2').combobox('setValues','');
-                                }
-                            });
-                        }
-                    });
-                    $('#s_city_1').combobox('setValues','');
-                }
-            });
-        }
-    });
+//    $('#s_province_2').combobox({
+//        onChange: function (n,o) {
+//            var id = $('#s_province_2').combobox('getValue');
+//            $.ajax({
+//                async: false,
+//                url:'<?php //echo yii::$app->urlManager->createUrl(['parts/parts-instock/get-company']); ?>//',
+//                type:'post',
+//                data:{'id':id},
+//                dataType:'json',
+//                success:function(data){
+//                    $('#s_city_2').combobox({
+//                        valueField:'value',
+//                        textField:'text',
+//                        editable: false,
+//                        panelHeight:'auto',
+//                        data: data,
+//                        onChange:function (n,o) {
+//                            var id = $('#s_city_2').combobox('getValue');
+//                            $.ajax({
+//                                async: false,
+//                                url:'<?php //echo yii::$app->urlManager->createUrl(['parts/parts-instock/get-site']); ?>//',
+//                                type:'post',
+//                                data:{'id':id},
+//                                dataType:'json',
+//                                success:function(data){
+//                                    $('#s_county_2').combobox({
+//                                        valueField:'value',
+//                                        textField:'text',
+//                                        editable: false,
+//                                        panelHeight:'auto',
+//                                        data: data
+//                                    });
+//                                    $('#s_county_2').combobox('setValues','');
+//                                }
+//                            });
+//                        }
+//                    });
+//                    $('#s_city_1').combobox('setValues','');
+//                }
+//            });
+//        }
+//    });
 </script>

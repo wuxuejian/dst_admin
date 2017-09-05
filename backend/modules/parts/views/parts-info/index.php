@@ -8,65 +8,42 @@
             <form id="search-form-parts-info-index" method="post">
                 <ul class="search-main">
                     <li>
-                        <div class="item-name">车辆品牌</div>
+                        <div class="item-name">配件编码</div>
                         <div class="item-input">
-                            <input class="easyui-textbox" name="car_brand" style="width:150px;">
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item-name">配件类别</div>
-                        <div class="item-input">
-                            <select
-                                    class="easyui-combobox"
-                                    style="width:150px;"
-                                    id="parts_type"
-                                    name="parts_type"
-                                    editable="true"
-                                    listHeight="200px"
-                            >
-                                <option value=" ">请选择</option>
-                                <?php foreach($searchFormOptions['parts_type'] as $val){?>
-                                    <option value="<?php echo $val['id']; ?>"><?php echo $val['parts_name']; ?></option>
-                                <?php }?>
-                            </select>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item-name">配件种类</div>
-                        <div class="item-input">
-                            <select
-                                    class="easyui-combobox"
-                                    style="width:150px;"
-                                    id="parts_kind"
-                                    name="parts_kind"
-                                    editable="true"
-                                    data-options="panelHeight:'auto'"
-                            >
-                            </select>
+                            <input class="easyui-textbox" name="parts_code" data-options="prompt:'请输入'," style="width:150px;">
                         </div>
                     </li>
                     <li>
                         <div class="item-name">配件名称</div>
                         <div class="item-input">
-                            <input class="easyui-textbox" name="parts_name" style="width:150px;">
+                            <input class="easyui-textbox" name="parts_name" data-options="prompt:'请输入'," style="width:150px;">
                         </div>
                     </li>
                     <li>
-                        <div class="item-name">配件品牌</div>
+                        <div class="item-name">规格</div>
                         <div class="item-input">
-                            <input class="easyui-textbox" name="parts_brand" style="width:150px;">
+                            <input class="easyui-textbox" name="size" data-options="prompt:'请输入'," style="width:150px;">
                         </div>
                     </li>
                     <li>
-                        <div class="item-name">厂家配件编码</div>
+                        <div class="item-name">原厂编码</div>
                         <div class="item-input">
-                            <input class="easyui-textbox" name="vender_code" style="width:150px;">
+                            <input class="easyui-textbox" name="factory_code" data-options="prompt:'请输入'," style="width:150px;">
                         </div>
                     </li>
                     <li>
-                        <div class="item-name">我方配件编码</div>
+                        <div class="item-name">适用车型</div>
                         <div class="item-input">
-                            <input class="easyui-textbox" name="dst_code" style="width:150px;">
+                            <input class="easyui-textbox" name="car_type" data-options="prompt:'请输入'," style="width:150px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-name">状态</div>
+                        <div class="item-input">
+                            <select class="easyui-combobox" name="status" style="width:150px;">
+                                <option value="0">正常</option>
+                                <option value="1">作废</option>
+                            </select>
                         </div>
                     </li>
                     <li class="search-button">
@@ -91,6 +68,7 @@
 <!-- 窗口 -->
 <div id="easyui-dialog-parts-parts-info-index-add"></div>
 <div id="easyui-dialog-parts-parts-info-index-edit"></div>
+<div id="easyui-dialog-parts-parts-info-index-see"></div>
 <div id="easyui-dialog-parts-parts-info-index-import">
 <!--    <form id="much_import" enctype="multipart/form-data" method="post">
         <div style="margin-left: 20%;margin-top: 50px;">请上传文件：<input type="file" id="upload"></div>
@@ -116,15 +94,23 @@
             singleSelect: true,
             columns:[[
                 {field: 'ck',checkbox: true},
-                {field: 'name',title: '车辆品牌'},
-                {field: 'parents_name',title: '配件类别',width: 100},
-                {field: 'son_name',title: '配件种类',width: 100},
+                {field: 'id',hidden:true},
+                {field: 'parts_code',title: '配件编码',width: 200},
                 {field: 'parts_name',title: '配件名称',width: 100},
-                {field: 'parts_brand',title: '配件品牌',width: 100},
-                {field: 'vender_code',title: '厂家配件编码',width: 100},
-                {field: 'dst_code',title: '我方配件编码',width: 100},
+                {field: 'size',title: '规格',width: 100},
                 {field: 'unit',title: '单位',width: 50},
-                {field: 'main_engine_price',title: '主机厂参考价',width: 100},
+                {field: 'factory_code',title: '原厂编码',width: 100},
+                {field: 'status',title: '状态',width: 100,
+                    formatter: function(value,row,index){
+                        if(row.status == 1){
+                            return '作废';
+                        }else{
+                            return '正常';
+                        }
+                    }
+                },
+                {field: 'create_man',title: '创建人',width: 100},
+                {field: 'create_time',title: '创建时间',width: 150},
             ]]
         });
         //初始化批量导入窗口
@@ -155,10 +141,11 @@
         //初始化添加窗口`
         $('#easyui-dialog-parts-parts-info-index-add').dialog({
             title: '添加配件信息',
-            width: 900,
-            height: 300,
+            width: 700,
+            height: 500,
             cache: true,
             modal: true,
+            resizable:true,
             closed: true,
             buttons: [{
                 text:'确定',
@@ -169,8 +156,8 @@
                         return false;
                     }
                     var data = form.serialize();
-                    var button = $(this);
-                    button.linkbutton('disable');
+//                    var button = $(this);
+//                    button.linkbutton('disable');
                     $.ajax({
                         type: 'post',
                         url: "<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/add']); ?>",
@@ -204,9 +191,9 @@
         });
         //初始化修改窗口
         $('#easyui-dialog-parts-parts-info-index-edit').dialog({
-            title: '修改配置信息',
-            width: 1000,
-            height: 250,
+            title: '修改',
+            width: 700,
+            height: 500,
             closed: true,
             cache: true,
             modal: true,
@@ -214,7 +201,7 @@
                 text:'确定',
                 iconCls:'icon-ok',
                 handler:function(){
-                    var data = $('#info-edit-feng').serialize();
+                    var data = $('#search-form-parts-info-edit').serialize();
                     var button = $(this);
                     button.linkbutton('disable');
                     $.ajax({
@@ -246,6 +233,22 @@
                 }
             }]
         });
+        //查看
+        $('#easyui-dialog-parts-parts-info-index-see').dialog({
+            title: '查看',
+            width: 700,
+            height: 500,
+            closed: true,
+            cache: true,
+            modal: true,
+            buttons: [{
+                text:'取消',
+                iconCls:'icon-cancel',
+                handler:function(){
+                    $('#easyui-dialog-parts-parts-info-index-see').dialog('close');
+                }
+            }]
+        });
         //绑定记录双击事件
         $('#easyui-datagrid-parts-parts-info-index').datagrid({
             onDblClickRow: function(rowIndex,rowData){
@@ -259,16 +262,28 @@
         $('#easyui-dialog-parts-parts-info-index-add').dialog('open');
         $('#easyui-dialog-parts-parts-info-index-add').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/add']); ?>');
     }
+    //查看方法
+    PartsInfoIndex.see = function(){
+        var datagrid = $('#easyui-datagrid-parts-parts-info-index');
+        var partsData = datagrid.datagrid('getSelected');
+        if(partsData == null){
+            $.messager.alert('查看失败','请选择查看项','error');
+            return false;
+        }
+        var id = partsData.id;
+        $('#easyui-dialog-parts-parts-info-index-see').dialog('open');
+        $('#easyui-dialog-parts-parts-info-index-see').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/see']); ?>&parts='+id);
+    }
     //删除配件信息
     PartsInfoIndex.del = function(){
         var datagrid = $('#easyui-datagrid-parts-parts-info-index');
         var partsData = datagrid.datagrid('getSelected');
         if(partsData == null){
-            $.messager.alert('删除失败','请选择删除项','error');
+            $.messager.alert('删除失败','请选择作废项','error');
             return false;
         }
-        var id = partsData.parts_id;
-        $.messager.confirm('确认对话框', '确定删除配件信息？', function(r){
+        var id = partsData.id;
+        $.messager.confirm('确认对话框', '确定作废配件信息？', function(r){
             if (r){
                 $.ajax({
                     type: 'post',
@@ -296,7 +311,7 @@
             $.messager.alert('修改失败','请选择修改项','error');
             return false;
         }
-        var id = partsData.parts_id;
+        var id = partsData.id;
         $('#easyui-dialog-parts-parts-info-index-edit').dialog('open');
         $('#easyui-dialog-parts-parts-info-index-edit').dialog('refresh','<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/edit']); ?>&parts='+id);
     }
@@ -318,13 +333,6 @@
         return false;
     });
 
-    //汽车品牌下拉
-    searchForm.find('input[name=car_brand]').combotree({
-        url: "<?php echo yii::$app->urlManager->createUrl(['car/combotree/get-car-brands']); ?>",
-        editable: false,
-        panelHeight:'auto',
-        lines:false,
-    });
     //重置查询表单
     PartsInfoIndex.resetForm = function(){
         var easyuiForm = $('#search-form-parts-info-index');
@@ -341,29 +349,4 @@
         }
         $('#easyui-datagrid-parts-parts-info-index').datagrid('load',data);
     }
-</script>
-<script>
-    //二级联动
-    $('#parts_type').combobox({
-        onChange: function (n,o) {
-            var id = $('#parts_type').combobox('getValue');
-            $.ajax({
-                url:'<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/get-kind']); ?>',
-                type:'post',
-                data:{'id':id},
-                dataType:'json',
-                success:function(data){
-//                    $('#parts_kind').combobox('clear');
-                    $('#parts_kind').combobox({
-                        valueField:'value',
-                        textField:'text',
-                        editable: false,
-                        panelHeight:'auto',
-                        data: data
-                    });
-                    $('#parts_kind').combobox('setValues','');
-                }
-            });
-        }
-    });
 </script>

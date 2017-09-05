@@ -1,125 +1,191 @@
-<div id="easyui-datagrid-auto-task-index-toolbar">
-        <div class="data-search-form">
-            <form action="#" method="post" id="info-edit-feng">
-                <table cellpadding="8" cellspacing="0">
-                    <tr>
-                        <td>车辆品牌:</td>
-                        <td>
-                            <input  class="easyui-combobox" type="text" name="car_brand" value="<?php echo $data['car_brand'];?>" required style="width: 150px;"/>
-                        </td>
-                        <td>配件类别:</td>
-                        <td>
-                            <select
-                                    class="easyui-combobox"
-                                    style="width:150px;"
-                                    id="parts_type_info_edit"
-                                    name="parts_type"
-                                    editable="true"
-                            >
-                                <?php foreach($type_name as $val){?>
-                                    <?php if($data['parent_id'] == $val['id']){?>
-                                        <option value="<?php echo $val['id'];?>" selected="selected"><?php echo $val['parts_name']; ?></option>
-                                    <?php }else{?>
-                                        <option value="<?php echo $val['id'];?>"><?php echo $val['parts_name']; ?></option>
-                                    <?php }?>
-                                <?php }?>
-                            </select>
-                        </td>
-                        <td>配件种类:</td>
-                        <td>
-                            <select
-                                    class="easyui-combobox"
-                                    style="width:150px;"
-                                    id="parts_kind_info_edit"
-                                    name="parts_kind"
-                                    editable="true"
-                                    data-options="panelHeight:'auto'"
-                            >
-                                <option value="<?php echo $data['son_id'];?>"><?php echo $data['son_name'];?></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>配件名称:</td>
-                        <td><input type="text" class="easyui-textbox" name="parts_name" value="<?php echo $data['parts_name'];?>" required style="width: 150px;" /></td>
-                        <td>配件品牌:</td>
-                        <td><input type="text" class="easyui-textbox" name="parts_brand" value="<?php echo $data['parts_brand'];?>" required style="width: 150px;" /></td>
-                        <td>厂家配件编码:</td>
-                        <td><input type="text" class="easyui-textbox" name="vender_code" value="<?php echo $data['vender_code'];?>" required style="width: 150px;" /></td>
-                    </tr>
-                    <tr>
-                        <td>我方配件编码:</td>
-                        <td><input type="text" class="easyui-textbox" name="dst_code" value="<?php echo $data['dst_code'];?>" required style="width: 150px;" /></td>
-                        <td>单位:</td>
-                        <td><input type="text" name="unit" value="<?php echo $data['unit'];?>" required style="width: 150px;" /></td>
-                        <td>主机厂参考价:</td>
-                        <td><input type="text"  class="easyui-textbox" name="main_engine_price" value="<?php echo $data['main_engine_price'];?>" required style="width: 150px;" /></td>
-                    </tr>
-                </table>
-                <br>
-                <input type="hidden" value="<?php echo $data['parts_id'];?>" name="parts_id">
-        </form>
+<form id="search-form-parts-info-edit" method="post">
+    <table cellpadding="8" cellspacing="0">
+        <tr>
+            <td colspan="4">
+                <h2>
+                    配件基础信息
+                </h2>
+            </td>
+        </tr>
+        <tr>
+            <td><div style="width:85px;text-align:right;">原厂编码：</div></td>
+            <td>
+                <input
+                        class="easyui-textbox"
+                        style="width:150px;"
+                        name="factory_code"
+                        required="true"
+                        validType="onlyNum"
+                        value="<?php echo $data['factory_code'];?>"
+                        data-options="prompt:'请输入',"
+                >
+                <input type="hidden" name="id" value="<?php echo $data['id'];?>">
+            </td>
+            <td><div style="width:85px;text-align:right;">配件名称：</div></td>
+            <td>
+                <input
+                        class="easyui-textbox"
+                        style="width:150px;"
+                        name="parts_name"
+                        required="true"
+                        validType="length[100]"
+                        value="<?php echo $data['parts_name'];?>"
+                        data-options="prompt:'请输入',"
+                >
+            </td>
+        </tr>
+        <tr>
+            <td><div style="width:85px;text-align:right;">单位：</div></td>
+            <td>
+                <select
+                        class="easyui-combobox"s
+                        style="width:150px;"
+                        id="unit"
+                        name="unit"
+                        editable="true"
+                        data-options="panelHeight:'300'"
+                >
+                    <option value="<?php echo $data['unit'];?>"><?php echo $data['unit'];?></option>
+                    <?php
+                    $unit = '只,盒,件,长,桶,米,片,瓶,把,副,块,升,根,公斤,包,个,罐,对,箱,台,斤,车,支,双,套,条,卷,提,颗,次,付,面,辆';
+                    $unit = explode(',', $unit);
+                    ?>
+                    <?php foreach ($unit as $v){?>
+                        <option value="<?php echo $v;?>"><?php echo $v;?></option>
+                    <?php }?>
+                </select>
+            </td>
+            <td><div style="width:85px;text-align:right;">规格：</div></td>
+            <td>
+                <input
+                        class="easyui-textbox"
+                        style="width:150px;"
+                        name="size"
+                        validType="length[100]"
+                        value="<?php echo $data['size'];?>"
+                        data-options="prompt:'请输入'"
+                >
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <h2>
+                    配件详细信息
+                </h2>
+            </td>
+        </tr>
+        <tr>
+            <td><div style="width:85px;text-align:right;">三包期(月)：</div></td>
+            <td>
+                <input
+                        class="easyui-textbox"
+                        style="width:150px;"
+                        name="three_date"
+                        validType="Num"
+                        data-options="prompt:'请输入',"
+                        value="<?php echo $data['three_date'];?>"
+                >
+            </td>
+            <td><div style="width:85px;text-align:right;">保质期(月)：</div></td>
+            <td>
+                <input
+                        class="easyui-textbox"
+                        style="width:150px;"
+                        name="work_date"
+                        validType="Num"
+                        value="<?php echo $data['work_date'];?>"
+                        data-options="prompt:'请输入',"
+                >
+            </td>
+        </tr>
+        <tr>
+            <td><div style="width:85px;text-align:right;">采购指导价：</div></td>
+            <td>
+                <input
+                        class="easyui-textbox"
+                        style="width:150px;"
+                        name="shop_price"
+                        validType="moneyNum"
+                        value="<?php echo $data['shop_price'];?>"
+                        data-options="prompt:'请输入',"
+                >
+            </td>
+            <td><div style="width:85px;text-align:right;">出库指导价：</div></td>
+            <td>
+                <input
+                        class="easyui-textbox"
+                        style="width:150px;"
+                        name="out_price"
+                        validType="moneyNum"
+                        value="<?php echo $data['out_price'];?>"
+                        data-options="prompt:'请输入',"
+                >
+            </td>
+        </tr>
+    </table>
+    <h2>
+        适用车型
+    </h2>
+    <div style="background: #000">
+        <div style="display: inline-block; float: left; position: relative; padding: 10px; background: #ddd; border-radius: 4px; margin: 0 0 10px 10px;">
+            <span><?php echo $data['car_type'];?></span>
+            <img onclick="javascript:del(this);" class="delet" style="position: absolute; width: 16px; height: 16px; right: -8px; top:-8px;" src="./jquery-easyui-1.4.3/themes/icons/cancel.png">
+            <input name="che_type[]" style="display: none;" value="<?php echo $data['car_type'];?>">
+        </div>
+        <div id="append_edit" style="display: inline-block; float: left; position: relative; margin-left: 10px;">
+            <span id="edit" style="position: absolute; left: 0; top:0;z-index:10; padding:9px; border:1px solid #ddd; border-radius: 4px;">+</span>
+            <select id="edit_select" style="display: none; position: absolute; left: 0; top:0;z-index:11">
+                <option></option>
+                <option value="666">111</option>
+            </select>
+        </div>
     </div>
-</div>
+</form>
 <script>
-    //修改功能提交,构建查询表单
-    var searchFormEdit = $('#info-edit-feng');
-    //汽车品牌下拉
-    searchFormEdit.find('input[name=car_brand]').combobox({
-        valueField:'value',
-        textField:'text',
-        data: <?= json_encode($searchFormOptions['car_brand']); ?>,
-        editable: false,
-        panelHeight:'auto',
-        lines:false,
-    });
-    //配件类别下拉
-    searchFormEdit.find('input[name=parts_type]').combobox({
-        valueField:'value',
-        textField:'text',
-        data: <?= json_encode($searchFormOptions['type_name']); ?>,
-        editable: true,
-        panelHeight:'auto',
-    });
-    //配件种类
-//    searchFormEdit.find('input[name=parts_kind]').combobox({
-//        valueField:'value',
-//        textField:'text',
-//        data: <?//= json_encode($searchFormOptions['part_kind']); ?>//,
-//        editable: true,
-//        panelHeight:'500',
-//    });
-    //单位
-    searchFormEdit.find('input[name=unit]').combobox({
-        valueField:'value',
-        textField:'text',
-        data: <?= json_encode($searchFormOptions['unit']); ?>,
-        editable: true,
-        panelHeight:'200',
-    });
+    $(function(){
+        $('#edit').click(function(){
+            $('#edit_select').css("display","block");
+        })
+        $("#edit_select").change(function(){
+            var $options=$('#edit_select option:selected');
+            var edithtml = "<div style=\"display: inline-block; float: left; position: relative; padding: 10px; background: #ddd; border-radius: 4px; margin: 0 0 10px 10px;\">\n" +
+                "            <span>"+$options.text()+"</span>\n" +
+                "            <img onclick=\"javascript:del(this);\" class=\"delet\" style=\"position: absolute; width: 16px; height: 16px; right: -8px; top:-8px;\" src=\"./jquery-easyui-1.4.3/themes/icons/cancel.png\">\n" +
+                "            <input name=\"che_type[]\" style=\"display: none;\" value="+$options.val()+">\n" +
+                "        </div>";
+            $('#append_edit').before(edithtml);
+            $('#edit_select').css("display","none");
+            $('#edit_select').val('');
+        });
+    })
+    function del(obj)
+    {
+        $(obj).parent('div').remove()
+    }
 </script>
 <script>
-    //二级联动
-    $('#parts_type_info_edit').combobox({
-        onChange: function (n,o) {
-            var id = $('#parts_type_info_edit').combobox('getValue');
-            $.ajax({
-                url:'<?php echo yii::$app->urlManager->createUrl(['parts/parts-info/get-kind']); ?>',
-                type:'post',
-                data:{'id':id},
-                dataType:'json',
-                success:function(data){
-//                    $('#parts_kind').combobox('clear');
-                    $('#parts_kind_info_edit').combobox({
-                        valueField:'value',
-                        textField:'text',
-                        editable: false,
-                        panelHeight:'auto',
-                        data: data
-                    });
-                    $('#parts_kind_info_edit').combobox('setValues','');
-                }
-            });
-        }
+    //新增验证规则
+    $.extend($.fn.validatebox.defaults.rules, {
+        onlyNum:{
+            validator:function(value,param){
+                var reg = /^[0-9a-zA-Z]*$/g;
+                return reg.test(value);
+            },
+            message:  '只能输入数字或字母！'
+        },
+        Num:{
+            validator:function(value,param){
+                var reg = /^[0-9]*$/g;
+                return reg.test(value);
+            },
+            message:  '只能输入数字！'
+        },
+        moneyNum:{
+            validator:function(value,param){
+                var reg = /^[0-9.]*$/g;
+                return reg.test(value);
+            },
+            message:  '只能输入数字！'
+        },
     });
 </script>
